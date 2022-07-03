@@ -1,0 +1,19 @@
+﻿<div id="modal-update-image" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <form class="uk-form-horizontal" id="bookForm" method="post" action="admin" enctype="multipart/form-data">
+            <h2 class="uk-modal-title"><fmt:message key="book_create_form.load.image"/></h2>
+            <input type="hidden" name="command" value="loadBookImage"/>
+            <input class="uk-input uk-form-width-large uk-hidden"
+                   id="book-image-id" name="book-image-id" type="text" form-field>
+            <div uk-form-custom="target: true">
+                <input type="file" id="image-book-update-file" name="image-book-update-file" accept="image/jpeg">
+                <input class="uk-input uk-form-width-large" type="text"
+                       placeholder="<fmt:message key="book_create_form.load.image"/>" disabled>
+            </div>
+            <div>
+                <input class="uk-width-1-1 uk-button uk-button-primary uk-button-default" type="submit"
+                       id="load-image" name="load-image" value="<fmt:message key="book_create_form.submit"/>"/>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/META-INF" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/create.form.book.jspf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/header.jspf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/update.form.book.jspf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/update.form.image.jspf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/log4j.properties" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/access.denied.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/admin.book.create.fail.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/admin.book.create.success.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/admin.user.create.fail.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/admin.user.create.success.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/error.page.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/fonts" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/form.create.user.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/form.create.user.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/images/_error.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/images/_lock.png" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/js" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.admin.books.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.admin.librarians.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.admin.users.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.incognito.all.books.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.librarian.all.books.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.librarian.all.users.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.librarian.rent.books.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.user.books.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/list.user.rent.books.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/login.form.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/login.form.jsp" charset="windows-1251" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

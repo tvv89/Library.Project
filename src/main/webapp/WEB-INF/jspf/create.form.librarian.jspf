@@ -1,0 +1,58 @@
+<div id="modal-add-librarian" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <form class="uk-form-horizontal" id="librarianForm" method="post" action="admin" enctype="multipart/form-data">
+            <h2 class="uk-modal-title"><fmt:message key="librarian_create_form.title"/></h2>
+            <input type="hidden" name="command" value="createLibrarian"/>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="number"><fmt:message key="librarian_create_form.login"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="number" name="number" type="text" form-field
+                           form-field-regex="^[A-Za-z0-9]$"
+                           form-field-regex-error="Login use characters and numbers">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="password"><fmt:message key="librarian_create_form.password"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="password" name="password" type="password" form-field
+                           form-field-regex="^[A-Za-z0-9]+$"
+                           form-field-regex-error="Password must have only characters and numbers">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="first-name"><fmt:message key="librarian_create_form.first_name"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="first-name" name="first-name" type="text" form-field
+                           form-field-regex="^[A-Za-zÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÞßàáâã´äåºæçè³¿éêëìíîïðñòóôõö÷øùüþÿ¸¨úÚ]+$"
+                           form-field-regex-error="Name must have only characters">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="last-name"><fmt:message key="librarian_create_form.last_name"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="last-name" name="last-name" type="text" form-field
+                           form-field-regex="^[A-Za-zÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÞßàáâã´äåºæçè³¿éêëìíîïðñòóôõö÷øùüþÿ¸¨úÚ]+$"
+                           form-field-regex-error="Name must have only characters">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="date-of-birth"><fmt:message key="librarian_create_form.date_of_birth"/></label>
+                <div class="uk-form-controls">
+                    <input type="date" id="date-of-birth" name="date-of-birth" form-field>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="phone"><fmt:message key="librarian_create_form.phone"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="phone" name="phone" type="text" form-field
+                           form-field-regex="^[+]{1}([0-9]){12}$"
+                           form-field-regex-error="Incorrect phone">
+                </div>
+            </div>
+            <div>
+                <input class="uk-width-1-1 uk-button uk-button-primary uk-button-default" type="submit"
+                       id="createLibrarianSubmit" value="<fmt:message key="librarian_create_form.submit"/>"/>
+            </div>
+        </form>
+    </div>
+</div>

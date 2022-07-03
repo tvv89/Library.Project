@@ -1,0 +1,78 @@
+﻿<div id="modal-add-book" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <form class="uk-form-horizontal" id="bookForm" method="post" action="admin" enctype="multipart/form-data">
+            <h2 class="uk-modal-title"><fmt:message key="book_create_form.title"/></h2>
+            <input type="hidden" name="command" value="createBook"/>
+            <input type="hidden" name="current-id" id="current-id"/>
+            <input type="hidden" name="image-book" id="image-book"/>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="isbn"><fmt:message key="book_create_form.isbn"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="isbn" name="isbn" type="text" form-field
+                           form-field-regex="^[0-9]{13}$"
+                           form-field-regex-error="ISBN use 13 numbers">
+                    <p id="isbn-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="author"><fmt:message key="book_create_form.author"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="author" name="author" type="text" form-field
+                           form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ, ]+$"
+                           form-field-regex-error="Name must have only characters">
+                    <p id="author-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="name"><fmt:message key="book_create_form.name"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="name" name="name" type="text" form-field
+                           form-field-regex="^[0-9A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ,?.!-:;  ]+$"
+                           form-field-regex-error="Name must have only characters, number and symbols">
+                    <p id="name-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="publisher"><fmt:message key="book_create_form.publisher"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="publisher" name="publisher" type="text" form-field
+                           form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ,. ]+$"
+                           form-field-regex-error="Publisher must have only characters, number and symbols">
+                    <p id="publisher-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="year"><fmt:message key="book_create_form.year"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="year" name="year" type="text" form-field
+                           form-field-regex="^([1-2]){1}([0-9]){3}$"
+                           form-field-regex-error="Incorrect year">
+                    <p id="year-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="genre"><fmt:message key="book_create_form.genre"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="genre" name="genre" type="text" form-field
+                           form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ, ]+$"
+                           form-field-regex-error="Genres must have only characters">
+                    <p id="genre-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="count"><fmt:message key="book_create_form.count"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="count" name="count" type="text" form-field
+                           form-field-regex="^[0-9]*$"
+                           form-field-regex-error="Should be positive number">
+                    <p id="count-error"></p>
+                </div>
+            </div>
+
+            <div>
+                <input class="uk-width-1-1 uk-button uk-button-primary uk-button-default" type="submit"
+                       id="createBookSubmit" name="createBookSubmit" value="<fmt:message key="book_create_form.submit"/>"/>
+            </div>
+        </form>
+    </div>
+</div>
