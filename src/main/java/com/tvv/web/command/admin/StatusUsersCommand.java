@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * This command show change user status by admin
+ */
 @AdminLevel
 public class StatusUsersCommand extends Command {
     private static final Logger log = Logger.getLogger(StatusUsersCommand.class);

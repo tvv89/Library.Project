@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Load list of users command for librarian
+ */
 @LibrarianLevel
 public class LoadListLibrarianUserCommand extends Command {
 

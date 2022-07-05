@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * This command show user information via send JSON response
+ * This command for pay fine by user
  */
 @LibrarianLevel
 public class PayFineForUserCommand extends Command {

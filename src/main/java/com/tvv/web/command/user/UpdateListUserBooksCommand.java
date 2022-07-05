@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Update list of books command for single page application include pagination and sorting
+ */
 @UserLevel
 public class UpdateListUserBooksCommand extends Command {
     private static final Logger log = Logger.getLogger(UpdateListUserBooksCommand.class);

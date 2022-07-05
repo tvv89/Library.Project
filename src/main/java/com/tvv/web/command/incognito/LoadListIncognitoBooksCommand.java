@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Update list of books command for single page application include pagination and sorting
+ */
 @IncognitoLevel
 public class LoadListIncognitoBooksCommand extends Command {
 

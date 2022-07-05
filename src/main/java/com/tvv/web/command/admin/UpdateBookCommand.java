@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Update book command for single page application
+ */
 @AdminLevel
 public class UpdateBookCommand extends Command {
     private static final Logger log = Logger.getLogger(UpdateBookCommand.class);

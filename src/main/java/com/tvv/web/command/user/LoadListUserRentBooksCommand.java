@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Load list of rent book command for user
+ */
 @UserLevel
 public class LoadListUserRentBooksCommand extends Command {
 

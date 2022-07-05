@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Command for Create book. Use annotation for
+ * Command for Create book. Use annotation for admin level
  */
 @AdminLevel
 public class CreateBookCommand extends Command {
@@ -31,10 +31,22 @@ public class CreateBookCommand extends Command {
         bookService = new BookService();
     }
 
+    /**
+     * initialization method for Book service
+     * @param bookService
+     */
     public void init(BookService bookService) {
         this.bookService = bookService;
     }
 
+    /**
+     * POST function for create Book
+     * @param request request with parameter
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     * @throws AppException
+     */
     @Override
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         log.debug("Start create book POST command " + this.getClass().getSimpleName());
@@ -64,6 +76,11 @@ public class CreateBookCommand extends Command {
         UtilCommand.bedGETRequest(request, response);
     }
 
+    /**
+     * read parameter from request and field check
+     * @param request request with parameters
+     * @return
+     */
     private BookDTO readParameters(HttpServletRequest request) {
         BookDTO result = new BookDTO();
         result.setId(0);

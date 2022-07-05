@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * This command show user information via send JSON response
+ * This command give book for user who booked before
  */
 @LibrarianLevel
 public class GiveLibrarianBookCommand extends Command {

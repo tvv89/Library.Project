@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Update list of books command for single page application include pagination and sorting
+ */
 @LibrarianLevel
 @IncognitoLevel
 public class UpdateListLibrarianBooksCommand extends Command {

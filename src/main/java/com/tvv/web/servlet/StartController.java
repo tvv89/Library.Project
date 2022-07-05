@@ -4,6 +4,7 @@ import com.tvv.db.entity.Role;
 import com.tvv.service.exception.AppException;
 import com.tvv.web.command.Command;
 import com.tvv.web.command.CommandCollection;
+import com.tvv.web.command.LoginCommand;
 import com.tvv.web.util.IncognitoLevel;
 import com.tvv.web.util.Path;
 import com.tvv.web.util.UtilCommand;
@@ -45,32 +46,16 @@ public class StartController extends HttpServlet {
         HttpSession session = request.getSession();
         Role userRole = (Role) session.getAttribute("userRole");
         if (userRole != null) {
-            String forward;
-            switch (userRole.getName()) {
-                case "admin":
-                    forward = Path.COMMAND__LIST_ADMIN_BOOK;
-                    break;
-                case "librarian":
-                    forward = Path.COMMAND__LIST_LIBRARIAN_BOOK;
-                    break;
-                case "user":
-                    forward = Path.COMMAND__LIST_USERS_BOOK;
-                    break;
-                default:
-                    forward = Path.COMMAND__START_PAGE_USER;
-                    break;
-            }
+            String forward = LoginCommand.getForwardPage(userRole);
             response.sendRedirect(forward);
             log.debug("StartController finished GET with " + forward);
             return;
         }
         String commandName = request.getParameter("command");
-
         log.trace("Request parameter command GET: " + commandName);
         if (commandName == null) commandName = "listIncognitoAllBooks";
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
-
         try {
             /**
              * GET executed function
@@ -133,7 +118,7 @@ public class StartController extends HttpServlet {
              */
             request.getSession().setAttribute("errorHeader", "404");
             request.getSession().setAttribute("errorMessage", "Page not found");
-            //UtilCommand.goToErrorPage(request,response);
+            UtilCommand.goToErrorPage(request,response);
         } catch (AppException e) {
             throw new RuntimeException(e);
         }

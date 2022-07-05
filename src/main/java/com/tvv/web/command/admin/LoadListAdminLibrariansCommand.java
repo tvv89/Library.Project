@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * This command show page with list of Librarians for admin
+ */
 @AdminLevel
 public class LoadListAdminLibrariansCommand extends Command {
     private static final Logger log = Logger.getLogger(LoadListAdminLibrariansCommand.class);

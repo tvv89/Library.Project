@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Update list of librarians command for single page application include pagination and sorting
+ */
 @AdminLevel
 public class UpdateListAdminLibrariansCommand extends Command {
     private static final Logger log = Logger.getLogger(UpdateListAdminLibrariansCommand.class);

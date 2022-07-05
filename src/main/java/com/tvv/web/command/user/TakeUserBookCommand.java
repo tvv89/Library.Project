@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * This command for booking book by user send JSON response
+ * This command for booking item by user send JSON response
  */
 @UserLevel
 public class TakeUserBookCommand extends Command {

@@ -28,6 +28,7 @@ public class CommandCollection {
 		commands.put("logout", new LogoutCommand());
 		commands.put("registration", new RegistrationCommand());
 		commands.put("createUser", new CreateUserCommand());
+		commands.put("language", new LanguageCommand());
 		/**
 		 * Command for word with Admin access
 		 */
@@ -44,7 +45,6 @@ public class CommandCollection {
 		commands.put("infoBook", new InfoBookCommand());
 		commands.put("deleteBook", new DeleteBookCommand());
 		commands.put("loadBookImage", new ImageBookLoadCommand());
-//		commands.put("roleUser", new UpdateUserRoleCommand());
 		/**
 		 * Command for word with Librarian
 		 */
@@ -78,17 +78,6 @@ public class CommandCollection {
 		commands.put("listIncognitoAllBooks", new LoadListIncognitoBooksCommand());
 		commands.put("updateListIncognitoBooks", new UpdateListLibrarianBooksCommand());
 
-		/**
-		 * Command for word with Payments
-		 */
-//		commands.put("listPayments", new LoadListPaymentsCommand());
-//		commands.put("updateListPayment", new UpdateListPaymentsCommand());
-//		commands.put("infoPayment", new InfoPaymentCommand());
-//		commands.put("statusPayment", new StatusPaymentsCommand());
-//		commands.put("createPayment", new CreatePaymentCommand());
-
-//		commands.put("noCommand", new WrongAttributeCommand());
-		commands.put("language", new LanguageCommand());
 		log.debug("Command container was initialized");
 		log.trace("Number of commands: " + commands.size());
 	}

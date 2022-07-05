@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Command for create user. Use UserService for add and check user data
+ * Command for add image book.
  */
 @AdminLevel
 public class ImageBookLoadCommand extends Command {

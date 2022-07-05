@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 public class LoginCommand extends Command {
 
 	private static final Logger log = Logger.getLogger(LoginCommand.class);
-	public static final String USER_LOGIN = "User login";
 	private UserDAO userDAO;
 	public LoginCommand() {
 		userDAO = new UserDAOImpl();
@@ -110,20 +109,7 @@ public class LoginCommand extends Command {
 		else {
 			Role userRole = currentUser.getRole();
 			log.trace("userRole: " + userRole);
-			switch (userRole.getName()){
-				case "admin":
-					forward = Path.COMMAND__LIST_ADMIN_BOOK;
-					break;
-				case "librarian":
-					forward = Path.COMMAND__LIST_LIBRARIAN_BOOK;
-					break;
-				case "user":
-					forward = Path.COMMAND__LIST_USERS_BOOK;
-					break;
-				default:
-					forward = Path.COMMAND__START_PAGE_USER;
-					break;
-			}
+			forward = getForwardPage(userRole);
 			session.setAttribute("currentUser", currentUser);
 			log.trace("Set the session attribute: user " + currentUser);
 			session.setAttribute("userRole", userRole);
@@ -140,10 +126,28 @@ public class LoginCommand extends Command {
 			}
 			Config.set(session, "javax.servlet.jsp.jstl.fmt.locale", lang);
 			session.setAttribute("currentLanguage", lang);
-			//session.setAttribute("langPack", SystemParameters.jsLanguagePack(lang));
 		}
 		log.debug("Command finished");
 		response.sendRedirect(forward);
+	}
+
+	public static String getForwardPage(Role userRole) {
+		String forward;
+		switch (userRole.getName()){
+			case "admin":
+				forward = Path.COMMAND__LIST_ADMIN_BOOK;
+				break;
+			case "librarian":
+				forward = Path.COMMAND__LIST_LIBRARIAN_BOOK;
+				break;
+			case "user":
+				forward = Path.COMMAND__LIST_USERS_BOOK;
+				break;
+			default:
+				forward = Path.COMMAND__START_PAGE_USER;
+				break;
+		}
+		return forward;
 	}
 
 	/**

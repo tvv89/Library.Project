@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * This command show page with list of Book for admin
+ */
 @AdminLevel
 public class LoadListAdminBooksCommand extends Command {
 
