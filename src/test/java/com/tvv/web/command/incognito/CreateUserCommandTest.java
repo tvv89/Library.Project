@@ -122,7 +122,7 @@ class CreateUserCommandTest {
         CreateUserCommand command = new CreateUserCommand();
         command.init(userService);
         command.executePost(request,response);
-        verify(response,times(1)).sendRedirect("/error.page.jsp");
+        verify(response,times(1)).sendRedirect("error.page.jsp");
 
     }
 
@@ -170,7 +170,7 @@ class CreateUserCommandTest {
         CreateUserCommand command = new CreateUserCommand();
         command.init(userService);
         command.executePost(request,response);
-        verify(response,times(1)).sendRedirect("/error.page.jsp");
+        verify(response,times(1)).sendRedirect("error.page.jsp");
 
     }
 

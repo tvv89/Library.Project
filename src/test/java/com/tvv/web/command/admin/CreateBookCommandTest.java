@@ -50,7 +50,7 @@ class CreateBookCommandTest {
         CreateBookCommand command = new CreateBookCommand();
         command.init(bookService);
         command.executePost(request,response);
-        verify(response, times(1)).sendRedirect("/admin.book.create.success.jsp");
+        verify(response, times(1)).sendRedirect("admin.book.create.success.jsp");
     }
 
     @Test

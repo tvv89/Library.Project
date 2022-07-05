@@ -128,7 +128,6 @@ public class CreateUserCommand extends Command {
         Map<String, String> result = new HashMap<>();
         boolean check = true;
         result.put("login", request.getParameter("login"));
-        //check = check && FieldsChecker.checkNameField(result.get("login"));
         result.put("password", request.getParameter("password"));
         check = check && FieldsChecker.checkPasswordField(result.get("password"));
         result.put("firstName", request.getParameter("first-name"));
