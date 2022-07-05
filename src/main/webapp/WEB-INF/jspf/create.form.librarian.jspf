@@ -8,7 +8,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="number" name="number" type="text" form-field
                            form-field-regex="^[A-Za-z0-9]$"
-                           form-field-regex-error=<fmt:message key="regex.message.user.number"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.user.number"/>">
                 </div>
             </div>
             <div class="uk-margin">
@@ -16,7 +16,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="password" name="password" type="password" form-field
                            form-field-regex="^[A-Za-z0-9]+$"
-                           form-field-regex-error=<fmt:message key="regex.message.user.password"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.user.password"/>">
                 </div>
             </div>
             <div class="uk-margin">
@@ -24,7 +24,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="first-name" name="first-name" type="text" form-field
                            form-field-regex="^[A-Za-zÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÞßàáâã´äåºæçè³¿éêëìíîïðñòóôõö÷øùüþÿ¸¨úÚ]+$"
-                           form-field-regex-error=<fmt:message key="regex.message.user.first_name"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.user.first_name"/>">
                 </div>
             </div>
             <div class="uk-margin">
@@ -32,7 +32,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="last-name" name="last-name" type="text" form-field
                            form-field-regex="^[A-Za-zÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÞßàáâã´äåºæçè³¿éêëìíîïðñòóôõö÷øùüþÿ¸¨úÚ]+$"
-                           form-field-regex-error=<fmt:message key="regex.message.user.last_name"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.user.last_name"/>">
                 </div>
             </div>
             <div class="uk-margin">
@@ -46,7 +46,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="phone" name="phone" type="text" form-field
                            form-field-regex="^[+]{1}([0-9]){12}$"
-                           form-field-regex-error=<fmt:message key="regex.message.user.phone"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.user.phone"/>">
                 </div>
             </div>
             <div>

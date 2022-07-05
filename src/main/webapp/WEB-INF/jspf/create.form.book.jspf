@@ -10,7 +10,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="isbn" name="isbn" type="text" form-field
                            form-field-regex="^[0-9]{13}$"
-                           form-field-regex-error=<fmt:message key="regex.message.book.isbn"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.book.isbn"/>">
                     <p id="isbn-error"></p>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="author" name="author" type="text" form-field
                            form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ, ]+$"
-                           form-field-regex-error=<fmt:message key="regex.message.book.author"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.book.author"/>">
                     <p id="author-error"></p>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="name" name="name" type="text" form-field
                            form-field-regex="^[0-9A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ,?.!-:;  ]+$"
-                           form-field-regex-error=<fmt:message key="regex.message.book.name"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.book.name"/>">
                     <p id="name-error"></p>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="publisher" name="publisher" type="text" form-field
                            form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ,. ]+$"
-                           form-field-regex-error=<fmt:message key="regex.message.book.publisher"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.book.publisher"/>">
                     <p id="publisher-error"></p>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="year" name="year" type="text" form-field
                            form-field-regex="^([1-2]){1}([0-9]){3}$"
-                           form-field-regex-error=<fmt:message key="regex.message.book.year"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.book.year"/>">
                     <p id="year-error"></p>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="genre" name="genre" type="text" form-field
                            form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ, ]+$"
-                           form-field-regex-error=<fmt:message key="regex.message.book.genre"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.book.genre"/>">
                     <p id="genre-error"></p>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="count" name="count" type="text" form-field
                            form-field-regex="^[0-9]*$"
-                           form-field-regex-error=<fmt:message key="regex.message.book.count"/>>
+                           form-field-regex-error="<fmt:message key="regex.message.book.count"/>">
                     <p id="count-error"></p>
                 </div>
             </div>
