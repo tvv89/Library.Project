@@ -101,7 +101,7 @@ public class CommandCollection {
 	public static Command get(String commandName) {
 		if (commandName == null || !commands.containsKey(commandName)) {
 			log.trace("Command not found: " + commandName);
-			return commands.get("noCommand"); 
+			return null;
 		}
 		
 		return commands.get(commandName);

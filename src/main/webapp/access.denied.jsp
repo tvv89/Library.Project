@@ -13,6 +13,9 @@
          width="300" alt="">
     <h1 class="uk-align-center"><fmt:message key="access_denied.header"/></h1>
     <p class="uk-align-center"><fmt:message key="access_denied.message"/></p>
+    <button class="uk-button uk-button-primary"
+            onclick="window.location.href='/start'">
+        <fmt:message key="access_denied.button"/></button>
 </div>
 </body>
 </html>

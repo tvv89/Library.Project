@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Command for Create book. Use annotation for
+ */
 @AdminLevel
 public class CreateBookCommand extends Command {
     private static final Logger log = Logger.getLogger(CreateBookCommand.class);

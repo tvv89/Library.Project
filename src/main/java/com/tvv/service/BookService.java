@@ -21,36 +21,27 @@ public class BookService {
     private static final Logger log = Logger.getLogger(BookService.class);
     private BookDAO bookDAO;
     private UserDAO userDAO;
-    private PublisherDAO publisherDAO;
-    private AuthorDAO authorDAO;
-    private GenreDAO genreDAO;
 
     public BookService() {
         this.userDAO = new UserDAOImpl();
         this.bookDAO = new BookDAOImpl();
-        this.publisherDAO = new PublisherDAOImpl();
-        this.authorDAO = new AuthorDAOImpl();
-        this.genreDAO = new GenreDAOImpl();
     }
 
-    public void init(BookDAO bookDAO, UserDAO userDAO, AuthorDAO authorDAO,
-                     PublisherDAO publisherDAO, GenreDAO genreDAO){
+    public void init(BookDAO bookDAO, UserDAO userDAO){
         this.bookDAO = bookDAO;
         this.userDAO = userDAO;
-        this.authorDAO = authorDAO;
-        this.publisherDAO = publisherDAO;
-        this.genreDAO = genreDAO;
     }
 
     public JsonObject bookListPagination(Map<String, Object> jsonParameters){
         log.trace("Start booksListPagination method in " + this.getClass().getName());
         JsonObject innerObject = new JsonObject();
+        if (jsonParameters==null) return UtilCommand.errorMessageJSON("Illegal argument from JSON");
         Optional<Integer> currentPage;
         Optional<Integer> itemPerPage;
         Optional<String> sorting;
-        currentPage = Optional.of((Integer) jsonParameters.get("currentPage"));
-        itemPerPage = Optional.of((Integer) jsonParameters.get("items"));
-        sorting = Optional.of((String) jsonParameters.get("sorting"));
+        currentPage = Optional.ofNullable((Integer) jsonParameters.get("currentPage"));
+        itemPerPage = Optional.ofNullable((Integer) jsonParameters.get("items"));
+        sorting = Optional.ofNullable((String) jsonParameters.get("sorting"));
         PageSettings pageSettings = new PageSettings();
         if (itemPerPage.orElse(5) <= 0) {
             pageSettings.setPage(1);
@@ -93,10 +84,10 @@ public class BookService {
         Optional<Integer> itemPerPage;
         Optional<String> sorting;
         Optional<String> searching;
-        currentPage = Optional.of((Integer) jsonParameters.get("currentPage"));
-        itemPerPage = Optional.of((Integer) jsonParameters.get("items"));
-        sorting = Optional.of((String) jsonParameters.get("sorting"));
-        searching = Optional.of((String) jsonParameters.get("searching"));
+        currentPage = Optional.ofNullable((Integer) jsonParameters.get("currentPage"));
+        itemPerPage = Optional.ofNullable((Integer) jsonParameters.get("items"));
+        sorting = Optional.ofNullable((String) jsonParameters.get("sorting"));
+        searching = Optional.ofNullable((String) jsonParameters.get("searching"));
         PageSettings pageSettings = new PageSettings();
         if (itemPerPage.orElse(5) <= 0) {
             pageSettings.setPage(1);
@@ -139,9 +130,9 @@ public class BookService {
         Optional<Integer> currentPage;
         Optional<Integer> itemPerPage;
         Optional<String> sorting;
-        currentPage = Optional.of((Integer) jsonParameters.get("currentPage"));
-        itemPerPage = Optional.of((Integer) jsonParameters.get("items"));
-        sorting = Optional.of((String) jsonParameters.get("sorting"));
+        currentPage = Optional.ofNullable((Integer) jsonParameters.get("currentPage"));
+        itemPerPage = Optional.ofNullable((Integer) jsonParameters.get("items"));
+        sorting = Optional.ofNullable((String) jsonParameters.get("sorting"));
         PageSettings pageSettings = new PageSettings();
         if (itemPerPage.orElse(5) <= 0) {
             pageSettings.setPage(1);

@@ -37,7 +37,7 @@ public class FieldsChecker {
      * @return correct or not
      */
     public static boolean checkISBN(String isbn) {
-        String regex = "^[1-9]{1}([0-9]){12}$";
+        String regex = "^[1-9]{1}([0-9]){12}";
         return checkRegEx(isbn,regex);
     }
 

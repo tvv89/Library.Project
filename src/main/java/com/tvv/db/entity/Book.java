@@ -1,6 +1,7 @@
 package com.tvv.db.entity;
 
 import java.time.Year;
+import java.util.Objects;
 import java.util.Set;
 
 public class Book extends Entity{
@@ -78,5 +79,18 @@ public class Book extends Entity{
                 ", year=" + year +
                 ", genres=" + genres +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(book.toString(), toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn, name, year, image);
     }
 }

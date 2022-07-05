@@ -2,6 +2,7 @@ package com.tvv.service.dto;
 
 import com.tvv.db.entity.CountBook;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class BookDTO {
@@ -106,5 +107,33 @@ public class BookDTO {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "BookDTO{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", author='" + author + '\'' +
+                ", name='" + name + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", year='" + year + '\'' +
+                ", image='" + image + '\'' +
+                ", genre='" + genre + '\'' +
+                ", count=" + count +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookDTO bookDTO = (BookDTO) o;
+        return Objects.equals(toString(), bookDTO.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isbn, author, name, publisher, year, image, genre, count);
     }
 }

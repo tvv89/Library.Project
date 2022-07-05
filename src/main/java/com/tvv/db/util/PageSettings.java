@@ -1,5 +1,7 @@
 package com.tvv.db.util;
 
+import java.util.Objects;
+
 public class PageSettings {
     private long page;
     private long size;
@@ -36,5 +38,18 @@ public class PageSettings {
                 ", size=" + size +
                 ", sort='" + sort + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PageSettings that = (PageSettings) o;
+        return page == that.page && size == that.size && Objects.equals(sort, that.sort);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(page, size, sort);
     }
 }

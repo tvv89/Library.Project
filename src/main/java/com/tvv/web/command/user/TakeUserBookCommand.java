@@ -8,14 +8,12 @@ import com.tvv.web.util.UserLevel;
 import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -32,7 +30,7 @@ public class TakeUserBookCommand extends Command {
         bookService = new BookService();
     }
 
-    public void setUp(BookService bookService) {
+    public void init(BookService bookService) {
         this.bookService = bookService;
     }
 
