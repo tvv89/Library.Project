@@ -40,20 +40,29 @@ function createTable(tx) {
     table.innerHTML = "";
     for (var i = 0; i < tx.length; i++) {
         var userStatusButton = tx[i].status;
-        var row = `<tr id="tr_${tx[i].id}">
-                <td><img class="uk-preserve-width uk-border-circle" 
-                src="/images/users/${tx[i].photo}" width="40" alt=""></td>
-                <td>${tx[i].number}</td>
-                <td>${tx[i].firstName}</td>
-                <td>${tx[i].lastName}</td>
-                <td>${tx[i].dateOfBirth}</td>
-                <td>${tx[i].phone}</td>
-                <td><button id="js-modal-status" class="uk-button uk-button-default" type="button" name="user"
-                                    value="${tx[i].id}" onclick="changeStatusButton(${tx[i].id})">${userStatusButton}</button>
-                </td>
-                </tr>`
+        var row = `<tr id="tr_${tx[i].id}">`
+                + loadRow(tx[i]) +
+                `</tr>`
         table.innerHTML += row;
     }
+}
+
+function loadRow(data) {
+    var userStatusButton = data.status;
+    var row = `
+                <td><img class="uk-preserve-width uk-border-circle" 
+                src="/images/users/${data.photo}" width="40" alt=""></td>
+                <td>${data.number}</td>
+                <td>${data.firstName}</td>
+                <td>${data.lastName}</td>
+                <td>${data.dateOfBirth}</td>
+                <td>${data.phone}</td>
+                <td><button id="js-modal-status" class="uk-button uk-button-default" type="button" name="user"
+                                    value="${data.id}" onclick="changeStatusButton(${data.id})">${userStatusButton}</button>
+                </td>
+                `
+    return row;
+
 }
 
 function changeUserStatus(id) {
@@ -67,18 +76,7 @@ function changeUserStatus(id) {
         .then(data =>  {
             if (data.status =='OK') {
                 if ($('#tr_' + data.user.id).length) {
-                    var userStatusButton = data.user.status;
-                    var newHtml = `
-                <td><img class="uk-preserve-width uk-border-circle" src="images/users/${data.user.photo}" width="40"
-                                 alt=""></td>
-                <td>${data.user.number}</td>
-                <td>${data.user.firstName}</td>
-                <td>${data.user.lastName}</td>
-                <td>${data.user.dateOfBirth}</td>
-                <td>${data.user.phone}</td>
-                <td><button id="js-modal-status" class="uk-button uk-button-default" type="button" name="user"
-                                    value="${data.user.id}" onclick="changeStatusButton(${data.user.id})">${userStatusButton}</button>
-                `
+                    let newHtml = loadRow(data.user);
                     $('#tr_' + data.user.id).html(newHtml);
                 }
             } else callErrorAlert(data.message);
@@ -109,33 +107,6 @@ function callErrorAlert(message){
     UIkit.modal.alert(message);
 }
 
-function enableSubmitButton(e) {
-    const form = e.target;
-    const submitButton = form.querySelector('input[type="submit"]');
-    submitButton.disabled = true;
-    const hasError = formFieldsRegexCheck(form);
-    if (hasError) {
-        submitButton.disabled = false;
-    }
-    return !hasError;
-}
-function formFieldsRegexCheck(form) {
-    const fieldsForRegexCheck = form.querySelectorAll('[form-field-regex]');
-    let hasError = false;
-    fieldsForRegexCheck.forEach(function(input) {
-        const errorMessageElement = input.parentElement.querySelector(`#${input.name}-error`);
-        const regexToCheck = new RegExp(input.getAttribute('form-field-regex'));
-        if (!regexToCheck.test(input.value)) {
-            input.classList.add('uk-form-danger');
-            hasError = true;
-            errorMessageElement.innerText = input.getAttribute('form-field-regex-error');
-        } else {
-            input.classList.remove('uk-form-danger');
-            errorMessageElement.innerText = '';
-        }
-    });
-    return hasError;
-}
 
 window.addEventListener('DOMContentLoaded', (event) => {
     callPOSTRequest(1,0);
