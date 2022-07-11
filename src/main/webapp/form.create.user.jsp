@@ -12,6 +12,7 @@
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit.js"></script>
     <script src="js/uikit-icons.js"></script>
+    <script src="js/librarykit.mini.js"></script>
     <script src="js/user.create.util.js"></script>
 </head>
 
@@ -20,17 +21,17 @@
     <h1><fmt:message key="form_create_user.user.title"/></h1>
     <form class="uk-form-horizontal" id="form-create-user" method="post" action="start" enctype="multipart/form-data">
         <input type="hidden" name="command" value="createUser"/>
-
         <div uk-form-custom="target: true">
-            <input type="file" id="photo-file" name="photo-file" accept="image/jpeg">
+            <label class="uk-form-label" for="photo-file"><fmt:message key="form_create_user.user.photo"/></label>
+            <input type="file" id="photo-file" name="photo-file" accept="image/jpeg"/>
             <input class="uk-input uk-form-width-large" type="text"
-                   placeholder="<fmt:message key="form_create_user.user.photo"/>" disabled>
+                   placeholder="<fmt:message key="form_create_user.user.photo"/>" disabled/>
         </div>
         <div class="uk-margin">
             <label class="uk-form-label" for="login"><fmt:message key="form_create_user.user.login"/></label>
             <div class="uk-form-controls">
                 <input class="uk-input uk-form-width-large uk-disabled"
-                       id="login" name="login" type="text" value="${number}" form-field>
+                       id="login" name="login" type="text" value="${number}" form-field/>
             </div>
         </div>
         <div class="uk-margin">
@@ -38,7 +39,7 @@
             <div class="uk-form-controls">
                 <input class="uk-input uk-form-width-large" id="password" name="password" type="password" form-field
                        form-field-regex="^[A-Za-z0-9]+$"
-                       form-field-regex-error="Password must have only characters and numbers">
+                       form-field-regex-error="<fmt:message key="regex.message.user.password"/>"/>
                 <p id="password-error"></p>
             </div>
             <div class="uk-margin">
@@ -47,7 +48,7 @@
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="first-name" name="first-name" type="text" form-field
                            form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ]+$"
-                           form-field-regex-error="Name must have only characters">
+                           form-field-regex-error="<fmt:message key="regex.message.user.first_name"/>"/>
                     <p id="first-name-error"></p>
                 </div>
             </div>
@@ -56,8 +57,8 @@
                         key="form_create_user.user.last_name"/></label>
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="last-name" name="last-name" type="text" form-field
-                           form-field-regex="^[0-9A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ]+$"
-                           form-field-regex-error="Name must have only characters">
+                           form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ]+$"
+                           form-field-regex-error="<fmt:message key="regex.message.user.last_name"/>"/>
                     <p id="last-name-error"></p>
                 </div>
             </div>
@@ -65,16 +66,16 @@
                 <label class="uk-form-label" for="date-of-birth"><fmt:message
                         key="form_create_user.user.date_of_birth"/></label>
                 <div class="uk-form-controls">
-                    <input type="date" id="date-of-birth" name="date-of-birth" form-field>
+                    <input type="date" id="date-of-birth" name="date-of-birth" form-field/>
                 </div>
             </div>
             <div class="uk-margin">
                 <label class="uk-form-label" for="phone"><fmt:message key="form_create_user.user.phone"/></label>
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="phone" name="phone" type="text" form-field
-                           form-field-regex="^[+]{1}([0-9]){12}$"
-                           form-field-regex-error="Incorrect phone">
-                    <p id="year-error"></p>
+                           form-field-regex="^([+]){1}([0-9]){12}$"
+                           form-field-regex-error="<fmt:message key="regex.message.user.phone"/>"/>
+                    <p id="phone-error"></p>
                 </div>
             </div>
             <div class="uk-margin">
@@ -86,16 +87,14 @@
                     </select>
                 </div>
             </div>
-
             <div>
                 <input class="uk-width-1-1 uk-button uk-button-primary uk-button-default" type="submit"
                        id="create-user-submit" name="create-user-submit"
                        value="<fmt:message key="form_create_user.user.submit"/>"/>
             </div>
+        </div>
     </form>
 </div>
-</div>
-
 </body>
 <%@ include file="/WEB-INF/jspf/javascript.language.pack.jspf" %>
 </html>

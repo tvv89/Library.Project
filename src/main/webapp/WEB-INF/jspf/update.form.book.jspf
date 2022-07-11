@@ -41,7 +41,7 @@
                 <label class="uk-form-label" for="upd-year"><fmt:message key="book_create_form.year"/></label>
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="upd-year" name="upd-year" type="text" form-field
-                           form-field-regex="^([1-2]){1}+[0-9]{3}$"
+                           form-field-regex="^([1-2]){1}([0-9]){3}$"
                            form-field-regex-error="Incorrect year">
                     <p id="upd-year-error"></p>
                 </div>

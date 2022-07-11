@@ -13,16 +13,21 @@ public interface BookDAO {
     void init(DBManager dbManager);
 
     boolean create(Book book, int count) throws AppException;
+
     Book findById(long id) throws AppException;
 
     CountBook findByIdWithCount(long id) throws AppException;
 
     boolean update(Book book, int count) throws AppException;
+
     boolean delete(Book book) throws AppException;
 
     List<CountBook> findAllBooks(PageSettings pageSettings) throws AppException;
+
     List<RentBook> findAllUserBooks(long userId, PageSettings pageSettings) throws AppException;
+
     long bookCount() throws AppException;
+
     long bookCount(long userId) throws AppException;
 
     long bookCount(String search) throws AppException;

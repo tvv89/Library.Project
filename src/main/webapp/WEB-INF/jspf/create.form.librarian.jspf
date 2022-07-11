@@ -1,4 +1,4 @@
-<div id="modal-add-librarian" uk-modal>
+ï»¿<div id="modal-add-librarian" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
         <form class="uk-form-horizontal" id="librarianForm" method="post" action="admin" enctype="multipart/form-data">
             <h2 class="uk-modal-title"><fmt:message key="librarian_create_form.title"/></h2>
@@ -7,8 +7,9 @@
                 <label class="uk-form-label" for="number"><fmt:message key="librarian_create_form.login"/></label>
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="number" name="number" type="text" form-field
-                           form-field-regex="^[A-Za-z0-9]$"
+                           form-field-regex="^[A-Za-z0-9]+$"
                            form-field-regex-error="<fmt:message key="regex.message.user.number"/>">
+                    <p id="number-error"></p>
                 </div>
             </div>
             <div class="uk-margin">
@@ -17,22 +18,25 @@
                     <input class="uk-input uk-form-width-large" id="password" name="password" type="password" form-field
                            form-field-regex="^[A-Za-z0-9]+$"
                            form-field-regex-error="<fmt:message key="regex.message.user.password"/>">
+                    <p id="password-error"></p>
                 </div>
             </div>
             <div class="uk-margin">
                 <label class="uk-form-label" for="first-name"><fmt:message key="librarian_create_form.first_name"/></label>
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="first-name" name="first-name" type="text" form-field
-                           form-field-regex="^[A-Za-zÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÞßàáâã´äåºæçè³¿éêëìíîïðñòóôõö÷øùüþÿ¸¨úÚ]+$"
+                           form-field-regex="^[A-Za-zÐÐ‘Ð’Ð“ÒÐ”Ð•Ð„Ð–Ð—Ð˜Ð†Ð‡Ð™ÐšÐ›ÐœÐÐžÐŸÐ Ð¡Ð¢Ð£Ð¤Ð¥Ð¦Ð§Ð¨Ð©Ð¬Ð®Ð¯Ð°Ð±Ð²Ð³Ò‘Ð´ÐµÑ”Ð¶Ð·Ð¸Ñ–Ñ—Ð¹ÐºÐ»Ð¼Ð½Ð¾Ð¿Ñ€ÑÑ‚ÑƒÑ„Ñ…Ñ†Ñ‡ÑˆÑ‰ÑŒÑŽÑÑ‘ÐÑŠÐª]+$"
                            form-field-regex-error="<fmt:message key="regex.message.user.first_name"/>">
+                    <p id="first-name-error"></p>
                 </div>
             </div>
             <div class="uk-margin">
                 <label class="uk-form-label" for="last-name"><fmt:message key="librarian_create_form.last_name"/></label>
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="last-name" name="last-name" type="text" form-field
-                           form-field-regex="^[A-Za-zÀÁÂÃ¥ÄÅªÆÇÈ²¯ÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÞßàáâã´äåºæçè³¿éêëìíîïðñòóôõö÷øùüþÿ¸¨úÚ]+$"
+                           form-field-regex="^[A-Za-zÐÐ‘Ð’Ð“ÒÐ”Ð•Ð„Ð–Ð—Ð˜Ð†Ð‡Ð™ÐšÐ›ÐœÐÐžÐŸÐ Ð¡Ð¢Ð£Ð¤Ð¥Ð¦Ð§Ð¨Ð©Ð¬Ð®Ð¯Ð°Ð±Ð²Ð³Ò‘Ð´ÐµÑ”Ð¶Ð·Ð¸Ñ–Ñ—Ð¹ÐºÐ»Ð¼Ð½Ð¾Ð¿Ñ€ÑÑ‚ÑƒÑ„Ñ…Ñ†Ñ‡ÑˆÑ‰ÑŒÑŽÑÑ‘ÐÑŠÐª]+$"
                            form-field-regex-error="<fmt:message key="regex.message.user.last_name"/>">
+                    <p id="last-name-error"></p>
                 </div>
             </div>
             <div class="uk-margin">
@@ -45,8 +49,9 @@
                 <label class="uk-form-label" for="phone"><fmt:message key="librarian_create_form.phone"/></label>
                 <div class="uk-form-controls">
                     <input class="uk-input uk-form-width-large" id="phone" name="phone" type="text" form-field
-                           form-field-regex="^[+]{1}([0-9]){12}$"
+                           form-field-regex="^([+]){1}([0-9]){12}$"
                            form-field-regex-error="<fmt:message key="regex.message.user.phone"/>">
+                    <p id="phone-error"></p>
                 </div>
             </div>
             <div>

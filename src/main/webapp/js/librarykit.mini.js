@@ -33,11 +33,15 @@ function enableSubmitButton(e) {
     const form = e.target;
     const submitButton = form.querySelector('input[type="submit"]');
     submitButton.disabled = true;
-    const hasError = formFieldsRegexCheck(form);
-    if (hasError) {
-        submitButton.disabled = false;
+    try {
+        const hasError = formFieldsRegexCheck(form);
+        if (hasError) {
+            submitButton.disabled = false;
+        }
+        return !hasError;
+    } catch {
+        return false;
     }
-    return !hasError;
 }
 
 function formFieldsRegexCheck(form) {

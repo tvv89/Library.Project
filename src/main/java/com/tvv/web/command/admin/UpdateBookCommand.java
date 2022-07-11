@@ -40,7 +40,7 @@ public class UpdateBookCommand extends Command {
          * Read parameter from request
          */
         BookDTO bookDTO = readParameters(request);
-        log.debug("Read parameter: " + bookDTO.toString());
+        log.debug("Read parameter: " + bookDTO);
         /**
          * Check parameters and create account
          */
@@ -84,7 +84,7 @@ public class UpdateBookCommand extends Command {
         /**
          * image item
          */
-        result.setImage(request.getParameter("upd-image-book"));
+        result.setImage(null);
         if (!checkFields) return null;
         return result;
     }
