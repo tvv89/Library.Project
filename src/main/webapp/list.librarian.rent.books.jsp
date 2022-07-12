@@ -50,7 +50,18 @@
         </div>
     </div>
     <div id="userinfo" uk-modal>
-
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title"><fmt:message key="list_books.user.info.header"/></h2>
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <img class="uk-preserve-width uk-border-circle" id="user-photo"
+                 src="" width="100" alt=""><br>
+            <span class="uk-label"><fmt:message key="list_books.user.info.label"/></span><br>
+            <label><fmt:message key="list_books.user.info.number"/> </label><label id="user-number"></label><br>
+            <label><fmt:message key="list_books.user.info.first_name"/> </label><label id="user-fn"></label><br>
+            <label><fmt:message key="list_books.user.info.last_name"/> </label><label id="user-ln"></label><br>
+            <label><fmt:message key="list_books.user.info.date_of_birth"/> </label><label id="user-dob"></label><br>
+            <label><fmt:message key="list_books.user.info.phone"/> </label><label id="user-phone"></label><br>
+        </div>
     </div>
 </div>
 

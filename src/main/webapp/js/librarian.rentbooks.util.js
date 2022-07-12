@@ -193,27 +193,34 @@ function callErrorAlert(message) {
 }
 
 function userInfo(id) {
-    var usermodal = document.getElementById('userinfo')
-    usermodal.innerHTML = "";
+    //let usermodal = document.getElementById('userinfo')
+    //usermodal.innerHTML = "";
     fetch('librarian?command=infoUser', {
         method: 'POST',
         body: JSON.stringify({userNumber: id.toString()})
     }).then(response => response.json())
         .then(data => {
             if (data.status == 'OK') {
-                var row = `<div class="uk-modal-dialog uk-modal-body">
+                /*var row = `<div class="uk-modal-dialog uk-modal-body">
         <h2 class="uk-modal-title">Information</h2>
         <button class="uk-modal-close-default" type="button" uk-close></button>
-        <img class="uk-preserve-width uk-border-circle" 
+        <img class="uk-preserve-width uk-border-circle" id="user-photo"
         src="images/users/${data.user.photo}" width="100" alt=""><br>
         <span class="uk-label">User</span><br>
-        <label>Number: ${data.user.number}</label><br>
-        <label>First name: ${data.user.firstName}</label><br>
-        <label>Last name: ${data.user.lastName}</label><br>
-        <label>Date of birth: ${data.user.dateOfBirth}</label><br>
-        <label>Phone: ${data.user.phone}</label><br>
+        <label>Number: </label><label id="user-number">${data.user.number}</label><br>
+        <label>First name: </label><label id="user-fn">${data.user.firstName}</label><br>
+        <label>Last name: </label><label id="user-ln">${data.user.lastName}</label><br>
+        <label>Date of birth: </label><label id="user-dob">${data.user.dateOfBirth}</label><br>
+        <label>Phone: </label><label id="user-phone">${data.user.phone}</label><br>
     </div>`
-                usermodal.innerHTML += row;
+                usermodal.innerHTML += row;*/
+                document.getElementById("user-photo").src = `images/users/${data.user.photo}`;
+                document.getElementById("user-number").innerHTML=`${data.user.number}`;
+                document.getElementById("user-fn").innerHTML=`${data.user.firstName}`;
+                document.getElementById("user-ln").innerHTML=`${data.user.lastName}`;
+                document.getElementById("user-dob").innerHTML=`${data.user.dateOfBirth}`;
+                document.getElementById("user-phone").innerHTML=`${data.user.phone}`;
+
             } else callErrorAlert(data.message);
         });
 
