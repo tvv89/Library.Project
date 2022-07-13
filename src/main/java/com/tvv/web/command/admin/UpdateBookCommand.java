@@ -42,16 +42,11 @@ public class UpdateBookCommand extends Command {
         BookDTO bookDTO = readParameters(request);
         log.debug("Read parameter: " + bookDTO);
         /**
-         * Check parameters and create account
+         * Check parameters and update book
          */
-        if (bookDTO != null) {
-
-            if (bookService.updateBook(bookDTO)) {
-                response.sendRedirect(Path.COMMAND__LIST_ADMIN_BOOK);
-            } else {
-                response.sendRedirect(Path.PAGE__FAIL_BOOK);
-            }
-        } else response.sendRedirect(Path.PAGE__FAIL_BOOK);
+        if (bookDTO != null && bookService.updateBook(bookDTO))
+            response.sendRedirect(Path.COMMAND__LIST_ADMIN_BOOK);
+        else response.sendRedirect(Path.PAGE__FAIL_BOOK);
         log.debug("Finish create book POST command " + this.getClass().getSimpleName());
     }
 
