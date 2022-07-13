@@ -51,6 +51,7 @@ public class TakeUserBookCommand extends Command {
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.trace("Start POST method " + this.getClass().getSimpleName());
         JsonObject innerObject = new JsonObject();
+        bookService.initLanguage(UtilCommand.getStringLocale(request));
         /**
          * Check user role
          */

@@ -49,6 +49,7 @@ public class GiveLibrarianBookCommand extends Command {
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.trace("Start POST method " + this.getClass().getSimpleName());
         ResourceBundle message = UtilCommand.getLocale(request);
+        bookService.initLanguage(UtilCommand.getStringLocale(request));
         JsonObject innerObject;
         String number;
         Integer bookId;
