@@ -75,9 +75,7 @@ public class StartController extends HttpServlet {
             request.getSession().setAttribute("errorMessage", "Page not found");
             UtilCommand.goToErrorPage(request, response);
         }
-
         log.debug("StartController finished GET with " + commandName);
-
     }
 
     /**
@@ -97,10 +95,8 @@ public class StartController extends HttpServlet {
         log.debug("StartController Librarian started GET");
         String commandName = request.getParameter("command");
         log.trace("Request parameter command GET: " + commandName);
-
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
-
         try {
             /**
              * POST executed function
@@ -122,10 +118,7 @@ public class StartController extends HttpServlet {
         } catch (AppException e) {
             throw new RuntimeException(e);
         }
-
         log.debug("StartController Librarian finished GET with " + commandName);
-
     }
-
 
 }

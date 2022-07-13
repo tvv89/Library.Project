@@ -46,7 +46,7 @@
                         <p><fmt:message key="navigation.user.info.phone"/>: ${sessionScope.currentUser.phone}</p>
                         <p><fmt:message
                                 key="navigation.user.info.day_of_birth"/>: ${sessionScope.currentUser.dateOfBirth}</p>
-                        <button class="uk-button-default" onclick="location.href = 'start?command=logout'">
+                        <button class="uk-button-default" onclick="location.href = 'admin?command=logout'">
                             <fmt:message key="navigation.user.info.logout"/>
                         </button>
                     </div>

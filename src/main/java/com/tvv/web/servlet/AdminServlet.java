@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 /**
  * servlet controller for user. Application uses one controller and different command.
- *
  */
 @WebServlet(name = "Admin", value = "/admin")
 @MultipartConfig
@@ -31,6 +30,7 @@ public class AdminServlet extends HttpServlet {
 
     /**
      * Function for GET request. Use command GET function
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -41,10 +41,8 @@ public class AdminServlet extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter("command");
         log.trace("Request parameter command GET: " + commandName);
-
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
-
         try {
             /**
              * GET executed function
@@ -62,15 +60,14 @@ public class AdminServlet extends HttpServlet {
              */
             request.getSession().setAttribute("errorHeader", "404");
             request.getSession().setAttribute("errorMessage", "Page not found");
-            UtilCommand.goToErrorPage(request,response);
+            UtilCommand.goToErrorPage(request, response);
         }
-
         log.debug("StartController finished GET with " + commandName);
-
     }
 
     /**
      * Function for POST request. Use command POST function
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -84,10 +81,8 @@ public class AdminServlet extends HttpServlet {
          */
         String commandName = request.getParameter("command");
         log.trace("Request parameter command POST: " + commandName);
-
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
-
         try {
             /**
              * POST executed function
@@ -99,18 +94,15 @@ public class AdminServlet extends HttpServlet {
                 RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);
                 disp.forward(request, response);
             }
-        } catch (ServletException | NullPointerException |AppException e) {
+        } catch (ServletException | NullPointerException | AppException e) {
             /**
              * Show error page
              */
             request.getSession().setAttribute("errorHeader", "404");
-            request.getSession().setAttribute("errorMessage", "Page not found "+ e.getMessage());
-            UtilCommand.goToErrorPage(request,response);
+            request.getSession().setAttribute("errorMessage", "Page not found " + e.getMessage());
+            UtilCommand.goToErrorPage(request, response);
         }
-
         log.debug("StartController finished POST with " + commandName);
-
     }
-
 
 }
