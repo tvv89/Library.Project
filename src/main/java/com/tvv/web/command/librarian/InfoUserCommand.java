@@ -58,6 +58,7 @@ public class InfoUserCommand extends Command {
                     UtilCommand.parseRequestJSON(request);
             userNumber = (String) jsonParameters.get("userNumber");
             log.trace("Read user number for info: " + userNumber);
+            userService.initLanguage(UtilCommand.getStringLocale(request));
             innerObject = userService.getUserInfoByNumber(userNumber);
         } catch (Exception e) {
             ResourceBundle message = UtilCommand.getLocale(request);
