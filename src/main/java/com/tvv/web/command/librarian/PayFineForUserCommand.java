@@ -55,6 +55,7 @@ public class PayFineForUserCommand extends Command {
                     UtilCommand.parseRequestJSON(request);
             id = (Integer) jsonParameters.get("id");
             log.trace("User pay tax for: " + id);
+            bookService.initLanguage(UtilCommand.getStringLocale(request));
             innerObject = bookService.payFineForBook(id);
         } catch (Exception e) {
             ResourceBundle message = UtilCommand.getLocale(request);

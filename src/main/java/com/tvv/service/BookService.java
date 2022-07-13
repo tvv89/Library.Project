@@ -190,6 +190,8 @@ public class BookService {
              */
             innerObject.add("status", new Gson().toJsonTree("OK"));
             innerObject.add("book", new Gson().toJsonTree(rentBookDTO));
+            innerObject.add("message",
+                    new Gson().toJsonTree(message.getString("message.json.book_service.update_rent_book.success")));
         } catch (AppException ex) {
             innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
         }
@@ -209,6 +211,8 @@ public class BookService {
              */
             innerObject.add("status", new Gson().toJsonTree("OK"));
             innerObject.add("book", new Gson().toJsonTree(rentBookDTO));
+            innerObject.add("message",
+                    new Gson().toJsonTree(message.getString("message.json.book_service.pay_fine.success")));
 
         } catch (AppException ex) {
             innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
@@ -228,7 +232,11 @@ public class BookService {
             /**
              * Select and show user list
              */
-            if (result) innerObject.add("status", new Gson().toJsonTree("OK"));
+            if (result) {
+                innerObject.add("status", new Gson().toJsonTree("OK"));
+                innerObject.add("message",
+                        new Gson().toJsonTree(message.getString("message.json.book_service.delete_rent.success")));
+            }
             else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_return"));
         } catch (AppException ex) {
             innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
