@@ -96,8 +96,7 @@ function cancelBooking(tableId) {
             .catch(err => {
                 callErrorAlert(err);
             });
-
-        console.log('Payment is deleted')
+        console.log('Booking is deleted')
     }, function () {
         console.log('Canceling enable')
     });

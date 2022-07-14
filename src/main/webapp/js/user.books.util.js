@@ -76,7 +76,7 @@ function takeBookButton(id) {
             .then(data => {
                 if (data.status == 'OK') {
                     UIkit.notification({
-                        message: "Book was booked ",
+                        message: `${data.message}`,
                         status: 'success',
                         timeout: 2000
                     });

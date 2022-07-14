@@ -258,6 +258,8 @@ public class BookService {
                 if (countFire > 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
                 if (user != null && bookDAO.addBookToRentByUser(bookId, user.getId())) {
                     innerObject.add("status", new Gson().toJsonTree("OK"));
+                    innerObject.add("message",
+                            new Gson().toJsonTree(message.getString("message.json.book_service.booking.success")));
                 } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_user"));
             } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
         } catch (AppException ex) {
