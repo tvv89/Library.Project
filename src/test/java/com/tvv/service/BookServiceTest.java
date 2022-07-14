@@ -222,7 +222,8 @@ class BookServiceTest {
         JsonObject result = bookService.startRentBook(1);
         String assertSendData = "{\"status\":\"OK\",\"book\":{\"id\":1,\"image\":\"1234567890123.jpg\"," +
                 "\"author\":\"AuthorFirstName AuthorLastName\",\"name\":\"The best book\",\"number\":\"89000000\"," +
-                "\"startDate\":\"2022-07-01\",\"endDate\":\"2022-08-01\",\"status\":\"reading\",\"statusPay\":\"\"}}";
+                "\"startDate\":\"2022-07-01\",\"endDate\":\"2022-08-01\",\"status\":\"reading\",\"statusPay\":\"\"}," +
+                "\"message\":\"Rent book was updated\"}";
         assertEquals(result.toString(), assertSendData);
     }
 
@@ -247,7 +248,8 @@ class BookServiceTest {
         JsonObject result = bookService.payFineForBook(1);
         String assertSendData = "{\"status\":\"OK\",\"book\":{\"id\":1,\"image\":\"1234567890123.jpg\"," +
                 "\"author\":\"AuthorFirstName AuthorLastName\",\"name\":\"The best book\",\"number\":\"89000000\"," +
-                "\"startDate\":\"2022-07-01\",\"endDate\":\"2022-08-01\",\"status\":\"reading\",\"statusPay\":\"\"}}";
+                "\"startDate\":\"2022-07-01\",\"endDate\":\"2022-08-01\",\"status\":\"reading\",\"statusPay\":\"\"}" +
+                ",\"message\":\"Fine was paid\"}";
         assertEquals(result.toString(), assertSendData);
     }
 
@@ -272,7 +274,7 @@ class BookServiceTest {
         bookService.init(bookDAO, userDAO);
 
         JsonObject result = bookService.deleteBookFromRent(1);
-        String assertSendData = "{\"status\":\"OK\"}";
+        String assertSendData = "{\"status\":\"OK\",\"message\":\"Book was returned to library\"}";
         assertEquals(result.toString(), assertSendData);
     }
 
@@ -303,7 +305,7 @@ class BookServiceTest {
         bookService.init(bookDAO, userDAO);
 
         JsonObject result = bookService.startRentBookByUserNumber(1, "89000000");
-        String assertSendData = "{\"status\":\"OK\"}";
+        String assertSendData = "{\"status\":\"OK\",\"message\":\"Booking was rented\"}";
         assertEquals(result.toString(), assertSendData);
     }
 
