@@ -1,18 +1,15 @@
 package com.tvv.web.command.librarian;
 
 import com.google.gson.JsonObject;
-import com.tvv.db.entity.Role;
-import com.tvv.db.entity.User;
 import com.tvv.service.UserService;
 import com.tvv.web.command.Command;
-import com.tvv.web.util.LibrarianLevel;
+import com.tvv.web.util.security.LibrarianLevel;
 import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 import java.util.ResourceBundle;

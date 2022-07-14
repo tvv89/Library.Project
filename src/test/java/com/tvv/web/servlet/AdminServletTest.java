@@ -1,13 +1,5 @@
 package com.tvv.web.servlet;
 
-import com.tvv.service.exception.AppException;
-import com.tvv.web.command.Command;
-import com.tvv.web.command.LoginCommand;
-import com.tvv.web.command.LogoutCommand;
-import com.tvv.web.command.incognito.RegistrationCommand;
-import com.tvv.web.util.AdminLevel;
-import com.tvv.web.util.Path;
-import com.tvv.web.util.UserLevel;
 import org.junit.jupiter.api.Test;
 
 import javax.servlet.RequestDispatcher;
@@ -16,10 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Map;
-import java.util.TreeMap;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class AdminServletTest {

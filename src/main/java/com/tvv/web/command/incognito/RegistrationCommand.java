@@ -2,7 +2,7 @@ package com.tvv.web.command.incognito;
 
 import com.tvv.service.UserService;
 import com.tvv.web.command.Command;
-import com.tvv.web.util.IncognitoLevel;
+import com.tvv.web.util.security.IncognitoLevel;
 import com.tvv.web.util.Path;
 import org.apache.log4j.Logger;
 
@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**

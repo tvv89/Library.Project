@@ -1,4 +1,4 @@
-package com.tvv.web.util;
+package com.tvv.web.util.security;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

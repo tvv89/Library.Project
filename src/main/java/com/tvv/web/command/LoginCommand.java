@@ -6,7 +6,7 @@ import com.tvv.db.entity.User;
 import com.tvv.db.impl.UserDAOImpl;
 import com.tvv.service.exception.AppException;
 import com.tvv.service.util.StringHash;
-import com.tvv.web.util.IncognitoLevel;
+import com.tvv.web.util.security.IncognitoLevel;
 import com.tvv.web.util.Path;
 import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;

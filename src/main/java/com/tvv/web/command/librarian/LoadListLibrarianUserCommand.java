@@ -1,7 +1,7 @@
 package com.tvv.web.command.librarian;
 
 import com.tvv.web.command.Command;
-import com.tvv.web.util.LibrarianLevel;
+import com.tvv.web.util.security.LibrarianLevel;
 import com.tvv.web.util.Path;
 import org.apache.log4j.Logger;
 
