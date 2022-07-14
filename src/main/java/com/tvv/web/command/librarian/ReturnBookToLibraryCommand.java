@@ -55,6 +55,7 @@ public class ReturnBookToLibraryCommand extends Command {
                     UtilCommand.parseRequestJSON(request);
             id = (Integer) jsonParameters.get("id");
             log.trace("Come back book to library: " + id);
+            bookService.initLanguage(UtilCommand.getStringLocale(request));
             innerObject = bookService.deleteBookFromRent(id);
         } catch (Exception e) {
             ResourceBundle message = UtilCommand.getLocale(request);

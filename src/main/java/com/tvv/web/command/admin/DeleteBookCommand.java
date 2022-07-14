@@ -49,6 +49,7 @@ public class DeleteBookCommand extends Command {
     @Override
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.trace("Start POST method " + this.getClass().getSimpleName());
+        bookService.initLanguage(UtilCommand.getStringLocale(request));
         JsonObject innerObject;
         /**
          * Delete book

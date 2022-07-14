@@ -50,7 +50,7 @@ public class InfoBookCommand extends Command {
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.trace("Start POST method " + this.getClass().getSimpleName());
         JsonObject innerObject = new JsonObject();
-
+        bookService.initLanguage(UtilCommand.getStringLocale(request));
         /**
          * User info can read only ADMIN
          */

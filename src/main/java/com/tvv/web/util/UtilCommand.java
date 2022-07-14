@@ -100,11 +100,17 @@ public class UtilCommand {
     }
 
     public static ResourceBundle getLocale(HttpServletRequest request) throws IOException {
-        HttpSession session = request.getSession();
-        String local = (String) session.getAttribute("currentLanguage");
-        if (local==null || local.isEmpty()) local="";
+        String local = getStringLocale(request);
         Locale locale = new Locale(local);
         ResourceBundle message = ResourceBundle.getBundle("resources",locale);
         return message;
+    }
+
+    public static String getStringLocale(HttpServletRequest request) {
+        if (request==null) return "";
+        HttpSession session = request.getSession();
+        String local = (String) session.getAttribute("currentLanguage");
+        if (local==null || local.isEmpty()) local="";
+        return local;
     }
 }

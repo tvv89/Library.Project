@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -50,14 +51,16 @@ public class GiveBookForUserCommand extends Command {
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.trace("Start POST method " + this.getClass().getSimpleName());
         JsonObject innerObject;
+
+        ResourceBundle message = UtilCommand.getLocale(request);
         long id;
         try {
             Map<String, Object> jsonParameters = UtilCommand.parseRequestJSON(request);
             id = (Integer) jsonParameters.get("id");
             log.trace("Give book to user: " + id);
+            bookService.initLanguage(UtilCommand.getStringLocale(request));
             innerObject = bookService.startRentBook(id);
         } catch (Exception e) {
-            ResourceBundle message = UtilCommand.getLocale(request);
             innerObject = UtilCommand
                     .errorMessageJSON(message.getString("error.json.incorrect.request.data") + e.getMessage());
             log.error("Can't read correct data from request, because " + e.getMessage());

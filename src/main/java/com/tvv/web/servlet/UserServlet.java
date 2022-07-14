@@ -42,10 +42,8 @@ public class UserServlet extends HttpServlet {
         log.debug("StartController Librarian started GET");
         String commandName = request.getParameter("command");
         log.trace("Request parameter command GET: " + commandName);
-
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
-
         try {
             /**
              * GET executed function
@@ -65,9 +63,7 @@ public class UserServlet extends HttpServlet {
             request.getSession().setAttribute("errorMessage", "Page not found");
             UtilCommand.goToErrorPage(request,response);
         }
-
         log.debug("StartController Librarian finished GET with " + commandName);
-
     }
 
     /**
@@ -87,10 +83,8 @@ public class UserServlet extends HttpServlet {
          */
         String commandName = request.getParameter("command");
         log.trace("Request parameter command POST: " + commandName);
-
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
-
         try {
             /**
              * POST executed function
@@ -110,10 +104,7 @@ public class UserServlet extends HttpServlet {
             request.getSession().setAttribute("errorMessage", "Page not found " + e.getMessage());
             UtilCommand.goToErrorPage(request,response);
         }
-
         log.debug("StartController Librarian finished POST with " + commandName);
-
     }
-
 
 }

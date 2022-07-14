@@ -18,9 +18,10 @@ public class CharacterEncodingFilter implements Filter {
 
     /**
      * Function doFilter
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
-     * @param chain filter chain
+     * @param chain    filter chain
      * @throws ServletException
      * @throws IOException
      */
@@ -29,8 +30,8 @@ public class CharacterEncodingFilter implements Filter {
         /**
          * Use UTF-8 encoding
          */
-            request.setCharacterEncoding("UTF-8");
-            chain.doFilter(request, response);
+        request.setCharacterEncoding("UTF-8");
+        chain.doFilter(request, response);
 
     }
 }

@@ -16,24 +16,33 @@ import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserService {
     private static final Logger log = Logger.getLogger(UserService.class);
     private UserDAO userDAO;
     private RoleDAO roleDAO;
+    private String local;
+    private ResourceBundle message;
 
     public UserService() {
         this.userDAO = new UserDAOImpl();
         this.roleDAO = new RoleDAOImpl();
+        this.local = "en";
+        Locale locale = new Locale(local);
+        this.message = ResourceBundle.getBundle("resources", locale);
     }
 
     public void init(UserDAO userDAO, RoleDAO roleDAO) {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
+    }
+
+    public void initLanguage(String local) {
+        this.local = local;
+        Locale locale = new Locale(this.local);
+        this.message = ResourceBundle.getBundle("resources", locale);
     }
 
     public JsonObject usersListPagination(Map<String, Object> jsonParameters, long role) {
@@ -100,7 +109,7 @@ public class UserService {
                 innerObject.add("status", new Gson().toJsonTree("OK"));
                 innerObject.add("user", new Gson().toJsonTree(userDTO));
             } else {
-                innerObject = UtilCommand.errorMessageJSON("User not found by number");
+                innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.user_service.not_found"));
             }
         } catch (AppException e) {
             innerObject = UtilCommand.errorMessageJSON(e.getMessage());

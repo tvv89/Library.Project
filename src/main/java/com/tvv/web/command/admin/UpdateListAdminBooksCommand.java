@@ -35,7 +35,6 @@ public class UpdateListAdminBooksCommand extends Command {
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         log.trace("Start POST command " + this.getClass().getName());
         JsonObject innerObject;
-
         /**
          * Start JSON parsing request
          */
