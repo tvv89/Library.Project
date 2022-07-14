@@ -1,6 +1,6 @@
-var itemsPerPage = 5;
-var currentPGPage = 1;
-var sortBy = "name";
+let itemsPerPage = 5;
+let currentPGPage = 1;
+let sortBy = "name";
 window.addEventListener('DOMContentLoaded', (event) => {
     callPOSTRequest(1, 0);
 });
@@ -101,7 +101,6 @@ function cancelBooking(tableId) {
         console.log('Canceling enable')
     });
 }
-
 
 function changeSort() {
     sortBy = $('#sortBooksOption').val();
