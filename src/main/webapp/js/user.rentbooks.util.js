@@ -52,8 +52,10 @@ function createTable(tx) {
 }
 
 function rentBookRow(book) {
-        var buttonPayColor = book.status == "need pay" ? "color:red" : "color:#D3D3D3";
-        var row = `<td><img class="uk-preserve-width uk-border-rectangle" 
+        const buttonPayColor = book.status == "need pay" ? "color:red" : "color:#D3D3D3";
+        const buttonCancelColor = book.status == "booked" ? "" : "color:#D3D3D3";
+        const buttonCancelStatus = book.status != "booked" ? "uk-disabled" : "uk-enabled";
+        let row = `<td><img class="uk-preserve-width uk-border-rectangle" 
                 src="/images/books/${book.image}" width="40" alt=""></td>
                 <td>${book.author}</td>
                 <td>${book.name}</td>
@@ -62,8 +64,43 @@ function rentBookRow(book) {
                 <td>${book.status}</td>
                 <td>
                     <a uk-icon="icon: bell; ratio: 1.5" style="${buttonPayColor}"></a>
+                    <a uk-icon="icon: minus-circle; ratio: 1.5" 
+                            class="${buttonCancelStatus}" 
+                            style="${buttonCancelColor}" 
+                            onclick="cancelBooking(${book.id})"></a>
                 </td>`
         return row;
+}
+
+function cancelBooking(tableId) {
+    UIkit.modal.confirm("This booking will be canceled.").then(function () {
+        fetch('user?command=cancelBooking', {
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                id: tableId
+            })
+        }).then(response => response.json())
+            .then(data => {
+                if (data.status == 'OK') {
+                    callPOSTRequest(1, 0);
+                    UIkit.notification({
+                        message: `${data.message}`,
+                        status: 'success',
+                        timeout: 2000
+                    });
+                } else callErrorAlert(data.message);
+            })
+            .catch(err => {
+                callErrorAlert(err);
+            });
+
+        console.log('Payment is deleted')
+    }, function () {
+        console.log('Canceling enable')
+    });
 }
 
 

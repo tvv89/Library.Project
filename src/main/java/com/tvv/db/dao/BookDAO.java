@@ -42,6 +42,8 @@ public interface BookDAO {
 
     boolean deleteRentBook(long id) throws AppException;
 
+    boolean deleteRentBookById(long id) throws AppException;
+
     List<CountBook> findBooksWithSearch(PageSettings pageSettings, String search) throws AppException;
 
     boolean addBookToRentByUser(long bookId, long userId) throws AppException;

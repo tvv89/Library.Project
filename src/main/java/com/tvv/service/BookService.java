@@ -399,6 +399,30 @@ public class BookService {
 
     }
 
+    public JsonObject cancelBookingByUserId(long id, long userId) {
+        log.trace("Start cancelBookingByUserId method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        try {
+            RentBook book = bookDAO.findRendBookByRentId(id);
+            boolean result = false;
+            if (book.getUser().getId() == userId) result = bookDAO.deleteRentBookById(id);
+            /**
+             * Select and show user list
+             */
+            if (result) {
+                innerObject.add("status", new Gson().toJsonTree("OK"));
+                innerObject.add("message",
+                        new Gson().toJsonTree(message.getString("message.json.book_service.rent.success")));
+            } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_delete_rent"));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End cancelBookingByUserId method");
+        return innerObject;
+
+    }
+
     public boolean updateImage(long bookId, String image) {
         if (bookId <= 0 || image == null) return false;
         boolean result;

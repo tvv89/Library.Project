@@ -143,7 +143,6 @@ function takeBook(tableId) {
             .catch(err => {
                 callErrorAlert(err);
             });
-
         console.log('Payment is deleted')
     }, function () {
         console.log('Canceling enable')

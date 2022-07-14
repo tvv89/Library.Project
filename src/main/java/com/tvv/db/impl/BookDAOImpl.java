@@ -723,6 +723,27 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
+    public boolean deleteRentBookById(long id) throws AppException {
+        PreparedStatement pstmt = null;
+        Connection con = null;
+        boolean result;
+        try {
+            con = dbManager.getConnection();
+            pstmt = con.prepareStatement(SQL_DELETE_REND_BOOK_BY_ID);
+            pstmt.setLong(1, id);
+            pstmt.execute();
+            pstmt.close();
+            result = true;
+        } catch (SQLException ex) {
+            dbManager.rollbackCloseConnection(con);
+            throw new AppException("Can't find rent book by id", ex);
+        } finally {
+            dbManager.commitCloseConnection(con);
+        }
+        return result;
+    }
+
+    @Override
     public List<CountBook> findBooksWithSearch(PageSettings pageSettings, String search) throws AppException {
         List<CountBook> books = new ArrayList<>();
         Book book = null;
