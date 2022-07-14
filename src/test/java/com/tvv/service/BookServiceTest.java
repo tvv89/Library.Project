@@ -212,14 +212,14 @@ class BookServiceTest {
         when(bookDAO.findByIdWithCount(1)).thenReturn(countBook);
         when(bookDAO.countFineByUser("",1))
                 .thenReturn(0);
-        when(bookDAO.changeStartDateRentBook(1, 1))
+        when(bookDAO.changeStartDateRentBook(1, 1, 30))
                 .thenReturn(rentBook);
 
         UserDAO userDAO = mock(UserDAO.class);
         BookService bookService = new BookService();
         bookService.init(bookDAO, userDAO);
 
-        JsonObject result = bookService.startRentBook(1);
+        JsonObject result = bookService.startRentBook(1, 30);
         String assertSendData = "{\"status\":\"OK\",\"book\":{\"id\":1,\"image\":\"1234567890123.jpg\"," +
                 "\"author\":\"AuthorFirstName AuthorLastName\",\"name\":\"The best book\",\"number\":\"89000000\"," +
                 "\"startDate\":\"2022-07-01\",\"endDate\":\"2022-08-01\",\"status\":\"reading\",\"statusPay\":\"\"}," +

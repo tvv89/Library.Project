@@ -7,6 +7,7 @@ import com.tvv.web.util.security.LibrarianLevel;
 import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +58,8 @@ public class GiveBookForUserCommand extends Command {
             id = (Integer) jsonParameters.get("id");
             log.trace("Give book to user: " + id);
             bookService.initLanguage(UtilCommand.getStringLocale(request));
-            innerObject = bookService.startRentBook(id);
+            int days = Integer.parseInt(request.getServletContext().getInitParameter("RentDays"));
+            innerObject = bookService.startRentBook(id, days);
         } catch (Exception e) {
             innerObject = UtilCommand
                     .errorMessageJSON(message.getString("error.json.incorrect.request.data") + e.getMessage());

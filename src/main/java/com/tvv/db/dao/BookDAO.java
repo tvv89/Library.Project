@@ -32,9 +32,9 @@ public interface BookDAO {
 
     long bookCount(String search) throws AppException;
 
-    boolean addBookToRent(long bookId, long userId) throws AppException;
+    boolean addBookToRent(long bookId, long userId, int days) throws AppException;
 
-    RentBook changeStartDateRentBook(long id, long bookId) throws AppException;
+    RentBook changeStartDateRentBook(long id, long bookId, int days) throws AppException;
 
     RentBook changePayStatusRentBook(long id) throws AppException;
 

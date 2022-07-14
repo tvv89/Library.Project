@@ -174,7 +174,7 @@ public class BookService {
         return innerObject;
     }
 
-    public JsonObject startRentBook(long id) {
+    public JsonObject startRentBook(long id, int days) {
         log.trace("Start startRentBook method in " + this.getClass().getName());
         JsonObject innerObject = new JsonObject();
         try {
@@ -183,7 +183,7 @@ public class BookService {
                 return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
             int countFire = bookDAO.countFineByUser("", rentBook.getUser().getId());
             if (countFire > 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
-            RentBook book = bookDAO.changeStartDateRentBook(id, rentBook.getBook().getId());
+            RentBook book = bookDAO.changeStartDateRentBook(id, rentBook.getBook().getId(), days);
             RentBookDTO rentBookDTO = new RentBookDTO(book);
             /**
              * Select and show user list
