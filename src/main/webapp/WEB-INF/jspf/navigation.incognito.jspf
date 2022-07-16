@@ -1,0 +1,25 @@
+<nav class="uk-navbar uk-margin-large-bottom">
+    <div class="uk-navbar-left">
+        <button class="uk-navbar-brand uk-hidden-small uk-button">LIB</button>
+        <ul class="uk-navbar-nav uk-hidden-small">
+            <li>
+                <a href=""><fmt:message key="navigation.navbar.librarian.books"/></a>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a uk-icon="icon: user; ratio: 1.5" href="start?command=login"></a>
+            </li>
+            <li>
+                <select class="uk-select uk-align-center" id="languageSelect" onchange="changeLanguage('start')">
+                    <option value="en" <c:if test='${sessionScope.currentLanguage == "en"}'> selected </c:if>>
+                        <fmt:message key="navigation.user.info.language.english"/></option>
+                    <option value="uk" <c:if test='${sessionScope.currentLanguage == "uk"}'> selected </c:if>>
+                        <fmt:message key="navigation.user.info.language.ukrainian"/></option>
+                </select>
+            </li>
+        </ul>
+    </div>
+</nav>

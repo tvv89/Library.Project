@@ -1,0 +1,72 @@
+﻿<div id="modal-update-book" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <form class="uk-form-horizontal" id="updateBookForm" method="post" action="admin" enctype="multipart/form-data">
+            <h2 class="uk-modal-title"><fmt:message key="book_update_form.title"/></h2>
+            <input type="hidden" name="command" value="updateBook"/>
+            <input type="hidden" name="upd-current-id" id="upd-current-id"/>
+            <input type="hidden" name="upd-image-book" id="upd-image-book"/>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="upd-isbn"><fmt:message key="book_create_form.isbn"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="upd-isbn" name="upd-isbn" type="text" form-field
+                           form-field-regex="^[0-9]{13}$"
+                           form-field-regex-error="ISBN use 13 numbers">
+                    <p id="upd-isbn-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="upd-author"><fmt:message key="book_create_form.author"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large uk-disabled" id="upd-author" name="upd-author" type="text" form-field
+                           >
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="upd-name"><fmt:message key="book_create_form.name"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="upd-name" name="upd-name" type="text" form-field
+                           form-field-regex="^[0-9A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ,?.!-:;  ]+$"
+                           form-field-regex-error="Name must have only characters, number and symbols">
+                    <p id="upd-name-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="upd-publisher"><fmt:message key="book_create_form.publisher"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large uk-disabled" id="upd-publisher" name="upd-publisher" type="text" form-field
+                           >
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="upd-year"><fmt:message key="book_create_form.year"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="upd-year" name="upd-year" type="text" form-field
+                           form-field-regex="^([1-2]){1}([0-9]){3}$"
+                           form-field-regex-error="Incorrect year">
+                    <p id="upd-year-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="upd-genre"><fmt:message key="book_create_form.genre"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large uk-disabled" id="upd-genre" name="upd-genre" type="text" form-field
+                           >
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="upd-count"><fmt:message key="book_create_form.count"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="upd-count" name="upd-count" type="text" form-field
+                           form-field-regex="^[0-9]*$"
+                           form-field-regex-error="Should be positive number">
+                    <p id="upd-count-error"></p>
+                </div>
+            </div>
+
+            <div>
+                <input class="uk-width-1-1 uk-button uk-button-primary uk-button-default" type="submit"
+                       id="updateBookSubmit" name="updateBookSubmit" value="<fmt:message key="book_create_form.submit"/>"/>
+            </div>
+        </form>
+    </div>
+</div>
