@@ -26,24 +26,8 @@
         <ul class="uk-pagination" id="pagination">
         </ul>
     </div>
-    <div class="uk-grid" data-uk-grid-margin>
-        <div class="uk-width-medium-1-1">
-            <table class="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-striped">
-                <thead>
-                <tr>
-                    <th class="uk-table-shrink"><fmt:message key="list_books.table.header.photo"/></th>
-                    <th><fmt:message key="list_books.table.header.isbn"/></th>
-                    <th><fmt:message key="list_books.table.header.author"/></th>
-                    <th><fmt:message key="list_books.table.header.name"/></th>
-                    <th><fmt:message key="list_books.table.header.publisher"/></th>
-                    <th><fmt:message key="list_books.table.header.year"/></th>
-                </tr>
-                </thead>
-                <tbody id="table">
+    <div class="uk-child-width-1-5@m uk-grid-small uk-grid-match" id="table" uk-grid>
 
-                </tbody>
-            </table>
-        </div>
     </div>
     <div id="userinfo" uk-modal>
 

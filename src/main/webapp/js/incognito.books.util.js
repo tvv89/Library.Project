@@ -47,16 +47,17 @@ function createTable(tx) {
     table.innerHTML = "";
     for (var i = 0; i < tx.length; i++) {
         var countStatus = tx[i].count>0 ? "" : "color: red";
-        var row = `<tr id="tr_${tx[i].id}">
-                <td><img class="uk-preserve-width uk-border-rectangle" 
-                src="/images/books/${tx[i].image}" width="40" alt=""></td>
-                <td>${tx[i].isbn}</td>
-                <td>${tx[i].author}</td>
-                <td>${tx[i].name}</td>
-                <td>${tx[i].publisher}</td>
-                <td>${tx[i].year}</td>
-                </td>
-                </tr>`
+        var row = `<div>
+        <div class="uk-card uk-card-default uk-card-body uk-align-center" id="tr_${tx[i].id}">
+            <img class="uk-preserve-width uk-border-rectangle" 
+                src="/images/books/${tx[i].image}" width="100" alt=""><br>
+                <p class="uk-article-meta">${tx[i].isbn}</p>
+            <h3>${tx[i].name}</h3><br>
+            <label class="uk-text-bold uk-text-uppercase">${tx[i].author}</label><br>
+            <label>${tx[i].publisher}</label><br>
+            <label>${tx[i].year}</label>
+        </div>
+    </div>`
         table.innerHTML += row;
     }
 }
