@@ -28,7 +28,7 @@
         <ul class="uk-pagination" id="pagination">
         </ul>
     </div>
-    <div class="uk-grid" data-uk-grid-margin>
+    <%--<div class="uk-grid" data-uk-grid-margin>
         <div class="uk-width-medium-1-1">
             <table class="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-striped">
                 <thead>
@@ -47,6 +47,9 @@
                 </tbody>
             </table>
         </div>
+    </div>--%>
+    <div class="uk-child-width-1-5@m uk-grid-small uk-grid-match" id="table" uk-grid>
+
     </div>
 </div>
 

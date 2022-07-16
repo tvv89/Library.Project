@@ -29,6 +29,25 @@ function createPagination(page,pages) {
     paginat.innerHTML += row;
 }
 
+function bookStatus(statusOfBook) {
+    let iconStatus;
+    switch (statusOfBook){
+        case "reading":
+            iconStatus = "future";
+            break;
+        case "booked":
+            iconStatus = "cart";
+            break;
+        case "need pay":
+            iconStatus = "credit-card";
+            break;
+        default:
+            iconStatus = "warning";
+            break;
+    }
+    return iconStatus;
+}
+
 function enableSubmitButton(e) {
     const form = e.target;
     const submitButton = form.querySelector('input[type="submit"]');
