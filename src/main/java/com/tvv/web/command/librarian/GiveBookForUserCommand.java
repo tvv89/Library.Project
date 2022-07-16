@@ -2,16 +2,15 @@ package com.tvv.web.command.librarian;
 
 import com.google.gson.JsonObject;
 import com.tvv.service.BookService;
-import com.tvv.service.UserService;
 import com.tvv.web.command.Command;
-import com.tvv.web.util.LibrarianLevel;
+import com.tvv.web.util.security.LibrarianLevel;
 import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -59,7 +58,8 @@ public class GiveBookForUserCommand extends Command {
             id = (Integer) jsonParameters.get("id");
             log.trace("Give book to user: " + id);
             bookService.initLanguage(UtilCommand.getStringLocale(request));
-            innerObject = bookService.startRentBook(id);
+            int days = Integer.parseInt(request.getServletContext().getInitParameter("RentDays"));
+            innerObject = bookService.startRentBook(id, days);
         } catch (Exception e) {
             innerObject = UtilCommand
                     .errorMessageJSON(message.getString("error.json.incorrect.request.data") + e.getMessage());

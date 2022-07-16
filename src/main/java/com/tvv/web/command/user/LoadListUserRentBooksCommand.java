@@ -2,7 +2,7 @@ package com.tvv.web.command.user;
 
 import com.tvv.web.command.Command;
 import com.tvv.web.util.Path;
-import com.tvv.web.util.UserLevel;
+import com.tvv.web.util.security.UserLevel;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;

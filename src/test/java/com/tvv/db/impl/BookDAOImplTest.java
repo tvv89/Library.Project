@@ -85,14 +85,14 @@ class BookDAOImplTest {
 
     private static final String SQL_INSERT_RENT_BOOK_BY_USER =
             "INSERT INTO book_user (id, book_id, user_id, start_date, end_date, status_pay) " +
-                    "VALUES (0, ?, ?, curdate(), DATE_ADD(curdate(), INTERVAL 30 DAY), '')";
+                    "VALUES (0, ?, ?, curdate(), DATE_ADD(curdate(), INTERVAL ? DAY), '')";
 
     private static final String SQL_UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID =
             "UPDATE current_books SET count = count - 1 WHERE book_id = ?";
 
     private static final String SQL_UPDATE_RENT_BOOK_START_DATE =
             "UPDATE book_user SET start_date = curdate(), " +
-                    "end_date = DATE_ADD(curdate(), INTERVAL 30 DAY)" +
+                    "end_date = DATE_ADD(curdate(), INTERVAL ? DAY)" +
                     "WHERE id = ?";
 
     private static final String SQL_FIND_REND_BOOK_BY_ID = "select bu.id as id," +
@@ -771,7 +771,7 @@ class BookDAOImplTest {
 
         BookDAO bookDAO = new BookDAOImpl();
         bookDAO.init(instance);
-        boolean result = bookDAO.addBookToRent(1, 1);
+        boolean result = bookDAO.addBookToRent(1, 1, 30);
         verify(pstmt, times(2)).executeUpdate();
         assertTrue(result);
     }
@@ -801,7 +801,7 @@ class BookDAOImplTest {
         mockLoadRentBook(con, rs);
         BookDAO bookDAO = new BookDAOImpl();
         bookDAO.init(instance);
-        RentBook rentBook = bookDAO.changeStartDateRentBook(1, 1);
+        RentBook rentBook = bookDAO.changeStartDateRentBook(1, 1,30);
         assertEquals(rentBook.getStartDate(), assertRentBook.getStartDate());
     }
 

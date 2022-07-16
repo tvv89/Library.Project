@@ -71,6 +71,8 @@ public class CommandCollection {
 		commands.put("listUserRentBooks", new LoadListUserRentBooksCommand());
 		commands.put("updateUserRentBook", new UpdateListUserRentBooksCommand());
 		commands.put("takeUserBook", new TakeUserBookCommand());
+		commands.put("cancelBooking", new CancelBookingCommand());
+
 
 		/**
 		 * Command for word with incognito

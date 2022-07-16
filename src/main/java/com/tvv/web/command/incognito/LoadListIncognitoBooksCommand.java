@@ -1,7 +1,7 @@
 package com.tvv.web.command.incognito;
 
 import com.tvv.web.command.Command;
-import com.tvv.web.util.IncognitoLevel;
+import com.tvv.web.util.security.IncognitoLevel;
 import com.tvv.web.util.Path;
 import org.apache.log4j.Logger;
 

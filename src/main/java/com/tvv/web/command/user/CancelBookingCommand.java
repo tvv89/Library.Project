@@ -1,34 +1,36 @@
-package com.tvv.web.command.librarian;
+package com.tvv.web.command.user;
 
 import com.google.gson.JsonObject;
+import com.tvv.db.entity.User;
 import com.tvv.service.BookService;
 import com.tvv.web.command.Command;
-import com.tvv.web.util.security.LibrarianLevel;
+import com.tvv.web.util.security.UserLevel;
 import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * This command for pay fine by user
+ * This command for cancel booking item by user send JSON response
  */
-@LibrarianLevel
-public class PayFineForUserCommand extends Command {
+@UserLevel
+public class CancelBookingCommand extends Command {
 
-    private static final Logger log = Logger.getLogger(PayFineForUserCommand.class);
+    private static final Logger log = Logger.getLogger(CancelBookingCommand.class);
 
     private BookService bookService;
 
-    public PayFineForUserCommand() {
+    public CancelBookingCommand() {
         bookService = new BookService();
     }
 
-    public void setUp(BookService bookService) {
+    public void init(BookService bookService) {
         this.bookService = bookService;
     }
 
@@ -48,19 +50,25 @@ public class PayFineForUserCommand extends Command {
     @Override
     public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.trace("Start POST method " + this.getClass().getSimpleName());
-        JsonObject innerObject;
-        long id;
+        JsonObject innerObject = new JsonObject();
+        bookService.initLanguage(UtilCommand.getStringLocale(request));
+        /**
+         * Check user
+         */
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("currentUser");
+        long bookId;
         try {
             Map<String, Object> jsonParameters =
                     UtilCommand.parseRequestJSON(request);
-            id = (Integer) jsonParameters.get("id");
-            log.trace("User pay tax for: " + id);
-            bookService.initLanguage(UtilCommand.getStringLocale(request));
-            innerObject = bookService.payFineForBook(id);
+            bookId = (Integer) jsonParameters.get("id");
+            long userId = currentUser.getId();
+            log.trace("Give book " + bookId + "to user: " + userId);
+            innerObject = bookService.cancelBookingByUserId(bookId, userId);
         } catch (Exception e) {
             ResourceBundle message = UtilCommand.getLocale(request);
             innerObject = UtilCommand
-                    .errorMessageJSON(message.getString("error.page.user.create") + e.getMessage());
+                    .errorMessageJSON(message.getString("error.json.incorrect.request.data") + e.getMessage());
             log.error("Can't read correct data from request, because " + e.getMessage());
         }
         /**

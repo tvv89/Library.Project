@@ -95,7 +95,7 @@ public class BookDAOImpl implements BookDAO {
 
     private static final String SQL_UPDATE_RENT_BOOK_START_DATE =
             "UPDATE book_user SET start_date = curdate(), " +
-                    "end_date = DATE_ADD(curdate(), INTERVAL 30 DAY)" +
+                    "end_date = DATE_ADD(curdate(), INTERVAL ? DAY)" +
                     "WHERE id = ?";
     private static final String SQL_UPDATE_RENT_BOOK_STATUS_PAY =
             "UPDATE book_user SET status_pay = 'paid' " +
@@ -123,7 +123,7 @@ public class BookDAOImpl implements BookDAO {
                     "  WHERE book_id = ?";
     private static final String SQL_INSERT_RENT_BOOK_BY_USER =
             "INSERT INTO book_user (id, book_id, user_id, start_date, end_date, status_pay) " +
-                    "VALUES (0, ?, ?, curdate(), DATE_ADD(curdate(), INTERVAL 30 DAY), '')";
+                    "VALUES (0, ?, ?, curdate(), DATE_ADD(curdate(), INTERVAL ? DAY), '')";
     private static final String SQL_INSERT_RENT_BOOK_BY_USER_FROM_USER =
             "INSERT INTO book_user (id, book_id, user_id, start_date, end_date, status_pay) " +
                     "VALUES (0, ?, ?, null, null, '')";
@@ -345,7 +345,6 @@ public class BookDAOImpl implements BookDAO {
         }
         return result;
     }
-
 
     @Override
     public boolean delete(Book book) throws AppException {
@@ -577,7 +576,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean addBookToRent(long bookId, long userId) throws AppException {
+    public boolean addBookToRent(long bookId, long userId, int days) throws AppException {
         boolean result = false;
         PreparedStatement pstmt = null;
         Connection con = null;
@@ -586,6 +585,7 @@ public class BookDAOImpl implements BookDAO {
             pstmt = con.prepareStatement(SQL_INSERT_RENT_BOOK_BY_USER);
             pstmt.setLong(1, bookId);
             pstmt.setLong(2, userId);
+            pstmt.setLong(3, days);
             pstmt.executeUpdate();
             pstmt = con.prepareStatement(SQL_UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID);
             pstmt.setLong(1, bookId);
@@ -603,7 +603,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public RentBook changeStartDateRentBook(long id, long bookId) throws AppException {
+    public RentBook changeStartDateRentBook(long id, long bookId, int days) throws AppException {
         RentBook book = new RentBook();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -612,7 +612,8 @@ public class BookDAOImpl implements BookDAO {
         try {
             con = dbManager.getConnection();
             pstmt = con.prepareStatement(SQL_UPDATE_RENT_BOOK_START_DATE);
-            pstmt.setLong(1, id);
+            pstmt.setLong(1, days);
+            pstmt.setLong(2, id);
             pstmt.executeUpdate();
             pstmt = con.prepareStatement(SQL_UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID);
             pstmt.setLong(1, bookId);
@@ -711,6 +712,27 @@ public class BookDAOImpl implements BookDAO {
             pstmt.setLong(1, id);
             pstmt.execute();
             rs.close();
+            pstmt.close();
+            result = true;
+        } catch (SQLException ex) {
+            dbManager.rollbackCloseConnection(con);
+            throw new AppException("Can't find rent book by id", ex);
+        } finally {
+            dbManager.commitCloseConnection(con);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean deleteRentBookById(long id) throws AppException {
+        PreparedStatement pstmt = null;
+        Connection con = null;
+        boolean result;
+        try {
+            con = dbManager.getConnection();
+            pstmt = con.prepareStatement(SQL_DELETE_REND_BOOK_BY_ID);
+            pstmt.setLong(1, id);
+            pstmt.execute();
             pstmt.close();
             result = true;
         } catch (SQLException ex) {

@@ -38,6 +38,10 @@
         <param-name>locales</param-name>
         <param-value>uk en</param-value>
     </context-param>
+    <context-param>
+        <param-name>RentDays</param-name>
+        <param-value>20</param-value>
+    </context-param>
     <resource-ref>
         <description>DB Connection</description>
         <res-ref-name>jdbc/Library</res-ref-name>

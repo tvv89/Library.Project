@@ -1,7 +1,7 @@
 package com.tvv.web.command.admin;
 
 import com.tvv.web.command.Command;
-import com.tvv.web.util.AdminLevel;
+import com.tvv.web.util.security.AdminLevel;
 import com.tvv.web.util.Path;
 import org.apache.log4j.Logger;
 

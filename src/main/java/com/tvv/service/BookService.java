@@ -174,7 +174,7 @@ public class BookService {
         return innerObject;
     }
 
-    public JsonObject startRentBook(long id) {
+    public JsonObject startRentBook(long id, int days) {
         log.trace("Start startRentBook method in " + this.getClass().getName());
         JsonObject innerObject = new JsonObject();
         try {
@@ -183,7 +183,7 @@ public class BookService {
                 return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
             int countFire = bookDAO.countFineByUser("", rentBook.getUser().getId());
             if (countFire > 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
-            RentBook book = bookDAO.changeStartDateRentBook(id, rentBook.getBook().getId());
+            RentBook book = bookDAO.changeStartDateRentBook(id, rentBook.getBook().getId(), days);
             RentBookDTO rentBookDTO = new RentBookDTO(book);
             /**
              * Select and show user list
@@ -258,6 +258,8 @@ public class BookService {
                 if (countFire > 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
                 if (user != null && bookDAO.addBookToRentByUser(bookId, user.getId())) {
                     innerObject.add("status", new Gson().toJsonTree("OK"));
+                    innerObject.add("message",
+                            new Gson().toJsonTree(message.getString("message.json.book_service.booking.success")));
                 } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_user"));
             } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
         } catch (AppException ex) {
@@ -395,6 +397,30 @@ public class BookService {
         }
         log.debug("JSON to send: " + innerObject);
         log.trace("End deleteBookById method");
+        return innerObject;
+
+    }
+
+    public JsonObject cancelBookingByUserId(long id, long userId) {
+        log.trace("Start cancelBookingByUserId method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        try {
+            RentBook book = bookDAO.findRendBookByRentId(id);
+            boolean result = false;
+            if (book.getUser().getId() == userId) result = bookDAO.deleteRentBookById(id);
+            /**
+             * Select and show user list
+             */
+            if (result) {
+                innerObject.add("status", new Gson().toJsonTree("OK"));
+                innerObject.add("message",
+                        new Gson().toJsonTree(message.getString("message.json.book_service.rent.success")));
+            } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_delete_rent"));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End cancelBookingByUserId method");
         return innerObject;
 
     }

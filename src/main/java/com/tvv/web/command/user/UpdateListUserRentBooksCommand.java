@@ -5,7 +5,7 @@ import com.tvv.db.entity.User;
 import com.tvv.service.BookService;
 import com.tvv.service.exception.AppException;
 import com.tvv.web.command.Command;
-import com.tvv.web.util.UserLevel;
+import com.tvv.web.util.security.UserLevel;
 import com.tvv.web.util.UtilCommand;
 import org.apache.log4j.Logger;
 
