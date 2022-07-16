@@ -17,29 +17,23 @@ public class UserDAOImpl implements UserDAO {
 
     private static final String SQL__FIND_USER_BY_ID =
             "SELECT * FROM users WHERE id=?";
-
     private static final String SQL__FIND_USER_BY_NUMBER =
             "SELECT * FROM users WHERE number=?";
-
     private static final String SQL_INSERT_USER =
             "INSERT INTO users (id, number, password, first_name, last_name," +
                     "date_of_birth, phone, status, photo, role_id, locale) " +
                     "VALUES (0, ?, ?, ?, ?," +
                     "?, ?, ?, ?, ?, ?);";
-
     private static final String SQL_UPDATE_USER =
             "UPDATE users SET number = ?, password = ?, first_name = ?, last_name = ?," +
                     "date_of_birth = ?, phone = ?, status = ?, photo = ?, role_id = ?, locale = ?" +
                     "WHERE id = ?;";
-
     private static final String SQL_UPDATE_USER_LOCALE =
             "UPDATE users SET locale = ? " +
                     "WHERE id = ?;";
 
-
     private static final String SQL_DELETE_USER =
             "DELETE FROM users WHERE id = ?;";
-
     private static final String SQL_FIND_ALL_USERS_PAGINATION_NUMBER =
             "SELECT * FROM users WHERE role_id=? ORDER BY number limit ?,? ";
     private static final String SQL_FIND_ALL_USERS_PAGINATION_NAME =
@@ -48,7 +42,6 @@ public class UserDAOImpl implements UserDAO {
             "SELECT count(*) as count FROM users WHERE role_id = ?";
     private static final String SQL__FIND_FREE_NUMBER =
             "SELECT max(cast(number as UNSIGNED)) as number FROM users WHERE role_id = ?";
-
 
     private DBManager dbManager;
 
