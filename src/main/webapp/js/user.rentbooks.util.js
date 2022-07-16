@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function callPOSTRequest(option, parameter) {
-    var items = parseInt($('#itemsPerPage').val());
+    let items = parseInt($('#itemsPerPage').val());
     switch (option) {
         case 1:
             break;

@@ -26,17 +26,13 @@ public class BookDAOImpl implements BookDAO {
     private static final String SQL__INSERT_BOOK_GENRE =
             "INSERT INTO book_genre (id, book_id, genre_id) " +
                     "values (0, ?, ?)";
-
     private static final String SQL__INSERT_BOOK_COUNT =
             "INSERT INTO current_books (id, book_id, count) " +
                     "values (0, ?, ?)";
-
-    private static final String SQL__FIND_BOOK_BY_ID =
-            "SELECT * FROM books WHERE id=?";
-
+    private static final String SQL__FIND_BOOK_BY_ID = "SELECT * FROM books WHERE id=?";
     private static final String SQL__FIND_BOOK_BY_ID_WITH_COUNT =
             "SELECT b.*, cb.count as count FROM books b inner join current_books cb on b.id=cb.book_id WHERE b.id=?";
-    private static final String SQL_FIND_ALL_BOOKS_PAGINATION_AUTHOR =
+    private static final String SQL__FIND_ALL_BOOKS_PAGINATION_AUTHOR =
             "SELECT b.id as id," +
                     "   GROUP_CONCAT(a.first_name, ' ', a.last_name SEPARATOR ', ') as author," +
                     "   b.isbn as isbn," +
@@ -50,8 +46,7 @@ public class BookDAOImpl implements BookDAO {
                     "inner join books b on book_id = b.id  " +
                     "inner join current_books cb on b.id = cb.book_id " +
                     "GROUP BY book_id order by author limit ?,?;";
-
-    private static final String SQL_FIND_ALL_BOOKS_PAGINATION_PUBLISHER =
+    private static final String SQL__FIND_ALL_BOOKS_PAGINATION_PUBLISHER =
             "SELECT b.id as id," +
                     "   p.name as publisher," +
                     "   b.isbn as isbn," +
@@ -64,9 +59,7 @@ public class BookDAOImpl implements BookDAO {
                     "FROM books b inner join publishers p on publisher_id=p.id " +
                     "inner join current_books cb on b.id = cb.book_id " +
                     "order by publisher limit ?,?;";
-
-
-    private static final String SQL_FIND_REND_BOOK_BY_ID = "select bu.id as id," +
+    private static final String SQL__FIND_REND_BOOK_BY_ID = "select bu.id as id," +
             "bu.book_id as book_id, " +
             "bu.user_id as user_id, " +
             "bu.start_date as start_date, " +
@@ -78,65 +71,62 @@ public class BookDAOImpl implements BookDAO {
             "inner join books b inner join publishers p on b.publisher_id=p.id on book_id = b.id " +
             "inner join users u on user_id = u.id " +
             "where bu.id = ? ";
-    private static final String SQL_FIND_ALL_BOOKS_PAGINATION_NAME =
+    private static final String SQL__FIND_ALL_BOOKS_PAGINATION_NAME =
             "SELECT *, cb.count as count, cb.id as cb_id FROM books b " +
                     "inner join current_books cb on b.id = cb.book_id order by name limit ?,?;";
-    private static final String SQL_FIND_ALL_BOOKS_PAGINATION_ISBN =
+    private static final String SQL__FIND_ALL_BOOKS_PAGINATION_ISBN =
             "SELECT *, cb.count as count, cb.id as cb_id FROM books b " +
                     "inner join current_books cb on b.id = cb.book_id order by isbn limit ?,?;";
-    private static final String SQL_COUNT_BOOK =
-            "SELECT count(*) as count FROM books";
-
-    private static final String SQL_COUNT_BOOK_BY_USER_ID =
+    private static final String SQL__COUNT_BOOK = "SELECT count(*) as count FROM books";
+    private static final String SQL__COUNT_BOOK_BY_USER_ID =
             "SELECT count(*) as count FROM book_user where user_id = ?";
-
-    private static final String SQL_COUNT_BOOK_BY_ALL_USER =
+    private static final String SQL__COUNT_BOOK_BY_ALL_USER =
             "SELECT count(*) as count FROM book_user";
-
-    private static final String SQL_UPDATE_RENT_BOOK_START_DATE =
+    private static final String SQL__UPDATE_RENT_BOOK_START_DATE =
             "UPDATE book_user SET start_date = curdate(), " +
                     "end_date = DATE_ADD(curdate(), INTERVAL ? DAY)" +
                     "WHERE id = ?";
-    private static final String SQL_UPDATE_RENT_BOOK_STATUS_PAY =
-            "UPDATE book_user SET status_pay = 'paid' " +
-                    "WHERE id = ?";
-
-    private static final String SQL_UPDATE_BOOK_IMAGE =
-            "UPDATE books SET image = ? " +
-                    "WHERE id = ?";
-
-    private static final String SQL_DELETE_REND_BOOK_BY_ID =
+    private static final String SQL__UPDATE_RENT_BOOK_STATUS_PAY =
+            "UPDATE book_user SET status_pay = 'paid' WHERE id = ?";
+    private static final String SQL__UPDATE_BOOK_IMAGE =
+            "UPDATE books SET image = ? WHERE id = ?";
+    private static final String SQL__DELETE_REND_BOOK_BY_ID =
             "DELETE FROM book_user WHERE id = ?";
-    private static final String SQL_UPDATE_ADD_BOOK_COUNT_BY_BOOK_ID =
+    private static final String SQL__UPDATE_ADD_BOOK_COUNT_BY_BOOK_ID =
             "UPDATE current_books SET count = count + 1 WHERE book_id = ?";
-    private static final String SQL_UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID =
+    private static final String SQL__UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID =
             "UPDATE current_books SET count = count - 1 WHERE book_id = ?";
-
-    private static final String SQL_UPDATE_BOOK_BY_ID =
-            "UPDATE books SET isbn = ?," +
-                    "name = ?, " +
-                    "year = ? " +
-                    "  WHERE id = ?";
-
-    private static final String SQL_UPDATE_BOOK_COUNT_BY_BOOK_ID =
-            "UPDATE current_books SET count = ? " +
-                    "  WHERE book_id = ?";
-    private static final String SQL_INSERT_RENT_BOOK_BY_USER =
+    private static final String SQL__UPDATE_BOOK_BY_ID =
+            "UPDATE books SET isbn = ?, name = ?, year = ? WHERE id = ?";
+    private static final String SQL__UPDATE_BOOK_COUNT_BY_BOOK_ID =
+            "UPDATE current_books SET count = ? WHERE book_id = ?";
+    private static final String SQL__INSERT_RENT_BOOK_BY_USER =
             "INSERT INTO book_user (id, book_id, user_id, start_date, end_date, status_pay) " +
                     "VALUES (0, ?, ?, curdate(), DATE_ADD(curdate(), INTERVAL ? DAY), '')";
-    private static final String SQL_INSERT_RENT_BOOK_BY_USER_FROM_USER =
+    private static final String SQL__INSERT_RENT_BOOK_BY_USER_FROM_USER =
             "INSERT INTO book_user (id, book_id, user_id, start_date, end_date, status_pay) " +
                     "VALUES (0, ?, ?, null, null, '')";
-
-    private static final String SQL_DELETE_BOOK_BY_ID =
+    private static final String SQL__DELETE_BOOK_BY_ID =
             "DELETE FROM books WHERE id= ?";
-    private static final String SQL_COUNT_FINE_USER =
+    private static final String SQL__COUNT_FINE_USER =
             "select count(*) as count from (select " +
                     " IF(bu.start_date>date(0),if(bu.end_date<curdate() and bu.status_pay<>'paid', 'need pay', 'reading'),'booked') as stat " +
                     "from book_user bu " +
                     "inner join users u on bu.user_id=u.id " +
                     "where u.number = ? or u.id = ?) as table1 " +
                     "where table1.stat like '%need pay%'";
+    private static final String SQL__COUNT_BOOK_BY_STRING_SEARCH = "select count(*) as count from (" +
+            "SELECT count(*)" +
+            "                    FROM books b " +
+            "                    inner join books_authors ba on ba.book_id = b.id " +
+            "                    inner join authors a on ba.author_id=a.id " +
+            "                    inner join current_books cb on b.id = cb.book_id " +
+            "                    where LOWER(b.name) like LOWER(CONCAT('%', ?, '%')) " +
+            "                    or LOWER(a.first_name) like LOWER(CONCAT('%', ?, '%')) " +
+            "                    or LOWER(a.last_name) like LOWER(CONCAT('%', ?, '%')) " +
+            "                    GROUP BY b.id) t";
+    private static final String SQL__SELECT_BOOK_USER_BY_ID = "select * from book_user where id = ?";
+
     private DBManager dbManager;
 
     @Override
@@ -324,13 +314,13 @@ public class BookDAOImpl implements BookDAO {
         boolean result;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_UPDATE_BOOK_BY_ID);
+            pstmt = con.prepareStatement(SQL__UPDATE_BOOK_BY_ID);
             pstmt.setString(1, book.getIsbn());
             pstmt.setString(2, book.getName());
             pstmt.setString(3, book.getYear().toString());
             pstmt.setLong(4, book.getId());
             pstmt.executeUpdate();
-            pstmt = con.prepareStatement(SQL_UPDATE_BOOK_COUNT_BY_BOOK_ID);
+            pstmt = con.prepareStatement(SQL__UPDATE_BOOK_COUNT_BY_BOOK_ID);
             pstmt.setInt(1, count);
             pstmt.setLong(2, book.getId());
             pstmt.executeUpdate();
@@ -353,7 +343,7 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_DELETE_BOOK_BY_ID);
+            pstmt = con.prepareStatement(SQL__DELETE_BOOK_BY_ID);
             pstmt.setLong(1, book.getId());
             pstmt.executeUpdate();
             pstmt.close();
@@ -380,16 +370,16 @@ public class BookDAOImpl implements BookDAO {
             String executeSQLScript;
             switch (pageSettings.getSort()) {
                 case Fields.BOOK__ISBN:
-                    executeSQLScript = SQL_FIND_ALL_BOOKS_PAGINATION_ISBN;
+                    executeSQLScript = SQL__FIND_ALL_BOOKS_PAGINATION_ISBN;
                     break;
                 case "publisher":
-                    executeSQLScript = SQL_FIND_ALL_BOOKS_PAGINATION_PUBLISHER;
+                    executeSQLScript = SQL__FIND_ALL_BOOKS_PAGINATION_PUBLISHER;
                     break;
                 case "author":
-                    executeSQLScript = SQL_FIND_ALL_BOOKS_PAGINATION_AUTHOR;
+                    executeSQLScript = SQL__FIND_ALL_BOOKS_PAGINATION_AUTHOR;
                     break;
                 default:
-                    executeSQLScript = SQL_FIND_ALL_BOOKS_PAGINATION_NAME;
+                    executeSQLScript = SQL__FIND_ALL_BOOKS_PAGINATION_NAME;
                     break;
             }
             pstmt = con.prepareStatement(executeSQLScript);
@@ -495,7 +485,7 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_COUNT_BOOK);
+            pstmt = con.prepareStatement(SQL__COUNT_BOOK);
             rs = pstmt.executeQuery();
             if (rs.next())
                 count = rs.getLong("count");
@@ -519,8 +509,8 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            String query = SQL_COUNT_BOOK_BY_ALL_USER;
-            if (userId > 0) query = SQL_COUNT_BOOK_BY_USER_ID;
+            String query = SQL__COUNT_BOOK_BY_ALL_USER;
+            if (userId > 0) query = SQL__COUNT_BOOK_BY_USER_ID;
             pstmt = con.prepareStatement(query);
             if (userId > 0) pstmt.setLong(1, userId);
             rs = pstmt.executeQuery();
@@ -546,16 +536,7 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            String query = "select count(*) as count from (" +
-                    "SELECT count(*)" +
-                    "                    FROM books b " +
-                    "                    inner join books_authors ba on ba.book_id = b.id " +
-                    "                    inner join authors a on ba.author_id=a.id " +
-                    "                    inner join current_books cb on b.id = cb.book_id " +
-                    "                    where LOWER(b.name) like LOWER(CONCAT('%', ?, '%')) " +
-                    "                    or LOWER(a.first_name) like LOWER(CONCAT('%', ?, '%')) " +
-                    "                    or LOWER(a.last_name) like LOWER(CONCAT('%', ?, '%')) " +
-                    "                    GROUP BY b.id) t";
+            String query = SQL__COUNT_BOOK_BY_STRING_SEARCH;
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, search);
             pstmt.setString(2, search);
@@ -582,12 +563,12 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_INSERT_RENT_BOOK_BY_USER);
+            pstmt = con.prepareStatement(SQL__INSERT_RENT_BOOK_BY_USER);
             pstmt.setLong(1, bookId);
             pstmt.setLong(2, userId);
             pstmt.setLong(3, days);
             pstmt.executeUpdate();
-            pstmt = con.prepareStatement(SQL_UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID);
+            pstmt = con.prepareStatement(SQL__UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID);
             pstmt.setLong(1, bookId);
             pstmt.executeUpdate();
             pstmt.close();
@@ -611,14 +592,14 @@ public class BookDAOImpl implements BookDAO {
 
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_UPDATE_RENT_BOOK_START_DATE);
+            pstmt = con.prepareStatement(SQL__UPDATE_RENT_BOOK_START_DATE);
             pstmt.setLong(1, days);
             pstmt.setLong(2, id);
             pstmt.executeUpdate();
-            pstmt = con.prepareStatement(SQL_UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID);
+            pstmt = con.prepareStatement(SQL__UPDATE_REMOVE_BOOK_COUNT_BY_BOOK_ID);
             pstmt.setLong(1, bookId);
             pstmt.executeUpdate();
-            pstmt = con.prepareStatement(SQL_FIND_REND_BOOK_BY_ID);
+            pstmt = con.prepareStatement(SQL__FIND_REND_BOOK_BY_ID);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
             BookLoad mapper = new BookLoad();
@@ -644,10 +625,10 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_UPDATE_RENT_BOOK_STATUS_PAY);
+            pstmt = con.prepareStatement(SQL__UPDATE_RENT_BOOK_STATUS_PAY);
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
-            pstmt = con.prepareStatement(SQL_FIND_REND_BOOK_BY_ID);
+            pstmt = con.prepareStatement(SQL__FIND_REND_BOOK_BY_ID);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
             BookLoad mapper = new BookLoad();
@@ -673,7 +654,7 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_FIND_REND_BOOK_BY_ID);
+            pstmt = con.prepareStatement(SQL__FIND_REND_BOOK_BY_ID);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
             BookLoad mapper = new BookLoad();
@@ -699,16 +680,16 @@ public class BookDAOImpl implements BookDAO {
         boolean result;
         try {
             con = dbManager.getConnection();
-            String query = "select * from book_user where id = ?";
+            String query = SQL__SELECT_BOOK_USER_BY_ID;
             pstmt = con.prepareStatement(query);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
             long bookId = 0;
             if (rs.next()) bookId = rs.getLong(Fields.BU__BOOK);
-            pstmt = con.prepareStatement(SQL_UPDATE_ADD_BOOK_COUNT_BY_BOOK_ID);
+            pstmt = con.prepareStatement(SQL__UPDATE_ADD_BOOK_COUNT_BY_BOOK_ID);
             pstmt.setLong(1, bookId);
             pstmt.executeUpdate();
-            pstmt = con.prepareStatement(SQL_DELETE_REND_BOOK_BY_ID);
+            pstmt = con.prepareStatement(SQL__DELETE_REND_BOOK_BY_ID);
             pstmt.setLong(1, id);
             pstmt.execute();
             rs.close();
@@ -730,7 +711,7 @@ public class BookDAOImpl implements BookDAO {
         boolean result;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_DELETE_REND_BOOK_BY_ID);
+            pstmt = con.prepareStatement(SQL__DELETE_REND_BOOK_BY_ID);
             pstmt.setLong(1, id);
             pstmt.execute();
             pstmt.close();
@@ -825,7 +806,7 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_INSERT_RENT_BOOK_BY_USER_FROM_USER);
+            pstmt = con.prepareStatement(SQL__INSERT_RENT_BOOK_BY_USER_FROM_USER);
             pstmt.setLong(1, bookId);
             pstmt.setLong(2, userId);
             pstmt.executeUpdate();
@@ -848,7 +829,7 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_UPDATE_BOOK_IMAGE);
+            pstmt = con.prepareStatement(SQL__UPDATE_BOOK_IMAGE);
             pstmt.setString(1, image);
             pstmt.setLong(2, bookId);
             pstmt.executeUpdate();
@@ -872,7 +853,7 @@ public class BookDAOImpl implements BookDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            pstmt = con.prepareStatement(SQL_COUNT_FINE_USER);
+            pstmt = con.prepareStatement(SQL__COUNT_FINE_USER);
             pstmt.setString(1, number);
             pstmt.setLong(2, id);
             rs = pstmt.executeQuery();
@@ -891,6 +872,20 @@ public class BookDAOImpl implements BookDAO {
     }
 
     private class BookLoad implements LoadEntity<Book> {
+        private static final String SQL__SELECT_FROM_PUBLISHER_BY_ID = "SELECT * FROM publishers WHERE id=?";
+        private static final String SQL__SELECT_AUTHORS_BY_BOOK_ID = "SELECT a.id, " +
+                "a.first_name, " +
+                "a.last_name " +
+                "FROM books_authors ba inner join authors a on ba.author_id=a.id " +
+                "WHERE ba.book_id=?;";
+        private static final String SQL__SELECT_GENRES_BY_BOOK_ID = "SELECT g.id, " +
+                "g.name " +
+                "FROM book_genre bg inner join genres g on bg.genre_id=g.id " +
+                "WHERE bg.book_id=?;";
+        private static final String SQL__SELECT_BOOK_BY_ID = "SELECT * FROM books WHERE id=?";
+        private static final String SQL__SELECT_USER_BY_ID = "SELECT * FROM users WHERE id=?";
+        private static final String SQL__SELECT_ROLE_BY_ID = "SELECT * FROM roles WHERE id=?";
+
         /**
          * Load object from ResultSet
          *
@@ -919,7 +914,7 @@ public class BookDAOImpl implements BookDAO {
             PreparedStatement pstmt = null;
             ResultSet resultSet = null;
             try {
-                pstmt = con.prepareStatement("SELECT * FROM publishers WHERE id=?");
+                pstmt = con.prepareStatement(SQL__SELECT_FROM_PUBLISHER_BY_ID);
                 pstmt.setLong(1, rs.getLong(Fields.BOOK__PUBLISHER));
                 resultSet = pstmt.executeQuery();
                 if (resultSet.next()) {
@@ -944,11 +939,7 @@ public class BookDAOImpl implements BookDAO {
             PreparedStatement pstmt = null;
             ResultSet rs = null;
             try {
-                pstmt = con.prepareStatement("SELECT a.id, " +
-                        "a.first_name, " +
-                        "a.last_name " +
-                        "FROM books_authors ba inner join authors a on ba.author_id=a.id " +
-                        "WHERE ba.book_id=?;");
+                pstmt = con.prepareStatement(SQL__SELECT_AUTHORS_BY_BOOK_ID);
                 pstmt.setLong(1, id);
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
@@ -971,10 +962,7 @@ public class BookDAOImpl implements BookDAO {
             PreparedStatement pstmt = null;
             ResultSet rs = null;
             try {
-                pstmt = con.prepareStatement("SELECT g.id, " +
-                        "g.name " +
-                        "FROM book_genre bg inner join genres g on bg.genre_id=g.id " +
-                        "WHERE bg.book_id=?;");
+                pstmt = con.prepareStatement(SQL__SELECT_GENRES_BY_BOOK_ID);
                 pstmt.setLong(1, id);
                 rs = pstmt.executeQuery();
                 while (rs.next()) {
@@ -999,7 +987,7 @@ public class BookDAOImpl implements BookDAO {
             ResultSet rsRole = null;
             try {
                 rentBook.setId(rsRentBook.getLong(Fields.ENTITY__ID));
-                pstmt = con.prepareStatement("SELECT * FROM books WHERE id=?");
+                pstmt = con.prepareStatement(SQL__SELECT_BOOK_BY_ID);
                 pstmt.setLong(1, rsRentBook.getLong(Fields.BU__BOOK));
                 rsBook = pstmt.executeQuery();
                 Book book = null;
@@ -1009,7 +997,7 @@ public class BookDAOImpl implements BookDAO {
                 }
                 rsBook.close();
                 rentBook.setBook(book);
-                pstmt = con.prepareStatement("SELECT * FROM users WHERE id=?");
+                pstmt = con.prepareStatement(SQL__SELECT_USER_BY_ID);
                 pstmt.setLong(1, rsRentBook.getLong(Fields.BU__USER));
                 rsUser = pstmt.executeQuery();
                 User user = new User();
@@ -1024,7 +1012,7 @@ public class BookDAOImpl implements BookDAO {
                     user.setStatus(rsUser.getString(Fields.USER__STATUS));
                     user.setPhoto(rsUser.getString(Fields.USER__PHOTO));
                 }
-                pstmt = con.prepareStatement("SELECT * FROM roles WHERE id=?");
+                pstmt = con.prepareStatement(SQL__SELECT_ROLE_BY_ID);
                 pstmt.setLong(1, rsUser.getLong(Fields.USER__ROLE));
                 rsRole = pstmt.executeQuery();
                 Role role = new Role();
