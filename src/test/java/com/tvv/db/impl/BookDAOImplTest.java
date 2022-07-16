@@ -62,13 +62,9 @@ class BookDAOImplTest {
             "SELECT b.*, cb.count as count FROM books b inner join current_books cb on b.id=cb.book_id WHERE b.id=?";
 
     private static final String SQL_UPDATE_BOOK_BY_ID =
-            "UPDATE books SET isbn = ?," +
-                    "name = ?, " +
-                    "year = ? " +
-                    "  WHERE id = ?";
+            "UPDATE books SET isbn = ?, name = ?, year = ? WHERE id = ?";
     private static final String SQL_UPDATE_BOOK_COUNT_BY_BOOK_ID =
-            "UPDATE current_books SET count = ? " +
-                    "  WHERE book_id = ?";
+            "UPDATE current_books SET count = ? WHERE book_id = ?";
 
     private static final String SQL_DELETE_BOOK_BY_ID =
             "DELETE FROM books WHERE id= ?";

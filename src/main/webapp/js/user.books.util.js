@@ -43,21 +43,22 @@ function callPOSTRequest(option, parameter) {
 }
 
 function createTable(tx) {
-    var table = document.getElementById('table')
+    const table = document.getElementById('table')
     table.innerHTML = "";
-    for (var i = 0; i < tx.length; i++) {
-        var countStatus = tx[i].count>0 ? "" : "color: red";
-        var row = `<tr id="tr_${tx[i].id}">
-                <td><img class="uk-preserve-width uk-border-rectangle" 
-                src="/images/books/${tx[i].image}" width="40" alt=""></td>
-                <td>${tx[i].isbn}</td>
-                <td>${tx[i].author}</td>
-                <td>${tx[i].name}</td>
-                <td>${tx[i].publisher}</td>
-                <td>${tx[i].year}</td>
-                <td><a uk-icon="icon: sign-in; ratio: 1.5" style="${countStatus}" onclick="takeBookButton(${tx[i].id})"></a>
-                </td>
-                </tr>`
+    for (let i = 0; i < tx.length; i++) {
+        const countStatus = tx[i].count>0 ? "" : "color: red";
+        let row = `<div class="uk-animation-toggle">
+        <div class="uk-card uk-card-default uk-card-body uk-align-center uk-animation-scale-up" id="tr_${tx[i].id}">
+            <img class="uk-preserve-width uk-border-rectangle" 
+                src="/images/books/${tx[i].image}" width="100" alt=""><br>
+            <p class="uk-article-meta">${tx[i].isbn}</p>    
+            <h3>${tx[i].name}</h3><br>
+            <label class="uk-text-bold uk-text-uppercase">${tx[i].author}</label><br>
+            <label>${tx[i].publisher}</label><br>
+            <label>${tx[i].year}</label><br>
+            <a uk-icon="icon: cart; ratio: 1.5" style="${countStatus}" onclick="takeBookButton(${tx[i].id})"></a>
+        </div>
+        </div>`
         table.innerHTML += row;
     }
 }
