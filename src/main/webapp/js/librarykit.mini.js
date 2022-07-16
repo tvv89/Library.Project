@@ -47,6 +47,9 @@ function bookStatus(statusOfBook) {
     }
     return iconStatus;
 }
+function payStatus(statusOfBook) {
+    return statusOfBook=="paid" ? "check" : "";
+}
 
 function enableSubmitButton(e) {
     const form = e.target;

@@ -49,14 +49,14 @@ function createTable(tx) {
         const countStatus = tx[i].count>0 ? "" : "color: red";
         let row = `<div class="uk-animation-toggle">
         <div class="uk-card uk-card-default uk-card-body uk-align-center uk-animation-scale-up" id="tr_${tx[i].id}">
-            <label>${tx[i].isbn}</label><br>
             <img class="uk-preserve-width uk-border-rectangle" 
                 src="/images/books/${tx[i].image}" width="100" alt=""><br>
+            <p class="uk-article-meta">${tx[i].isbn}</p>    
             <h3>${tx[i].name}</h3><br>
             <label class="uk-text-bold uk-text-uppercase">${tx[i].author}</label><br>
             <label>${tx[i].publisher}</label><br>
             <label>${tx[i].year}</label><br>
-            <a uk-icon="icon: plus-circle; ratio: 1.5" style="${countStatus}" onclick="takeBookButton(${tx[i].id})"></a>
+            <a uk-icon="icon: cart; ratio: 1.5" style="${countStatus}" onclick="takeBookButton(${tx[i].id})"></a>
         </div>
         </div>`
         table.innerHTML += row;

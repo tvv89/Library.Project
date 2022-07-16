@@ -52,7 +52,7 @@ function createTable(tx) {
 }
 
 function rentBookRow(book) {
-        const buttonPayColor = book.status == "need pay" ? "color:red" : "color:#D3D3D3";
+        const buttonPayColor = book.status == "need pay" ? "color:red" : "";
         const buttonCancelColor = book.status == "booked" ? "" : "color:#D3D3D3";
         const buttonCancelStatus = book.status != "booked" ? "uk-disabled" : "uk-enabled";
         let row = `<td><img class="uk-preserve-width uk-border-rectangle" 
@@ -61,9 +61,8 @@ function rentBookRow(book) {
                 <td>${book.name}</td>
                 <td>${book.startDate}</td>
                 <td>${book.endDate}</td>
-                <td>${book.status}</td>
+                <td><a uk-icon="icon: ${bookStatus(book.status)}; ratio: 1.5" style="${buttonPayColor}"</a></td>
                 <td>
-                    <a uk-icon="icon: bell; ratio: 1.5" style="${buttonPayColor}"></a>
                     <a uk-icon="icon: minus-circle; ratio: 1.5" 
                             class="${buttonCancelStatus}" 
                             style="${buttonCancelColor}" 

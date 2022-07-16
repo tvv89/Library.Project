@@ -49,9 +49,9 @@ function createTable(tx) {
         var countStatus = tx[i].count>0 ? "" : "color: red";
         var row = `<div>
         <div class="uk-card uk-card-default uk-card-body uk-align-center" id="tr_${tx[i].id}">
-            <label>${tx[i].isbn}</label><br>
             <img class="uk-preserve-width uk-border-rectangle" 
                 src="/images/books/${tx[i].image}" width="100" alt=""><br>
+                <p class="uk-article-meta">${tx[i].isbn}</p>
             <h3>${tx[i].name}</h3><br>
             <label class="uk-text-bold uk-text-uppercase">${tx[i].author}</label><br>
             <label>${tx[i].publisher}</label><br>

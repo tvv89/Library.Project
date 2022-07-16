@@ -34,10 +34,11 @@ public class UserAccessRightFilter implements Filter {
         /**
          * Access for user
          */
+        long userRoleId = Long.parseLong(request.getServletContext().getInitParameter("UserRoleId"));
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
         Role role = (Role) session.getAttribute("userRole");
-        if (role != null && role.getName().equals("user")) {
+        if (role != null && role.getId()==userRoleId) {
             chain.doFilter(request, response);
         } else {
             RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);

@@ -35,10 +35,11 @@ public class AdminAccessRightFilter implements Filter {
         /**
          * Admin rights filter
          */
+        long adminRoleId = Long.parseLong(request.getServletContext().getInitParameter("AdminRoleId"));
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
         Role role = (Role) session.getAttribute("userRole");
-        if (role != null && role.getName().equals("admin")) {
+        if (role != null && role.getId()==adminRoleId) {
             chain.doFilter(request, response);
         } else {
             RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);

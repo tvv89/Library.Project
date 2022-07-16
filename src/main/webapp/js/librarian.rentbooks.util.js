@@ -167,8 +167,8 @@ function rentBookRow(book) {
                     ${book.number}</span></td>
                 <td>${book.startDate}</td>
                 <td>${book.endDate}</td>
-                <td>${book.status}</td>
-                <td>${book.statusPay}</td>
+                <td><a uk-icon="icon: ${bookStatus(book.status)}; ratio: 1.5" style="${buttonPayColor}"</a></td>
+                <td><a uk-icon="icon: ${payStatus(book.statusPay)}; ratio: 1.5"</a></td>
                 <td><a uk-icon="icon: sign-out; ratio: 1.5" class="${buttonGiveStatus}" 
                     style="${buttonGiveColor}" onclick="giveBook(${book.id})"></a>
                 <a uk-icon="icon: bell; ratio: 1.5" class="${buttonPayStatus}" 

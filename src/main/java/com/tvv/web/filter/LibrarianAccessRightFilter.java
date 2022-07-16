@@ -34,10 +34,11 @@ public class LibrarianAccessRightFilter implements Filter {
         /**
          * Access for Librarian
          */
+        long librarianRoleId = Long.parseLong(request.getServletContext().getInitParameter("LibrarianRoleId"));
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
         Role role = (Role) session.getAttribute("userRole");
-        if (role != null && role.getName().equals("librarian")) {
+        if (role != null && role.getId()==librarianRoleId) {
             chain.doFilter(request, response);
         } else {
             RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);
