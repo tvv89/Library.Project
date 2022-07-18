@@ -73,7 +73,8 @@ public class CommandCollection {
 		commands.put("takeUserBook", new TakeUserBookCommand());
 		commands.put("cancelBooking", new CancelBookingCommand());
 
-
+		commands.put("updateUser", new UpdateUserCommand());
+		commands.put("loadUserImage", new ImageUserLoadCommand());
 		/**
 		 * Command for word with incognito
 		 */

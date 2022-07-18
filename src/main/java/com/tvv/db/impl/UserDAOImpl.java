@@ -42,6 +42,8 @@ public class UserDAOImpl implements UserDAO {
             "SELECT count(*) as count FROM users WHERE role_id = ?";
     private static final String SQL__FIND_FREE_NUMBER =
             "SELECT max(cast(number as UNSIGNED)) as number FROM users WHERE role_id = ?";
+    private static final String SQL__UPDATE_USER_IMAGE =
+            "UPDATE users SET photo = ? WHERE id = ?";;
 
     private DBManager dbManager;
 
@@ -121,8 +123,9 @@ public class UserDAOImpl implements UserDAO {
             pstmt.setLong(9, user.getRole().getId());
             pstmt.setString(10, user.getLocale());
             pstmt.setLong(11, user.getId());
-            result = pstmt.execute();
+            pstmt.executeUpdate();
             pstmt.close();
+            result = true;
         } catch (SQLException ex) {
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
@@ -290,6 +293,29 @@ public class UserDAOImpl implements UserDAO {
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
             throw new AppException("Can not update Publisher in DB",ex);
+        } finally {
+            dbManager.commitCloseConnection(con);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateImageBookById(long id, String image) throws AppException {
+        boolean result = false;
+        PreparedStatement pstmt = null;
+        Connection con = null;
+        try {
+            con = dbManager.getConnection();
+            pstmt = con.prepareStatement(SQL__UPDATE_USER_IMAGE);
+            pstmt.setString(1, image);
+            pstmt.setLong(2, id);
+            pstmt.executeUpdate();
+            pstmt.close();
+            result = true;
+        } catch (SQLException ex) {
+            dbManager.rollbackCloseConnection(con);
+            ex.printStackTrace();
+            throw new AppException("Cannot update book_user in DB", ex);
         } finally {
             dbManager.commitCloseConnection(con);
         }
