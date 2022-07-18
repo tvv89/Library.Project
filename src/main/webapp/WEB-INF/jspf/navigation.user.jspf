@@ -22,7 +22,12 @@
                         <h3><fmt:message key="navigation.user.info.title"/></h3>
                         <img class="uk-preserve-width uk-border-circle"
                              src="images/users/${sessionScope.currentUser.photo}"
-                             width="80" alt="">
+                             width="100" alt="">
+                        </br>
+                        </br>
+                        <a uk-icon="icon: image; ratio: 1.5" href="#modal-update-user-image" uk-toggle></a>
+                        <a uk-icon="icon: pencil; ratio: 1.5" href="#modal-update-user" uk-toggle></a>
+                        <a uk-icon="icon: unlock; ratio: 1.5" onclick=""></a>
                         </br>
                         </br>
                         <div>
@@ -48,4 +53,6 @@
             </li>
         </ul>
     </div>
+    <%@ include file="/WEB-INF/jspf/update.form.user.jspf" %>
+    <%@ include file="/WEB-INF/jspf/update.form.user.image.jspf" %>
 </nav>

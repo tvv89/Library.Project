@@ -21,4 +21,6 @@ public interface UserDAO {
     String findFirstFreeNumber(long roleId) throws AppException;
 
     boolean updateLocale(long id, String currentLanguage) throws AppException;
+
+    boolean updateImageBookById(long id, String image) throws AppException;
 }

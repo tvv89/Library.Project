@@ -166,4 +166,36 @@ public class UserService {
         }
         return result;
     }
+
+    public boolean updateUser(UserDTO userDTO) throws AppException {
+        User user = userDAO.findById(userDTO.getId());
+        if (user.getFirstName()!=userDTO.getFirstName())
+            user.setFirstName(userDTO.getFirstName());
+        if (user.getLastName()!=userDTO.getLastName())
+            user.setLastName(userDTO.getLastName());
+        if (user.getDateOfBirth().toString()!=userDTO.getDateOfBirth())
+            user.setDateOfBirth(LocalDate.parse(userDTO.getDateOfBirth()));
+        if (user.getPhone()!=userDTO.getPhone())
+            user.setPhone(userDTO.getPhone());
+
+        return userDAO.update(user);
+    }
+
+    public boolean updateUserPassword(long id, String password) throws AppException {
+        User user = userDAO.findById(id);
+        user.setPassword(StringHash.getHashString(password));
+        return userDAO.update(user);
+    }
+
+    public boolean updateImage(long id, String image) {
+        if (id <= 0 || image == null) return false;
+        boolean result;
+        try {
+            result = userDAO.updateImageBookById(id, image);
+        } catch (AppException ex) {
+            log.error("Can not update image " + ex.getMessage());
+            result = false;
+        }
+        return result;
+    }
 }

@@ -1,0 +1,56 @@
+﻿<div id="modal-update-user" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <form class="uk-form-horizontal" id="update-user-form" method="post" action="${sessionScope.userRole.name}" enctype="multipart/form-data">
+            <h2 class="uk-modal-title"><fmt:message key="update_user_form.title"/></h2>
+            <input type="hidden" name="command" value="updateUser"/>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="update-user-number"><fmt:message key="librarian_create_form.login"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large uk-disabled" id="update-user-number" name="update-user-number" type="text" form-field
+                    value="${sessionScope.currentUser.number}">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="update-user-first-name"><fmt:message key="librarian_create_form.first_name"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="update-user-first-name" name="update-user-first-name" type="text" form-field
+                           form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ]+$"
+                           form-field-regex-error="<fmt:message key="regex.message.user.first_name"/>"
+                           value="${sessionScope.currentUser.firstName}">
+                    <p id="update-user-first-name-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="update-user-last-name"><fmt:message key="librarian_create_form.last_name"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="update-user-last-name" name="update-user-last-name" type="text" form-field
+                           form-field-regex="^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ]+$"
+                           form-field-regex-error="<fmt:message key="regex.message.user.last_name"/>"
+                           value="${sessionScope.currentUser.lastName}">
+                    <p id="update-user-last-name-error"></p>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="update-user-date-of-birth"><fmt:message key="librarian_create_form.date_of_birth"/></label>
+                <div class="uk-form-controls">
+                    <input type="date" id="update-user-date-of-birth" name="update-user-date-of-birth" form-field
+                           value="${sessionScope.currentUser.dateOfBirth}">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="update-user-phone"><fmt:message key="librarian_create_form.phone"/></label>
+                <div class="uk-form-controls">
+                    <input class="uk-input uk-form-width-large" id="update-user-phone" name="update-user-phone" type="text" form-field
+                           form-field-regex="^([+]){1}([0-9]){12}$"
+                           form-field-regex-error="<fmt:message key="regex.message.user.phone"/>"
+                           value="${sessionScope.currentUser.phone}">
+                    <p id="update-user-phone-error"></p>
+                </div>
+            </div>
+            <div>
+                <input class="uk-width-1-1 uk-button uk-button-primary uk-button-default" type="submit"
+                       id="updateUserSubmit" value="<fmt:message key="librarian_create_form.submit"/>"/>
+            </div>
+        </form>
+    </div>
+</div>

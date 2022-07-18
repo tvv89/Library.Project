@@ -23,5 +23,5 @@ public final class Path {
     public static final String PAGE__USER_ALL_BOOKS = "list.user.books.jsp";
     public static final String PAGE__USER_LOGIN = "login.form.jsp";
     public static final String PAGE__USER_RENT_BOOKS = "list.user.rent.books.jsp";
-
+    public static final String PAGE__FAIL_USER = "photo.user.create.fail.jsp";
 }
