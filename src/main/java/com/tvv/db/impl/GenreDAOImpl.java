@@ -34,13 +34,15 @@ public class GenreDAOImpl implements GenreDAO {
 
     private static final String SQL_DELETE_GENRE =
             "DELETE FROM genres WHERE id = ?;";
-    private DBManager dbManager;
+    private final DBManager dbManager;
 
-    public GenreDAOImpl() {dbManager = DBManager.getInstance();}
+    public GenreDAOImpl() {
+        dbManager = DBManager.getInstance();
+    }
 
     @Override
     public boolean create(Genre genre) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -50,11 +52,13 @@ public class GenreDAOImpl implements GenreDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not insert author to DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not insert author to DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -62,8 +66,8 @@ public class GenreDAOImpl implements GenreDAO {
     @Override
     public Genre findById(long id) throws AppException {
         Genre genre = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -76,17 +80,20 @@ public class GenreDAOImpl implements GenreDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find genre by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find genre by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return genre;
     }
 
     @Override
     public boolean update(Genre genre) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -96,18 +103,20 @@ public class GenreDAOImpl implements GenreDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not update genre in DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not update genre in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
 
     @Override
     public boolean delete(Genre genre) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -117,11 +126,13 @@ public class GenreDAOImpl implements GenreDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not delete author from DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not delete author from DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -129,8 +140,8 @@ public class GenreDAOImpl implements GenreDAO {
     @Override
     public Set<Genre> findGenresByBookId(long id) throws AppException {
         Set<Genre> genres = new HashSet<>();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -143,10 +154,13 @@ public class GenreDAOImpl implements GenreDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find genres by book id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find genres by book id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return genres;
     }
@@ -158,7 +172,7 @@ public class GenreDAOImpl implements GenreDAO {
          *
          * @param rs ResultSet
          * @return Author object
-         * @throws AppException
+         * @throws AppException custom exception
          */
         @Override
         public Genre loadRow(ResultSet rs) throws AppException {

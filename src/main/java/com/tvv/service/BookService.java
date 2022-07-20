@@ -29,7 +29,7 @@ public class BookService {
         this.bookDAO = new BookDAOImpl();
         this.local = "en";
         Locale locale = new Locale(local);
-        this.message = ResourceBundle.getBundle("resources",locale);
+        this.message = ResourceBundle.getBundle("resources", locale);
     }
 
     public void init(BookDAO bookDAO, UserDAO userDAO) {
@@ -40,284 +40,61 @@ public class BookService {
     public void initLanguage(String local) {
         this.local = local;
         Locale locale = new Locale(this.local);
-        this.message = ResourceBundle.getBundle("resources",locale);
-    }
-
-    public JsonObject bookListPagination(Map<String, Object> jsonParameters) {
-        log.trace("Start booksListPagination method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        if (jsonParameters == null) return UtilCommand.errorMessageJSON("Illegal argument from JSON");
-        Optional<Integer> currentPage;
-        Optional<Integer> itemPerPage;
-        Optional<String> sorting;
-        currentPage = Optional.ofNullable((Integer) jsonParameters.get("currentPage"));
-        itemPerPage = Optional.ofNullable((Integer) jsonParameters.get("items"));
-        sorting = Optional.ofNullable((String) jsonParameters.get("sorting"));
-        PageSettings pageSettings = new PageSettings();
-        if (itemPerPage.orElse(5) <= 0) {
-            pageSettings.setPage(1);
-            pageSettings.setSize(Integer.MAX_VALUE);
-        } else {
-            pageSettings.setPage(currentPage.orElse(1));
-            pageSettings.setSize(itemPerPage.orElse(5));
-        }
-        pageSettings.setSort(sorting.orElse("name"));
-        try {
-            String sortColumn = pageSettings.getSort();
-            pageSettings.setSort(sortColumn);
-            log.debug("Pagination parameter: " + pageSettings);
-            List<CountBook> bookList = bookDAO.findAllBooks(pageSettings);
-            List<BookDTO> list = bookList.stream()
-                    .map(book -> new BookDTO(book))
-                    .collect(Collectors.toList());
-            /**
-             * Select and show user list
-             */
-            long pages = (long) Math.ceil((double) bookDAO.bookCount() / pageSettings.getSize());
-            innerObject.add("status", new Gson().toJsonTree("OK"));
-            innerObject.add("page", new Gson().toJsonTree(pageSettings.getPage()));
-            innerObject.add("pages", new Gson().toJsonTree(pages));
-            innerObject.add("list", new Gson().toJsonTree(list));
-        } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
-        }
-        log.debug("JSON to send: " + innerObject);
-        log.trace("End usersListPagination method");
-        return innerObject;
-    }
-
-    public JsonObject bookListPaginationWithSearch(Map<String, Object> jsonParameters) {
-        log.trace("Start booksListPagination method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        Optional<Integer> currentPage;
-        Optional<Integer> itemPerPage;
-        Optional<String> sorting;
-        Optional<String> searching;
-        currentPage = Optional.ofNullable((Integer) jsonParameters.get("currentPage"));
-        itemPerPage = Optional.ofNullable((Integer) jsonParameters.get("items"));
-        sorting = Optional.ofNullable((String) jsonParameters.get("sorting"));
-        searching = Optional.ofNullable((String) jsonParameters.get("searching"));
-        PageSettings pageSettings = new PageSettings();
-        if (itemPerPage.orElse(5) <= 0) {
-            pageSettings.setPage(1);
-            pageSettings.setSize(Integer.MAX_VALUE);
-        } else {
-            pageSettings.setPage(currentPage.orElse(1));
-            pageSettings.setSize(itemPerPage.orElse(5));
-        }
-        pageSettings.setSort(sorting.orElse("name"));
-        try {
-            String sortColumn = pageSettings.getSort();
-            pageSettings.setSort(sortColumn);
-            String search = searching.orElse("");
-            log.debug("Pagination parameter: " + pageSettings);
-            List<CountBook> bookList = bookDAO.findBooksWithSearch(pageSettings, search);
-            List<BookDTO> list = bookList.stream()
-                    .map(book -> new BookDTO(book))
-                    .collect(Collectors.toList());
-            /**
-             * Select and show user list
-             */
-            long pages = (long) Math.ceil((double) bookDAO.bookCount(search) / pageSettings.getSize());
-            innerObject.add("status", new Gson().toJsonTree("OK"));
-            innerObject.add("page", new Gson().toJsonTree(pageSettings.getPage()));
-            innerObject.add("pages", new Gson().toJsonTree(pages));
-            innerObject.add("list", new Gson().toJsonTree(list));
-        } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
-        }
-        log.debug("JSON to send: " + innerObject);
-        log.trace("End usersListPagination method");
-        return innerObject;
-    }
-
-    public JsonObject bookRentListPagination(Map<String, Object> jsonParameters, long userId) {
-        log.trace("Start booksRentListPagination method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        Optional<Integer> currentPage;
-        Optional<Integer> itemPerPage;
-        Optional<String> sorting;
-        currentPage = Optional.ofNullable((Integer) jsonParameters.get("currentPage"));
-        itemPerPage = Optional.ofNullable((Integer) jsonParameters.get("items"));
-        sorting = Optional.ofNullable((String) jsonParameters.get("sorting"));
-        PageSettings pageSettings = new PageSettings();
-        if (itemPerPage.orElse(5) <= 0) {
-            pageSettings.setPage(1);
-            pageSettings.setSize(Integer.MAX_VALUE);
-        } else {
-            pageSettings.setPage(currentPage.orElse(1));
-            pageSettings.setSize(itemPerPage.orElse(5));
-        }
-        pageSettings.setSort(sorting.orElse("name"));
-        try {
-            String sortColumn = pageSettings.getSort();
-            pageSettings.setSort(sortColumn);
-            log.debug("Pagination parameter: " + pageSettings);
-            List<RentBook> bookList = bookDAO.findAllUserBooks(userId, pageSettings);
-            List<RentBookDTO> list = bookList.stream()
-                    .map(book -> new RentBookDTO(book))
-                    .collect(Collectors.toList());
-            /**
-             * Select and show user list
-             */
-            double bookCount = (double) bookDAO.bookCount(userId);
-            long pages = (long) Math.ceil(bookCount / pageSettings.getSize());
-            innerObject.add("status", new Gson().toJsonTree("OK"));
-            innerObject.add("page", new Gson().toJsonTree(pageSettings.getPage()));
-            innerObject.add("pages", new Gson().toJsonTree(pages));
-            innerObject.add("list", new Gson().toJsonTree(list));
-        } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
-        }
-        log.debug("JSON to send: " + innerObject);
-        log.trace("End bookRentListPagination method");
-        return innerObject;
-    }
-
-    public JsonObject startRentBook(long id, int days) {
-        log.trace("Start startRentBook method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        try {
-            RentBook rentBook = bookDAO.findRendBookByRentId(id);
-            if (bookDAO.findByIdWithCount(rentBook.getBook().getId()).getCount() <= 0)
-                return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
-            int countFire = bookDAO.countFineByUser("", rentBook.getUser().getId());
-            if (countFire > 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
-            RentBook book = bookDAO.changeStartDateRentBook(id, rentBook.getBook().getId(), days);
-            RentBookDTO rentBookDTO = new RentBookDTO(book);
-            /**
-             * Select and show user list
-             */
-            innerObject.add("status", new Gson().toJsonTree("OK"));
-            innerObject.add("book", new Gson().toJsonTree(rentBookDTO));
-            innerObject.add("message",
-                    new Gson().toJsonTree(message.getString("message.json.book_service.update_rent_book.success")));
-        } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
-        }
-        log.debug("JSON to send: " + innerObject);
-        log.trace("End startRentBook method");
-        return innerObject;
-    }
-
-    public JsonObject payFineForBook(long id) {
-        log.trace("Start payTaxForBook method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        try {
-            RentBook book = bookDAO.changePayStatusRentBook(id);
-            RentBookDTO rentBookDTO = new RentBookDTO(book);
-            /**
-             * Select and show user list
-             */
-            innerObject.add("status", new Gson().toJsonTree("OK"));
-            innerObject.add("book", new Gson().toJsonTree(rentBookDTO));
-            innerObject.add("message",
-                    new Gson().toJsonTree(message.getString("message.json.book_service.pay_fine.success")));
-
-        } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
-        }
-        log.debug("JSON to send: " + innerObject);
-        log.trace("End payTaxForBook method");
-        return innerObject;
-    }
-
-    public JsonObject deleteBookFromRent(long id) {
-        log.trace("Start deleteBookFromRent method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        try {
-            RentBook book = bookDAO.findRendBookByRentId(id);
-            boolean result = false;
-            if (book.getStatus() != "need pay") result = bookDAO.deleteRentBook(id);
-            /**
-             * Select and show user list
-             */
-            if (result) {
-                innerObject.add("status", new Gson().toJsonTree("OK"));
-                innerObject.add("message",
-                        new Gson().toJsonTree(message.getString("message.json.book_service.delete_rent.success")));
-            }
-            else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_return"));
-        } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
-        }
-        log.debug("JSON to send: " + innerObject);
-        log.trace("End deleteBookFromRent method");
-        return innerObject;
-    }
-
-    public JsonObject startRentBookByUserNumber(long bookId, String number) {
-        log.trace("Start startRentBookByUserNumber method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        if (bookId <= 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
-        try {
-            CountBook book = bookDAO.findByIdWithCount(bookId);
-            if (book != null && book.getCount() > 0) {
-                User user = userDAO.findUserByNumber(number);
-                int countFire = bookDAO.countFineByUser(number, 0L);
-                if (countFire > 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
-                if (user != null && bookDAO.addBookToRentByUser(bookId, user.getId())) {
-                    innerObject.add("status", new Gson().toJsonTree("OK"));
-                    innerObject.add("message",
-                            new Gson().toJsonTree(message.getString("message.json.book_service.booking.success")));
-                } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_user"));
-            } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
-        } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
-        }
-        log.debug("JSON to send: " + innerObject);
-        log.trace("End deleteBookFromRent method");
-        return innerObject;
+        this.message = ResourceBundle.getBundle("resources", locale);
     }
 
     public boolean createBook(BookDTO bookDTO) {
         log.trace("Start createBook method in " + this.getClass().getName());
-        JsonObject innerObject = new JsonObject();
-        String checkBookFields = "";
-        boolean result = false;
-        if (!checkBookFields.isEmpty()) return false;
+        boolean result;
+        if (bookDTO == null) return false;
         try {
             Book book = readBookFromRequest(bookDTO);
-            if (book != null && bookDAO.create(book, bookDTO.getCount())) {
-                result = true;
-                innerObject.add("status", new Gson().toJsonTree("OK"));
-            } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_create"));
+            result = book != null && bookDAO.create(book, bookDTO.getCount());
         } catch (AppException ex) {
-            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+            log.error(ex.getMessage());
             result = false;
         }
-        log.debug("JSON to send: " + innerObject);
         log.trace("End createBook method");
         return result;
     }
 
     public boolean updateBook(BookDTO bookDTO) {
         log.trace("Start updateBook method in " + this.getClass().getName());
-        String checkBookFields = "";
         boolean result;
-        if (!checkBookFields.isEmpty()) return false;
+        if (bookDTO == null) return false;
         try {
             Book book = readBookFromRequest(bookDTO);
-            if (book != null && bookDAO.update(book, bookDTO.getCount())) {
-                result = true;
-            } else result = false;
+            result = book != null && bookDAO.update(book, bookDTO.getCount());
         } catch (AppException ex) {
             result = false;
-            log.error("Error in update book" + ex.getMessage());
+            log.error("Error in update book " + ex.getMessage());
         }
         log.debug("Result of update: " + result);
         log.trace("End updateBook method");
         return result;
     }
 
+    public boolean updateImage(long id, String image) {
+        if (id <= 0 || image == null) return false;
+        boolean result;
+        try {
+            result = bookDAO.updateImageBookById(id, image);
+        } catch (AppException ex) {
+            log.error("Can not update image " + ex.getMessage());
+            result = false;
+        }
+        return result;
+    }
+
     private Book readBookFromRequest(BookDTO bookDTO) {
         Book book = new Book();
-        if (bookDTO==null) return null;
+        if (bookDTO == null) return null;
         book.setId(bookDTO.getId());
         book.setIsbn(bookDTO.getIsbn());
         Set<Author> authors = new HashSet<>();
+
         Set<String> stringsSet = Arrays.stream(bookDTO.getAuthor().split(","))
-                .map(s -> s.trim())
+                .map(String::trim)
                 .collect(Collectors.toSet());
         for (String s : stringsSet) {
             int lastIndex = s.lastIndexOf(" ");
@@ -338,7 +115,7 @@ public class BookService {
         book.setYear(Year.parse(bookDTO.getYear()));
         Set<Genre> genres = new HashSet<>();
         stringsSet = Arrays.stream(bookDTO.getGenre().split(","))
-                .map(s -> s.trim())
+                .map(String::trim)
                 .collect(Collectors.toSet());
         for (String s : stringsSet) {
             Genre genre = new Genre();
@@ -357,15 +134,11 @@ public class BookService {
         log.trace("Start findBookById method in " + this.getClass().getName());
         JsonObject innerObject = new JsonObject();
         try {
-
             CountBook book = bookDAO.findByIdWithCount(bookId);
             BookDTO bookDTO = new BookDTO(book);
-            /**
-             * Select and show user list
-             */
+            //Select and show book list
             innerObject.add("status", new Gson().toJsonTree("OK"));
             innerObject.add("book", new Gson().toJsonTree(bookDTO));
-
         } catch (AppException ex) {
             innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
         }
@@ -380,16 +153,14 @@ public class BookService {
         JsonObject innerObject = new JsonObject();
         try {
             Book book = bookDAO.findById(id);
-            boolean result = false;
-            if (book != null) result = bookDAO.delete(book);
-            /**
-             * Select and show user list
-             */
-            if (result) {
+            //delete book image file and BD row
+            if (book != null && bookDAO.delete(book)) {
                 innerObject.add("status", new Gson().toJsonTree("OK"));
                 if (!book.getImage().equals("_blank.png")) {
                     File file = new File(path, book.getImage());
-                    file.delete();
+                    boolean result  = file.delete();
+                    //insert information message if needed
+                    log.debug("Book image deletion status is " + result);
                 }
             } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_delete"));
         } catch (AppException ex) {
@@ -408,14 +179,13 @@ public class BookService {
             RentBook book = bookDAO.findRendBookByRentId(id);
             boolean result = false;
             if (book.getUser().getId() == userId) result = bookDAO.deleteRentBookById(id);
-            /**
-             * Select and show user list
-             */
+            // Cancel booking
             if (result) {
                 innerObject.add("status", new Gson().toJsonTree("OK"));
                 innerObject.add("message",
                         new Gson().toJsonTree(message.getString("message.json.book_service.rent.success")));
-            } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_delete_rent"));
+            } else
+                innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_delete_rent"));
         } catch (AppException ex) {
             innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
         }
@@ -425,15 +195,193 @@ public class BookService {
 
     }
 
-    public boolean updateImage(long bookId, String image) {
-        if (bookId <= 0 || image == null) return false;
-        boolean result;
+    public JsonObject startRentBook(long id, int days) {
+        log.trace("Start startRentBook method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
         try {
-            result = bookDAO.updateImageBookById(bookId, image);
+            RentBook rentBook = bookDAO.findRendBookByRentId(id);
+            if (bookDAO.findByIdWithCount(rentBook.getBook().getId()).getCount() <= 0)
+                return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
+            int countFire = bookDAO.countFineByUser("", rentBook.getUser().getId());
+            if (countFire > 0)
+                return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
+            RentBook book = bookDAO.changeStartDateRentBook(id, rentBook.getBook().getId(), days);
+            RentBookDTO rentBookDTO = new RentBookDTO(book);
+            //JSON message
+            innerObject.add("status", new Gson().toJsonTree("OK"));
+            innerObject.add("book", new Gson().toJsonTree(rentBookDTO));
+            innerObject.add("message",
+                    new Gson().toJsonTree(message.getString("message.json.book_service.update_rent_book.success")));
         } catch (AppException ex) {
-            log.error("Can not update image " + ex.getMessage());
-            result = false;
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
         }
-        return result;
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End startRentBook method");
+        return innerObject;
     }
+
+    public JsonObject payFineForBook(long id) {
+        log.trace("Start payTaxForBook method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        try {
+            RentBook book = bookDAO.changePayStatusRentBook(id);
+            RentBookDTO rentBookDTO = new RentBookDTO(book);
+            //JSON message
+            innerObject.add("status", new Gson().toJsonTree("OK"));
+            innerObject.add("book", new Gson().toJsonTree(rentBookDTO));
+            innerObject.add("message",
+                    new Gson().toJsonTree(message.getString("message.json.book_service.pay_fine.success")));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End payTaxForBook method");
+        return innerObject;
+    }
+
+    public JsonObject startRentBookByUserNumber(long bookId, String number) {
+        log.trace("Start startRentBookByUserNumber method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        if (bookId <= 0) return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
+        try {
+            CountBook book = bookDAO.findByIdWithCount(bookId);
+            if (book != null && book.getCount() > 0) {
+                User user = userDAO.findUserByNumber(number);
+                int countFire = bookDAO.countFineByUser(number, 0L);
+                if (countFire > 0)
+                    return UtilCommand.errorMessageJSON(message.getString("error.json.book_service.need_pay"));
+                if (user != null && bookDAO.addBookToRentByUser(bookId, user.getId())) {
+                    innerObject.add("status", new Gson().toJsonTree("OK"));
+                    innerObject.add("message",
+                            new Gson().toJsonTree(message.getString("message.json.book_service.booking.success")));
+                } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_user"));
+            } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_book"));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End deleteBookFromRent method");
+        return innerObject;
+    }
+
+    public JsonObject bookListPagination(Map<String, Object> jsonParameters) {
+        log.trace("Start booksListPagination method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        if (jsonParameters == null) return UtilCommand.errorMessageJSON("Illegal argument from JSON");
+        PageSettings pageSettings = readPaginationParameter(jsonParameters);
+        try {
+            String sortColumn = pageSettings.getSort();
+            pageSettings.setSort(sortColumn);
+            log.debug("Pagination parameter: " + pageSettings);
+            List<CountBook> bookList = bookDAO.findAllBooks(pageSettings);
+            List<BookDTO> list = bookList.stream()
+                    .map(BookDTO::new)
+                    .collect(Collectors.toList());
+            //JSON message
+            long pages = (long) Math.ceil((double) bookDAO.bookCount() / pageSettings.getSize());
+            innerObject.add("status", new Gson().toJsonTree("OK"));
+            innerObject.add("page", new Gson().toJsonTree(pageSettings.getPage()));
+            innerObject.add("pages", new Gson().toJsonTree(pages));
+            innerObject.add("list", new Gson().toJsonTree(list));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End usersListPagination method");
+        return innerObject;
+    }
+
+    public JsonObject bookListPaginationWithSearch(Map<String, Object> jsonParameters) {
+        log.trace("Start booksListPagination method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        Optional<String> searching;
+        searching = Optional.ofNullable((String) jsonParameters.get("searching"));
+        PageSettings pageSettings = readPaginationParameter(jsonParameters);
+        try {
+            String sortColumn = pageSettings.getSort();
+            pageSettings.setSort(sortColumn);
+            String search = searching.orElse("");
+            log.debug("Pagination parameter: " + pageSettings);
+            List<CountBook> bookList = bookDAO.findBooksWithSearch(pageSettings, search);
+            List<BookDTO> list = bookList.stream()
+                    .map(BookDTO::new)
+                    .collect(Collectors.toList());
+            //JSON message
+            long pages = (long) Math.ceil((double) bookDAO.bookCount(search) / pageSettings.getSize());
+            innerObject.add("status", new Gson().toJsonTree("OK"));
+            innerObject.add("page", new Gson().toJsonTree(pageSettings.getPage()));
+            innerObject.add("pages", new Gson().toJsonTree(pages));
+            innerObject.add("list", new Gson().toJsonTree(list));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End usersListPagination method");
+        return innerObject;
+    }
+
+    public JsonObject bookRentListPagination(Map<String, Object> jsonParameters, long userId) {
+        log.trace("Start booksRentListPagination method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        PageSettings pageSettings = readPaginationParameter(jsonParameters);
+        try {
+            String sortColumn = pageSettings.getSort();
+            pageSettings.setSort(sortColumn);
+            log.debug("Pagination parameter: " + pageSettings);
+            List<RentBook> bookList = bookDAO.findAllUserBooks(userId, pageSettings);
+            List<RentBookDTO> list = bookList.stream()
+                    .map(RentBookDTO::new)
+                    .collect(Collectors.toList());
+            //JSON message
+            double bookCount = (double) bookDAO.bookCount(userId);
+            long pages = (long) Math.ceil(bookCount / pageSettings.getSize());
+            innerObject.add("status", new Gson().toJsonTree("OK"));
+            innerObject.add("page", new Gson().toJsonTree(pageSettings.getPage()));
+            innerObject.add("pages", new Gson().toJsonTree(pages));
+            innerObject.add("list", new Gson().toJsonTree(list));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End bookRentListPagination method");
+        return innerObject;
+    }
+
+    public JsonObject deleteBookFromRent(long id) {
+        log.trace("Start deleteBookFromRent method in " + this.getClass().getName());
+        JsonObject innerObject = new JsonObject();
+        try {
+            RentBook book = bookDAO.findRendBookByRentId(id);
+            if (!book.getStatus().equals("need pay") && bookDAO.deleteRentBook(id)) {
+                innerObject.add("status", new Gson().toJsonTree("OK"));
+                innerObject.add("message",
+                        new Gson().toJsonTree(message.getString("message.json.book_service.delete_rent.success")));
+            } else innerObject = UtilCommand.errorMessageJSON(message.getString("error.json.book_service.no_return"));
+        } catch (AppException ex) {
+            innerObject = UtilCommand.errorMessageJSON(ex.getMessage());
+        }
+        log.debug("JSON to send: " + innerObject);
+        log.trace("End deleteBookFromRent method");
+        return innerObject;
+    }
+
+    private PageSettings readPaginationParameter(Map<String, Object> jsonParameters) {
+        Optional<Integer> currentPage;
+        Optional<Integer> itemPerPage;
+        Optional<String> sorting;
+        currentPage = Optional.ofNullable((Integer) jsonParameters.get("currentPage"));
+        itemPerPage = Optional.ofNullable((Integer) jsonParameters.get("items"));
+        sorting = Optional.ofNullable((String) jsonParameters.get("sorting"));
+        PageSettings pageSettings = new PageSettings();
+        if (itemPerPage.orElse(5) <= 0) {
+            pageSettings.setPage(1);
+            pageSettings.setSize(Integer.MAX_VALUE);
+        } else {
+            pageSettings.setPage(currentPage.orElse(1));
+            pageSettings.setSize(itemPerPage.orElse(5));
+        }
+        pageSettings.setSort(sorting.orElse("name"));
+        return pageSettings;
+    }
+
 }

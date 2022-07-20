@@ -28,13 +28,15 @@ public class RoleDAOImpl implements RoleDAO {
 
     private static final String SQL_DELETE_ROLE =
             "DELETE FROM roles WHERE id = ?;";
-    private DBManager dbManager;
+    private final DBManager dbManager;
 
-    public RoleDAOImpl() {dbManager = DBManager.getInstance();}
+    public RoleDAOImpl() {
+        dbManager = DBManager.getInstance();
+    }
 
     @Override
     public boolean create(Role role) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -45,11 +47,13 @@ public class RoleDAOImpl implements RoleDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not insert Role to DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not insert Role to DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -57,8 +61,8 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Role findById(long id) throws AppException {
         Role role = new Role();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -71,17 +75,20 @@ public class RoleDAOImpl implements RoleDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find role by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find role by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return role;
     }
 
     @Override
     public boolean update(Role role) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -93,18 +100,20 @@ public class RoleDAOImpl implements RoleDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not update Publisher in DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not update Publisher in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
 
     @Override
     public boolean delete(Role role) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -114,11 +123,13 @@ public class RoleDAOImpl implements RoleDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not delete Role from DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not delete Role from DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -130,7 +141,7 @@ public class RoleDAOImpl implements RoleDAO {
          *
          * @param rs ResultSet
          * @return Role object
-         * @throws AppException
+         * @throws AppException custom exception
          */
         @Override
         public Role loadRow(ResultSet rs) throws AppException {

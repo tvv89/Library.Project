@@ -240,11 +240,13 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not insert book to DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not insert book to DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -252,8 +254,8 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public Book findById(long id) throws AppException {
         Book book = new Book();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         BookLoad mapper = new BookLoad();
         try {
@@ -268,10 +270,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find publisher by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find publisher by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
@@ -280,8 +285,8 @@ public class BookDAOImpl implements BookDAO {
     public CountBook findByIdWithCount(long id) throws AppException {
         CountBook bookCount = new CountBook();
         Book book;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -299,10 +304,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find findByIdWithCount by book id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find findByIdWithCount by book id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return bookCount;
     }
@@ -310,7 +318,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public boolean update(Book book, int count) throws AppException {
         Connection con = null;
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         boolean result;
         try {
             con = dbManager.getConnection();
@@ -327,19 +335,21 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not update book to DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not update book to DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
 
     @Override
     public boolean delete(Book book) throws AppException {
-        boolean result = false;
-        PreparedStatement pstmt = null;
+        boolean result;
+        PreparedStatement pstmt;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -349,11 +359,13 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found books in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found books in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -361,9 +373,9 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<CountBook> findAllBooks(PageSettings pageSettings) throws AppException {
         List<CountBook> books = new ArrayList<>();
-        Book book = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        Book book;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -400,11 +412,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found book in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found book in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return books;
     }
@@ -412,9 +426,9 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<RentBook> findAllUserBooks(long userId, PageSettings pageSettings) throws AppException {
         List<RentBook> books = new ArrayList<>();
-        RentBook book = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        RentBook book;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         String userCriteria;
         if (userId == 0) userCriteria = "";
@@ -468,11 +482,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found users in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found users in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return books;
     }
@@ -480,8 +496,8 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public long bookCount() throws AppException {
         long count = 0;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -492,11 +508,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found books in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found books in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
@@ -504,8 +522,8 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public long bookCount(long userId) throws AppException {
         long count = 0;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -519,11 +537,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found book_user in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found book_user in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
@@ -531,13 +551,12 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public long bookCount(String search) throws AppException {
         long count = 0;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            String query = SQL__COUNT_BOOK_BY_STRING_SEARCH;
-            pstmt = con.prepareStatement(query);
+            pstmt = con.prepareStatement(SQL__COUNT_BOOK_BY_STRING_SEARCH);
             pstmt.setString(1, search);
             pstmt.setString(2, search);
             pstmt.setString(3, search);
@@ -547,19 +566,21 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found book_user in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found book_user in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
 
     @Override
     public boolean addBookToRent(long bookId, long userId, int days) throws AppException {
-        boolean result = false;
-        PreparedStatement pstmt = null;
+        boolean result;
+        PreparedStatement pstmt;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -574,11 +595,13 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Cannot update book_user in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Cannot update book_user in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -586,8 +609,8 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public RentBook changeStartDateRentBook(long id, long bookId, int days) throws AppException {
         RentBook book = new RentBook();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
 
         try {
@@ -609,10 +632,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't update start date by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't update start date by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
@@ -620,8 +646,8 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public RentBook changePayStatusRentBook(long id) throws AppException {
         RentBook book = new RentBook();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -638,10 +664,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't update pay status by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't update pay status by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
@@ -649,8 +678,8 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public RentBook findRendBookByRentId(long id) throws AppException {
         RentBook book = new RentBook();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -664,24 +693,26 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find rent book by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find rent book by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
 
     @Override
     public boolean deleteRentBook(long id) throws AppException {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         boolean result;
         try {
             con = dbManager.getConnection();
-            String query = SQL__SELECT_BOOK_USER_BY_ID;
-            pstmt = con.prepareStatement(query);
+            pstmt = con.prepareStatement(SQL__SELECT_BOOK_USER_BY_ID);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
             long bookId = 0;
@@ -696,17 +727,20 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find rent book by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find rent book by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
 
     @Override
     public boolean deleteRentBookById(long id) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -717,10 +751,13 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find rent book by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find rent book by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -728,9 +765,9 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<CountBook> findBooksWithSearch(PageSettings pageSettings, String search) throws AppException {
         List<CountBook> books = new ArrayList<>();
-        Book book = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        Book book;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -790,19 +827,21 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found book in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found book in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return books;
     }
 
     @Override
     public boolean addBookToRentByUser(long bookId, long userId) throws AppException {
-        boolean result = false;
-        PreparedStatement pstmt = null;
+        boolean result;
+        PreparedStatement pstmt;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -813,19 +852,21 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Cannot update book_user in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Cannot update book_user in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
 
     @Override
     public boolean updateImageBookById(long bookId, String image) throws AppException {
-        boolean result = false;
-        PreparedStatement pstmt = null;
+        boolean result;
+        PreparedStatement pstmt;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -836,11 +877,13 @@ public class BookDAOImpl implements BookDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Cannot update book_user in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Cannot update book_user in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -848,8 +891,8 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public int countFineByUser(String number, long id) throws AppException {
         int count = 0;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -862,11 +905,13 @@ public class BookDAOImpl implements BookDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Not found books in DB", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Not found books in DB", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
@@ -891,7 +936,7 @@ public class BookDAOImpl implements BookDAO {
          *
          * @param rs ResultSet
          * @return Publisher object
-         * @throws AppException
+         * @throws AppException custom exception
          */
         @Override
         public Book loadRow(ResultSet rs) throws AppException {
@@ -911,8 +956,8 @@ public class BookDAOImpl implements BookDAO {
 
         public void loadFields(Connection con, Book book, ResultSet rs) throws AppException {
             Publisher publisher = new Publisher();
-            PreparedStatement pstmt = null;
-            ResultSet resultSet = null;
+            PreparedStatement pstmt;
+            ResultSet resultSet;
             try {
                 pstmt = con.prepareStatement(SQL__SELECT_FROM_PUBLISHER_BY_ID);
                 pstmt.setLong(1, rs.getLong(Fields.BOOK__PUBLISHER));
@@ -936,8 +981,8 @@ public class BookDAOImpl implements BookDAO {
 
         public Set<Author> findAuthors(Connection con, long id) throws AppException {
             Set<Author> authors = new HashSet<>();
-            PreparedStatement pstmt = null;
-            ResultSet rs = null;
+            PreparedStatement pstmt;
+            ResultSet rs;
             try {
                 pstmt = con.prepareStatement(SQL__SELECT_AUTHORS_BY_BOOK_ID);
                 pstmt.setLong(1, id);
@@ -959,8 +1004,8 @@ public class BookDAOImpl implements BookDAO {
 
         public Set<Genre> findGenres(Connection con, long id) throws AppException {
             Set<Genre> genres = new HashSet<>();
-            PreparedStatement pstmt = null;
-            ResultSet rs = null;
+            PreparedStatement pstmt;
+            ResultSet rs;
             try {
                 pstmt = con.prepareStatement(SQL__SELECT_GENRES_BY_BOOK_ID);
                 pstmt.setLong(1, id);
@@ -981,10 +1026,10 @@ public class BookDAOImpl implements BookDAO {
 
         public RentBook loadRentBook(Connection con, ResultSet rsRentBook) throws AppException {
             RentBook rentBook = new RentBook();
-            PreparedStatement pstmt = null;
-            ResultSet rsBook = null;
-            ResultSet rsUser = null;
-            ResultSet rsRole = null;
+            PreparedStatement pstmt;
+            ResultSet rsBook;
+            ResultSet rsUser;
+            ResultSet rsRole;
             try {
                 rentBook.setId(rsRentBook.getLong(Fields.ENTITY__ID));
                 pstmt = con.prepareStatement(SQL__SELECT_BOOK_BY_ID);
