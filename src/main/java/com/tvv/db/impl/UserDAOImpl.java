@@ -9,7 +9,6 @@ import com.tvv.db.util.Fields;
 import com.tvv.db.util.PageSettings;
 import com.tvv.service.exception.AppException;
 
-import javax.validation.constraints.Null;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -269,7 +268,6 @@ public class UserDAOImpl implements UserDAO {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            UserLoad mapper = new UserLoad();
             pstmt = con.prepareStatement(SQL__FIND_FREE_NUMBER);
             pstmt.setLong(1, roleId);
             rs = pstmt.executeQuery();
