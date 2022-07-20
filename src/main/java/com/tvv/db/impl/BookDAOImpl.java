@@ -276,7 +276,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Can't find publisher by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
@@ -341,7 +341,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Can not update book to DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -365,7 +365,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found books in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -418,7 +418,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found book in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return books;
     }
@@ -488,7 +488,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found users in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return books;
     }
@@ -514,7 +514,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found books in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
@@ -543,7 +543,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found book_user in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
@@ -572,7 +572,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found book_user in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
@@ -601,7 +601,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Cannot update book_user in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -638,7 +638,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Can't update start date by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
@@ -670,7 +670,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Can't update pay status by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
@@ -699,7 +699,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Can't find rent book by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return book;
     }
@@ -733,7 +733,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Can't find rent book by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -757,7 +757,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Can't find rent book by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -833,7 +833,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found book in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return books;
     }
@@ -858,7 +858,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Cannot update book_user in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -883,7 +883,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Cannot update book_user in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -911,7 +911,7 @@ public class BookDAOImpl implements BookDAO {
                 throw new AppException("Not found books in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }

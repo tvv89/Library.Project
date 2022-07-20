@@ -30,13 +30,13 @@ public class AuthorDAOImpl implements AuthorDAO {
 
     private static final String SQL_DELETE_AUTHOR =
             "DELETE FROM authors WHERE id = ?;";
-    private DBManager dbManager;
+    private final DBManager dbManager;
 
     public AuthorDAOImpl() {dbManager = DBManager.getInstance();}
 
     @Override
     public boolean create(Author author) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -47,11 +47,13 @@ public class AuthorDAOImpl implements AuthorDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not insert author to DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not insert author to DB",ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con!=null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -59,8 +61,8 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public Author findById(long id) throws AppException {
         Author author = new Author();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -73,17 +75,20 @@ public class AuthorDAOImpl implements AuthorDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find account by id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find account by id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con!=null) dbManager.commitCloseConnection(con);
         }
         return author;
     }
 
     @Override
     public boolean update(Author author) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -95,18 +100,20 @@ public class AuthorDAOImpl implements AuthorDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not update author in DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not update author in DB",ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con!=null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
 
     @Override
     public boolean delete(Author author) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -116,11 +123,13 @@ public class AuthorDAOImpl implements AuthorDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            ex.printStackTrace();
-            throw new AppException("Can not delete author from DB",ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can not delete author from DB",ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con!=null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -128,8 +137,8 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public Set<Author> findAuthorsByBookId(long id) throws AppException {
         Set<Author> authors = new HashSet<>();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -142,10 +151,13 @@ public class AuthorDAOImpl implements AuthorDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
-            dbManager.rollbackCloseConnection(con);
-            throw new AppException("Can't find authors by book id", ex);
+            if (con != null) {
+                dbManager.rollbackCloseConnection(con);
+                ex.printStackTrace();
+                throw new AppException("Can't find authors by book id", ex);
+            } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con!=null) dbManager.commitCloseConnection(con);
         }
         return authors;
     }
@@ -157,7 +169,7 @@ public class AuthorDAOImpl implements AuthorDAO {
          *
          * @param rs ResultSet
          * @return Author object
-         * @throws AppException
+         * @throws AppException custom exception
          */
         @Override
         public Author loadRow(ResultSet rs) throws AppException {
