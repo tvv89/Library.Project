@@ -29,6 +29,11 @@
                              width="80" alt="">
                         </br>
                         </br>
+                        <a uk-icon="icon: image; ratio: 1.5" href="#modal-update-user-image" uk-toggle></a>
+                        <a uk-icon="icon: pencil; ratio: 1.5" href="#modal-update-user" uk-toggle></a>
+                        <a uk-icon="icon: unlock; ratio: 1.5" onclick=""></a>
+                        </br>
+                        </br>
                         <div>
                             <select class="uk-select" id="languageSelect" onchange="changeLanguage('librarian')">
                                 <option value="en" <c:if test='${sessionScope.currentLanguage == "en"}'> selected </c:if>>
@@ -52,4 +57,6 @@
             </li>
         </ul>
     </div>
+    <%@ include file="/WEB-INF/jspf/update.form.user.jspf" %>
+    <%@ include file="/WEB-INF/jspf/update.form.user.image.jspf" %>
 </nav>

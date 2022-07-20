@@ -26,15 +26,16 @@ public class DBManager {
 
     /**
      * Get connection from pool
+     *
      * @return Connection for operation with DB
-     * @throws SQLException
+     * @throws SQLException SQL exception
      */
     public Connection getConnection() throws SQLException {
         Connection con = null;
         try {
             Context initContext = new InitialContext();
-            Context envContext  = (Context)initContext.lookup("java:/comp/env");
-            DataSource ds = (DataSource)envContext.lookup("jdbc/Library");
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/Library");
             con = ds.getConnection();
             con.setAutoCommit(false);
         } catch (NamingException ex) {
@@ -48,6 +49,7 @@ public class DBManager {
 
     /**
      * Function for commit changes in DB
+     *
      * @param con connection
      */
     public void commitCloseConnection(Connection con) {
@@ -62,6 +64,7 @@ public class DBManager {
 
     /**
      * Function for rollback changes in DB
+     *
      * @param con connection
      */
     public void rollbackCloseConnection(Connection con) {

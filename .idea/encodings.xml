@@ -10,6 +10,8 @@
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/header.jspf" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/update.form.book.jspf" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/update.form.image.jspf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/update.form.user.image.jspf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jspf/update.form.user.jspf" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/log4j.properties" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/access.denied.jsp" charset="windows-1251" />
@@ -20,7 +22,6 @@
     <file url="file://$PROJECT_DIR$/src/main/webapp/css" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/error.page.jsp" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/fonts" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/form.create.user.jsp" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/form.create.user.jsp" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/images/_error.png" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/images/_lock.png" charset="windows-1251" />
@@ -36,7 +37,7 @@
     <file url="file://$PROJECT_DIR$/src/main/webapp/list.user.books.jsp" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/list.user.rent.books.jsp" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/login.form.jsp" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/login.form.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/photo.user.create.fail.jsp" charset="windows-1251" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

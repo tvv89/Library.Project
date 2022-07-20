@@ -280,14 +280,6 @@ class BookServiceTest {
 
     @Test
     void testStartRentBookByUserNumber() throws AppException {
-        RentBook rentBook = new RentBook();
-        rentBook.setId(1);
-        rentBook.setBook(assertBook);
-        rentBook.setUser(assertUser);
-        rentBook.setStartDate(LocalDate.parse("2022-07-01"));
-        rentBook.setEndDate(LocalDate.parse("2022-08-01"));
-        rentBook.setStatus("reading");
-        rentBook.setStatusPay("");
         CountBook countBook = new CountBook();
         countBook.setId(1);
         countBook.setBook(assertBook);
@@ -410,5 +402,21 @@ class BookServiceTest {
 
         boolean result = bookService.updateImage(1, "1.jpg");
         assertTrue(result);
+    }
+
+    @Test
+    void testCancelBookingByUserId() throws AppException {
+        BookDAO bookDAO = mock(BookDAO.class);
+        when(bookDAO.findRendBookByRentId(1))
+                .thenReturn(assertRentBook);
+        when(bookDAO.deleteRentBookById(1))
+                .thenReturn(true);
+        UserDAO userDAO = mock(UserDAO.class);
+        BookService bookService = new BookService();
+        bookService.init(bookDAO, userDAO);
+        bookService.initLanguage("en");
+        JsonObject result = bookService.cancelBookingByUserId(1, 1);
+        String assertString = "{\"status\":\"OK\",\"message\":\"Booking was canceled\"}";
+        assertEquals(result.toString(), assertString);
     }
 }

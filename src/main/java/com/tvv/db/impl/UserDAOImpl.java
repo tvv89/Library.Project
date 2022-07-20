@@ -42,14 +42,18 @@ public class UserDAOImpl implements UserDAO {
             "SELECT count(*) as count FROM users WHERE role_id = ?";
     private static final String SQL__FIND_FREE_NUMBER =
             "SELECT max(cast(number as UNSIGNED)) as number FROM users WHERE role_id = ?";
+    private static final String SQL__UPDATE_USER_IMAGE =
+            "UPDATE users SET photo = ? WHERE id = ?";
 
-    private DBManager dbManager;
+    private final DBManager dbManager;
 
-    public UserDAOImpl() {dbManager = DBManager.getInstance();}
+    public UserDAOImpl() {
+        dbManager = DBManager.getInstance();
+    }
 
     @Override
     public boolean create(User user) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -68,11 +72,12 @@ public class UserDAOImpl implements UserDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
-            throw new AppException("Can not insert User to DB",ex);
+            throw new AppException("Can not insert User to DB", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -80,8 +85,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findById(long id) throws AppException {
         User user = new User();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -94,17 +99,18 @@ public class UserDAOImpl implements UserDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             throw new AppException("Can't find User by id", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return user;
     }
 
     @Override
     public boolean update(User user) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -121,21 +127,23 @@ public class UserDAOImpl implements UserDAO {
             pstmt.setLong(9, user.getRole().getId());
             pstmt.setString(10, user.getLocale());
             pstmt.setLong(11, user.getId());
-            result = pstmt.execute();
+            pstmt.executeUpdate();
             pstmt.close();
+            result = true;
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
-            throw new AppException("Can not update Publisher in DB",ex);
+            throw new AppException("Can not update Publisher in DB", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
 
     @Override
     public boolean delete(User user) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -145,11 +153,12 @@ public class UserDAOImpl implements UserDAO {
             result = pstmt.execute();
             pstmt.close();
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
-            throw new AppException("Can not delete User from DB",ex);
+            throw new AppException("Can not delete User from DB", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -157,15 +166,16 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<User> findAllUsers(PageSettings pageSettings, long role) throws AppException {
         List<User> users = new ArrayList<>();
-        User user = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        User user;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
             UserLoad mapper = new UserLoad();
             String executeSQLScript;
-            switch (pageSettings.getSort()){
+            //for extended (can use if statement now)
+            switch (pageSettings.getSort()) {
                 case "lastName":
                     executeSQLScript = SQL_FIND_ALL_USERS_PAGINATION_NAME;
                     break;
@@ -174,7 +184,7 @@ public class UserDAOImpl implements UserDAO {
                     break;
             }
             pstmt = con.prepareStatement(executeSQLScript);
-            long startIndex = (pageSettings.getPage()-1) * pageSettings.getSize();
+            long startIndex = (pageSettings.getPage() - 1) * pageSettings.getSize();
             pstmt.setLong(1, role);
             pstmt.setLong(2, startIndex);
             pstmt.setLong(3, pageSettings.getSize());
@@ -186,11 +196,12 @@ public class UserDAOImpl implements UserDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
-            throw new AppException("Not found users in DB",ex);
+            throw new AppException("Not found users in DB", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return users;
     }
@@ -198,8 +209,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public long userCount(long role) throws AppException {
         long count = 0;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -211,20 +222,22 @@ public class UserDAOImpl implements UserDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
-            throw new AppException("Not found users in DB",ex);
+            throw new AppException("Not found users in DB", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return count;
     }
 
     @Override
     public User findUserByNumber(String number) throws AppException {
+        if (number == null) return null;
         User user = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -237,10 +250,11 @@ public class UserDAOImpl implements UserDAO {
             rs.close();
             pstmt.close();
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             throw new AppException("Can't find User by id", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return user;
     }
@@ -248,13 +262,12 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public String findFirstFreeNumber(long roleId) throws AppException {
         long number = 0L;
-        String str = "";
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        String str;
+        PreparedStatement pstmt;
+        ResultSet rs;
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            UserLoad mapper = new UserLoad();
             pstmt = con.prepareStatement(SQL__FIND_FREE_NUMBER);
             pstmt.setLong(1, roleId);
             rs = pstmt.executeQuery();
@@ -265,17 +278,18 @@ public class UserDAOImpl implements UserDAO {
             pstmt.close();
             str = String.valueOf(number);
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             throw new AppException("Can't find max number by id", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return str;
     }
 
     @Override
     public boolean updateLocale(long id, String currentLanguage) throws AppException {
-        PreparedStatement pstmt = null;
+        PreparedStatement pstmt;
         Connection con = null;
         boolean result;
         try {
@@ -287,11 +301,36 @@ public class UserDAOImpl implements UserDAO {
             pstmt.close();
             result = true;
         } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
             dbManager.rollbackCloseConnection(con);
             ex.printStackTrace();
-            throw new AppException("Can not update Publisher in DB",ex);
+            throw new AppException("Can not update Publisher in DB", ex);
         } finally {
-            dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateImageBookById(long id, String image) throws AppException {
+        boolean result;
+        PreparedStatement pstmt;
+        Connection con = null;
+        try {
+            con = dbManager.getConnection();
+            pstmt = con.prepareStatement(SQL__UPDATE_USER_IMAGE);
+            pstmt.setString(1, image);
+            pstmt.setLong(2, id);
+            pstmt.executeUpdate();
+            pstmt.close();
+            result = true;
+        } catch (SQLException ex) {
+            if (con == null) throw new AppException("Can not get DB connection", ex);
+            dbManager.rollbackCloseConnection(con);
+            ex.printStackTrace();
+            throw new AppException("Cannot update book_user in DB", ex);
+        } finally {
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -304,7 +343,7 @@ public class UserDAOImpl implements UserDAO {
          *
          * @param rs ResultSet
          * @return User object
-         * @throws AppException
+         * @throws AppException custom exception for user
          */
         @Override
         public User loadRow(ResultSet rs) throws AppException {

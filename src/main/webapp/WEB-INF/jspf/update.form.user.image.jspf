@@ -1,0 +1,19 @@
+﻿<div id="modal-update-user-image" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <form class="uk-form-horizontal" id="userImageForm" method="post" action="${sessionScope.userRole.name}" enctype="multipart/form-data">
+            <h2 class="uk-modal-title"><fmt:message key="update_user_form.image.title"/></h2>
+            <input type="hidden" name="command" value="loadUserImage"/>
+            <input class="uk-input uk-form-width-large uk-hidden"
+                   id="user-image-id" name="user-image-id" type="text" form-field>
+            <div uk-form-custom="target: true">
+                <input type="file" id="image-user-update-file" name="image-user-update-file" accept="image/jpeg">
+                <input class="uk-input uk-form-width-large" type="text"
+                       placeholder="<fmt:message key="update_user_form.image.field"/>" disabled>
+            </div>
+            <div>
+                <input class="uk-width-1-1 uk-button uk-button-primary uk-button-default" type="submit"
+                       id="load-user-image" name="load-user-image" value="<fmt:message key="update_user_form.image.submit"/>"/>
+            </div>
+        </form>
+    </div>
+</div>
