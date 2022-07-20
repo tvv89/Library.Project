@@ -32,7 +32,9 @@ public class PublisherDAOImpl implements PublisherDAO {
             "DELETE FROM publishers WHERE id = ?;";
     private final DBManager dbManager;
 
-    public PublisherDAOImpl() {dbManager = DBManager.getInstance();}
+    public PublisherDAOImpl() {
+        dbManager = DBManager.getInstance();
+    }
 
     @Override
     public boolean create(Publisher publisher) throws AppException {
@@ -52,10 +54,10 @@ public class PublisherDAOImpl implements PublisherDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not insert Publisher to DB",ex);
+                throw new AppException("Can not insert Publisher to DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -83,7 +85,7 @@ public class PublisherDAOImpl implements PublisherDAO {
                 throw new AppException("Can't find publisher by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return publisher;
     }
@@ -107,10 +109,10 @@ public class PublisherDAOImpl implements PublisherDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not update Publisher in DB",ex);
+                throw new AppException("Can not update Publisher in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -130,10 +132,10 @@ public class PublisherDAOImpl implements PublisherDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not delete Publisher from DB",ex);
+                throw new AppException("Can not delete Publisher from DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }

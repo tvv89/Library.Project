@@ -129,7 +129,7 @@ public class RoleDAOImpl implements RoleDAO {
                 throw new AppException("Can not delete Role from DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }

@@ -36,7 +36,9 @@ public class GenreDAOImpl implements GenreDAO {
             "DELETE FROM genres WHERE id = ?;";
     private final DBManager dbManager;
 
-    public GenreDAOImpl() {dbManager = DBManager.getInstance();}
+    public GenreDAOImpl() {
+        dbManager = DBManager.getInstance();
+    }
 
     @Override
     public boolean create(Genre genre) throws AppException {
@@ -53,10 +55,10 @@ public class GenreDAOImpl implements GenreDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not insert author to DB",ex);
+                throw new AppException("Can not insert author to DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -84,7 +86,7 @@ public class GenreDAOImpl implements GenreDAO {
                 throw new AppException("Can't find genre by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return genre;
     }
@@ -104,10 +106,10 @@ public class GenreDAOImpl implements GenreDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not update genre in DB",ex);
+                throw new AppException("Can not update genre in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -127,10 +129,10 @@ public class GenreDAOImpl implements GenreDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not delete author from DB",ex);
+                throw new AppException("Can not delete author from DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -158,7 +160,7 @@ public class GenreDAOImpl implements GenreDAO {
                 throw new AppException("Can't find genres by book id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return genres;
     }

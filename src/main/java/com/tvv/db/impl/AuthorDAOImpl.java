@@ -32,7 +32,9 @@ public class AuthorDAOImpl implements AuthorDAO {
             "DELETE FROM authors WHERE id = ?;";
     private final DBManager dbManager;
 
-    public AuthorDAOImpl() {dbManager = DBManager.getInstance();}
+    public AuthorDAOImpl() {
+        dbManager = DBManager.getInstance();
+    }
 
     @Override
     public boolean create(Author author) throws AppException {
@@ -50,10 +52,10 @@ public class AuthorDAOImpl implements AuthorDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not insert author to DB",ex);
+                throw new AppException("Can not insert author to DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -81,7 +83,7 @@ public class AuthorDAOImpl implements AuthorDAO {
                 throw new AppException("Can't find account by id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return author;
     }
@@ -103,10 +105,10 @@ public class AuthorDAOImpl implements AuthorDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not update author in DB",ex);
+                throw new AppException("Can not update author in DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -126,10 +128,10 @@ public class AuthorDAOImpl implements AuthorDAO {
             if (con != null) {
                 dbManager.rollbackCloseConnection(con);
                 ex.printStackTrace();
-                throw new AppException("Can not delete author from DB",ex);
+                throw new AppException("Can not delete author from DB", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return result;
     }
@@ -157,7 +159,7 @@ public class AuthorDAOImpl implements AuthorDAO {
                 throw new AppException("Can't find authors by book id", ex);
             } else throw new AppException("Can not connect to DB", new NullPointerException());
         } finally {
-            if (con!=null) dbManager.commitCloseConnection(con);
+            if (con != null) dbManager.commitCloseConnection(con);
         }
         return authors;
     }
