@@ -1,6 +1,7 @@
 package com.tvv.db.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class User extends Entity{
     private String number;
@@ -13,6 +14,23 @@ public class User extends Entity{
     private String photo;
     private Role role;
     private String locale;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(number, user.number) && Objects.equals(password, user.password)
+                && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName)
+                && Objects.equals(dateOfBirth, user.dateOfBirth) && Objects.equals(phone, user.phone)
+                && Objects.equals(status, user.status) && Objects.equals(photo, user.photo)
+                && Objects.equals(role, user.role) && Objects.equals(locale, user.locale);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, password, firstName, lastName, dateOfBirth, phone, status, photo, role, locale);
+    }
 
     public String getNumber() {
         return number;
