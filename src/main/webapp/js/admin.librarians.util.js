@@ -1,6 +1,6 @@
-var itemsPerPage=5;
-var currentPGPage=1;
-var sortBy="number";
+let itemsPerPage=5;
+let currentPGPage=1;
+let sortBy="number";
 
 function callPOSTRequest(option, parameter) {
     var items = parseInt($('#itemsPerPage').val());
@@ -36,11 +36,10 @@ function callPOSTRequest(option, parameter) {
 }
 
 function createTable(tx) {
-    var table = document.getElementById('table')
+    const table = document.getElementById('table')
     table.innerHTML = "";
-    for (var i = 0; i < tx.length; i++) {
-        var userStatusButton = tx[i].status;
-        var row = `<tr id="tr_${tx[i].id}">`
+    for (let i = 0; i < tx.length; i++) {
+        let row = `<tr id="tr_${tx[i].id}">`
                 + loadRow(tx[i]) +
                 `</tr>`
         table.innerHTML += row;
@@ -48,8 +47,9 @@ function createTable(tx) {
 }
 
 function loadRow(data) {
-    var userStatusButton = data.status;
-    var row = `
+    const userStatusButton = data.status;
+    const userRoleButton = data.role;
+    let row = `
                 <td><img class="uk-preserve-width uk-border-circle" 
                 src="/images/users/${data.photo}" width="40" alt=""></td>
                 <td>${data.number}</td>
@@ -59,6 +59,9 @@ function loadRow(data) {
                 <td>${data.phone}</td>
                 <td><button id="js-modal-status" class="uk-button uk-button-default" type="button" name="user"
                                     value="${data.id}" onclick="changeStatusButton(${data.id})">${userStatusButton}</button>
+                </td>
+                <td><button id="js-modal-status" class="uk-button uk-button-default" type="button" name="role"
+                                    value="${data.id}" onclick="changeRoleButton(${data.id})">${userRoleButton}</button>
                 </td>
                 `
     return row;
@@ -84,7 +87,27 @@ function changeUserStatus(id) {
         .catch(err => {
             callErrorAlert(err);
         });
+}
 
+function changeUserRoleStatus(id) {
+    fetch('admin?command=changeRoleUser', {
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+        },
+        method: 'POST',
+        body: JSON.stringify({userId: id})
+    }) .then(response => response.json())
+        .then(data =>  {
+            if (data.status =='OK') {
+                if ($('#tr_' + data.user.id).length) {
+                    let newHtml = loadRow(data.user);
+                    $('#tr_' + data.user.id).html(newHtml);
+                }
+            } else callErrorAlert(data.message);
+        })
+        .catch(err => {
+            callErrorAlert(err);
+        });
 }
 
 function changeStatusButton(e) {
@@ -94,8 +117,16 @@ function changeStatusButton(e) {
     }, function () {
         console.log('Canceling enable')
     });
-};
+}
 
+function changeRoleButton(e) {
+    UIkit.modal.confirm("Are you sure to change user role?").then(function () {
+        changeUserRoleStatus(e);
+        console.log('User is enabled')
+    }, function () {
+        console.log('Canceling enable')
+    });
+}
 
 function changeSort(){
     sortBy = $('#sortUsersOption').val();
@@ -107,8 +138,7 @@ function callErrorAlert(message){
     UIkit.modal.alert(message);
 }
 
-
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
     callPOSTRequest(1,0);
     document.getElementById("librarianForm").onsubmit = enableSubmitButton;
 });

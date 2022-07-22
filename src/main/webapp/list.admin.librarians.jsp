@@ -41,6 +41,7 @@
                     <th><fmt:message key="list_users.table.header.date_of_birth"/></th>
                     <th><fmt:message key="list_users.table.header.phone"/></th>
                     <th><fmt:message key="list_users.table.header.status"/></th>
+                    <th><fmt:message key="list_users.table.header.role"/></th>
                 </tr>
                 </thead>
                 <tbody id="table">

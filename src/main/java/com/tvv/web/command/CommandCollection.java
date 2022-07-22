@@ -18,18 +18,18 @@ public class CommandCollection {
 	
 	private static final Logger log = Logger.getLogger(CommandCollection.class);
 	
-	private static Map<String, Command> commands = new TreeMap<String, Command>();
+	private static final Map<String, Command> commands = new TreeMap<>();
 	
 	static {
-		/**
-		 * Main authentication commands
-		 */
+
+		//Main authentication commands
+
 		commands.put("login", new LoginCommand());
 		commands.put("logout", new LogoutCommand());
 		commands.put("registration", new RegistrationCommand());
 		commands.put("createUser", new CreateUserCommand());
 		commands.put("language", new LanguageCommand());
-		/**
+		/*
 		 * Command for word with Admin access
 		 */
 		commands.put("listUsers", new LoadListAdminUsersCommand());
@@ -45,7 +45,8 @@ public class CommandCollection {
 		commands.put("infoBook", new InfoBookCommand());
 		commands.put("deleteBook", new DeleteBookCommand());
 		commands.put("loadBookImage", new ImageBookLoadCommand());
-		/**
+		commands.put("changeRoleUser", new ChangeUserRoleCommand());
+		/*
 		 * Command for word with Librarian
 		 */
 		commands.put("listLibrarianRentBooks", new LoadListLibrarianRentBooksCommand());
@@ -62,7 +63,7 @@ public class CommandCollection {
 		commands.put("listLibrarianUsers", new LoadListLibrarianUserCommand());
 		commands.put("updateListLibrarianUsers", new UpdateListLibrarianUsersCommand());
 
-		/**
+		/*
 		 * Command for word with User
 		 */
 		commands.put("listUserAllBooks", new LoadListUserBooksCommand());
@@ -75,7 +76,7 @@ public class CommandCollection {
 
 		commands.put("updateUser", new UpdateUserCommand());
 		commands.put("loadUserImage", new ImageUserLoadCommand());
-		/**
+		/*
 		 * Command for word with incognito
 		 */
 		commands.put("listIncognitoAllBooks", new LoadListIncognitoBooksCommand());
