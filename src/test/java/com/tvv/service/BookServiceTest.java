@@ -384,9 +384,10 @@ class BookServiceTest {
         UserDAO userDAO = mock(UserDAO.class);
         BookService bookService = new BookService();
         bookService.init(bookDAO, userDAO);
+        bookService.initLanguage("en");
 
         JsonObject result = bookService.deleteBookById(1, "");
-        String assertString = "{\"status\":\"OK\"}";
+        String assertString = "{\"status\":\"OK\",\"message\":\"Book was deleted\"}";
         assertEquals(result.toString(), assertString);
     }
 

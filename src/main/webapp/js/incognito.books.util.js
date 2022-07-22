@@ -1,10 +1,7 @@
-var itemsPerPage = 5;
-var currentPGPage = 1;
-var sortBy = "name";
-var searchText = "";
-window.addEventListener('DOMContentLoaded', (event) => {
-    callPOSTRequest(1, 0);
-});
+let itemsPerPage = 5;
+let currentPGPage = 1;
+let sortBy = "name";
+let searchText = "";
 
 function callPOSTRequest(option, parameter) {
     var items = parseInt($('#itemsPerPage').val());
@@ -77,3 +74,7 @@ function changeSearching() {
 function callErrorAlert(message) {
     UIkit.modal.alert(message);
 }
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    callPOSTRequest(1, 0);
+});

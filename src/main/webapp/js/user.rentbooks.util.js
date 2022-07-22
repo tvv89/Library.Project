@@ -1,9 +1,6 @@
 let itemsPerPage = 5;
 let currentPGPage = 1;
 let sortBy = "name";
-window.addEventListener('DOMContentLoaded', (event) => {
-    callPOSTRequest(1, 0);
-});
 
 function callPOSTRequest(option, parameter) {
     let items = parseInt($('#itemsPerPage').val());
@@ -72,7 +69,7 @@ function rentBookRow(book) {
 }
 
 function cancelBooking(tableId) {
-    UIkit.modal.confirm("This booking will be canceled.").then(function () {
+    UIkit.modal.confirm(javascript_user_rent_books_cancel_book).then(function () {
         fetch('user?command=cancelBooking', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -110,3 +107,7 @@ function changeSort() {
 function callErrorAlert(message) {
     UIkit.modal.alert(message);
 }
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    callPOSTRequest(1, 0);
+});

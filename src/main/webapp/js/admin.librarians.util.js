@@ -111,7 +111,7 @@ function changeUserRoleStatus(id) {
 }
 
 function changeStatusButton(e) {
-    UIkit.modal.confirm("Are you sure to change user status?").then(function () {
+    UIkit.modal.confirm(javascript_admin_librarian_status_button).then(function () {
         changeUserStatus(e);
         console.log('User is enabled')
     }, function () {
@@ -120,7 +120,7 @@ function changeStatusButton(e) {
 }
 
 function changeRoleButton(e) {
-    UIkit.modal.confirm("Are you sure to change user role?").then(function () {
+    UIkit.modal.confirm(javascript_admin_librarian_role_button).then(function () {
         changeUserRoleStatus(e);
         console.log('User is enabled')
     }, function () {
