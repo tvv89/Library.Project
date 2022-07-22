@@ -48,9 +48,9 @@ public class UserService {
     public JsonObject usersListPagination(Map<String, Object> jsonParameters, long role) {
         log.trace("Start usersListPagination method in " + this.getClass().getName());
         JsonObject innerObject = new JsonObject();
-        Optional<Integer> currentPage = null;
-        Optional<Integer> itemPerPage = null;
-        Optional<String> sorting = null;
+        Optional<Integer> currentPage;
+        Optional<Integer> itemPerPage;
+        Optional<String> sorting;
         currentPage = Optional.of((Integer) jsonParameters.get("currentPage"));
         itemPerPage = Optional.of((Integer) jsonParameters.get("items"));
         sorting = Optional.of((String) jsonParameters.get("sorting"));
@@ -74,12 +74,12 @@ public class UserService {
                     break;
             }
             pageSettings.setSort(sortColumn);
-            log.debug("Pagination parameter: " + pageSettings.toString());
+            log.debug("Pagination parameter: " + pageSettings);
             List<User> userList = userDAO.findAllUsers(pageSettings, role);
             List<UserDTO> list = userList.stream()
-                    .map(user -> new UserDTO(user))
+                    .map(UserDTO::new)
                     .collect(Collectors.toList());
-            /**
+            /*
              * Select and show user list
              */
             long pages = (long) Math.ceil((double) userDAO.userCount(role) / pageSettings.getSize());
@@ -103,7 +103,7 @@ public class UserService {
             User user = userDAO.findUserByNumber(number);
             if (user != null) {
                 UserDTO userDTO = new UserDTO(user);
-                /**
+                /*
                  * Select and show user
                  */
                 innerObject.add("status", new Gson().toJsonTree("OK"));
@@ -126,6 +126,14 @@ public class UserService {
         User user = findUserById(id);
         String newStatus = user.getStatus().equalsIgnoreCase("enabled") ? "disabled" : "enabled";
         user.setStatus(newStatus);
+        userDAO.update(user);
+        return user;
+    }
+
+    public User changeRoleUserById(long id, long newRoleId) throws AppException {
+        User user = findUserById(id);
+        Role role = roleDAO.findById(newRoleId);
+        user.setRole(role);
         userDAO.update(user);
         return user;
     }
@@ -169,15 +177,14 @@ public class UserService {
 
     public boolean updateUser(UserDTO userDTO) throws AppException {
         User user = userDAO.findById(userDTO.getId());
-        if (user.getFirstName()!=userDTO.getFirstName())
+        if (user.getFirstName().equals(userDTO.getFirstName()))
             user.setFirstName(userDTO.getFirstName());
-        if (user.getLastName()!=userDTO.getLastName())
+        if (user.getLastName().equals(userDTO.getLastName()))
             user.setLastName(userDTO.getLastName());
-        if (user.getDateOfBirth().toString()!=userDTO.getDateOfBirth())
+        if (user.getDateOfBirth().toString().equals(userDTO.getDateOfBirth()))
             user.setDateOfBirth(LocalDate.parse(userDTO.getDateOfBirth()));
-        if (user.getPhone()!=userDTO.getPhone())
+        if (user.getPhone().equals(userDTO.getPhone()))
             user.setPhone(userDTO.getPhone());
-
         return userDAO.update(user);
     }
 
@@ -198,4 +205,5 @@ public class UserService {
         }
         return result;
     }
+
 }
