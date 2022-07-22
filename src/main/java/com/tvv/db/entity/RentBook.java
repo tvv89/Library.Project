@@ -2,6 +2,7 @@ package com.tvv.db.entity;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.Objects;
 import java.util.Set;
 
 public class RentBook extends Entity{
@@ -80,5 +81,18 @@ public class RentBook extends Entity{
                 ", endDate=" + endDate +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RentBook rentBook = (RentBook) o;
+        return id == rentBook.id && Objects.equals(book, rentBook.book) && Objects.equals(user, rentBook.user) && Objects.equals(startDate, rentBook.startDate) && Objects.equals(endDate, rentBook.endDate) && Objects.equals(statusPay, rentBook.statusPay) && Objects.equals(status, rentBook.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, book, user, startDate, endDate, statusPay, status);
     }
 }

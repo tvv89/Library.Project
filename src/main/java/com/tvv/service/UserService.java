@@ -123,10 +123,11 @@ public class UserService {
     }
 
     public User changeStatusUserById(long id) throws AppException {
-        User user = findUserById(id);
+        User user = userDAO.findById(id);
         String newStatus = user.getStatus().equalsIgnoreCase("enabled") ? "disabled" : "enabled";
         user.setStatus(newStatus);
         userDAO.update(user);
+        user = userDAO.findById(id);
         return user;
     }
 
@@ -135,6 +136,7 @@ public class UserService {
         Role role = roleDAO.findById(newRoleId);
         user.setRole(role);
         userDAO.update(user);
+        user = userDAO.findById(id);
         return user;
     }
 

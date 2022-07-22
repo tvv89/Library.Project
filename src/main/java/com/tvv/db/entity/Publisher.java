@@ -1,5 +1,7 @@
 package com.tvv.db.entity;
 
+import java.util.Objects;
+
 public class Publisher extends Entity {
     private String name;
     private String address;
@@ -46,5 +48,18 @@ public class Publisher extends Entity {
                 ", phone='" + phone + '\'' +
                 ", city='" + city + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Publisher publisher = (Publisher) o;
+        return Objects.equals(name, publisher.name) && Objects.equals(address, publisher.address) && Objects.equals(phone, publisher.phone) && Objects.equals(city, publisher.city);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, address, phone, city);
     }
 }
