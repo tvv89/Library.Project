@@ -1,9 +1,7 @@
-var itemsPerPage=5;
-var currentPGPage=1;
-var sortBy="number";
-window.addEventListener('DOMContentLoaded', (event) => {
-        callPOSTRequest(1,0);
-});
+let itemsPerPage=5;
+let currentPGPage=1;
+let sortBy="number";
+
 function callPOSTRequest(option, parameter) {
     var items = parseInt($('#itemsPerPage').val());
     switch (option){
@@ -54,7 +52,6 @@ function createTable(tx) {
     }
 }
 
-
 function changeSort(){
     sortBy = $('#sortUsersOption').val();
     currentPGPage=1;
@@ -64,3 +61,7 @@ function changeSort(){
 function callErrorAlert(message){
     UIkit.modal.alert(message);
 }
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    callPOSTRequest(1,0);
+});

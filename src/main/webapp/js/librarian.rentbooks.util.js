@@ -1,9 +1,6 @@
-var itemsPerPage = 5;
-var currentPGPage = 1;
-var sortBy = "name";
-window.addEventListener('DOMContentLoaded', (event) => {
-    callPOSTRequest(1, 0);
-});
+let itemsPerPage = 5;
+let currentPGPage = 1;
+let sortBy = "name";
 
 function callPOSTRequest(option, parameter) {
     var items = parseInt($('#itemsPerPage').val());
@@ -52,7 +49,7 @@ function createTable(tx) {
 }
 
 function giveBook(tableId) {
-    UIkit.modal.confirm("Book will be give for user. Are you sure?").then(function () {
+    UIkit.modal.confirm(javascript_librarian_rent_book_give_book).then(function () {
         fetch('librarian?command=giveBookForUser', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -72,7 +69,8 @@ function giveBook(tableId) {
                             status: 'success',
                             timeout: 2000
                         })
-                    };
+                    }
+                    ;
                 } else callErrorAlert(data.message);
             })
             .catch(err => {
@@ -86,7 +84,7 @@ function giveBook(tableId) {
 }
 
 function payFine(tableId) {
-    UIkit.modal.confirm("Did user pay fine?").then(function () {
+    UIkit.modal.confirm(javascript_librarian_rent_book_pay_fine).then(function () {
         fetch('librarian?command=payFineBookForUser', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -120,7 +118,7 @@ function payFine(tableId) {
 }
 
 function takeBook(tableId) {
-    UIkit.modal.confirm("User return this book to library").then(function () {
+    UIkit.modal.confirm(javascript_librarian_rent_book_return_button).then(function () {
         fetch('librarian?command=returnBookToLibrary', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -150,15 +148,15 @@ function takeBook(tableId) {
 }
 
 function rentBookRow(book) {
-        var buttonPayStatus = book.status != "need pay" ? "uk-disabled" : "uk-enabled";
-        var buttonGiveStatus = book.startDate != "" ? "uk-disabled" : "uk-enabled";
-        var buttonTakeStatus = "uk-enabled";
-        if (buttonPayStatus == "uk-enabled" || buttonGiveStatus == "uk-enabled") buttonTakeStatus = "uk-disabled";
+    const buttonPayStatus = book.status != "need pay" ? "uk-disabled" : "uk-enabled";
+    const buttonGiveStatus = book.startDate != "" ? "uk-disabled" : "uk-enabled";
+    let buttonTakeStatus = "uk-enabled";
+    if (buttonPayStatus == "uk-enabled" || buttonGiveStatus == "uk-enabled") buttonTakeStatus = "uk-disabled";
 
-        var buttonPayColor = buttonPayStatus == "uk-enabled" ? "color:red" : "color:#D3D3D3";
-        var buttonGiveColor = buttonGiveStatus == "uk-enabled" ? "" : "color:#D3D3D3";
-        var buttonTakeColor = buttonTakeStatus == "uk-enabled" ? "" : "color:#D3D3D3";
-        var row = `<td><img class="uk-preserve-width uk-border-rectangle" 
+    const buttonPayColor = buttonPayStatus == "uk-enabled" ? "color:red" : "color:#D3D3D3";
+    const buttonGiveColor = buttonGiveStatus == "uk-enabled" ? "" : "color:#D3D3D3";
+    const buttonTakeColor = buttonTakeStatus == "uk-enabled" ? "" : "color:#D3D3D3";
+    let row = `<td><img class="uk-preserve-width uk-border-rectangle" 
                 src="/images/books/${book.image}" width="40" alt=""></td>
                 <td>${book.author}</td>
                 <td>${book.name}</td>
@@ -178,7 +176,7 @@ function rentBookRow(book) {
                 <a uk-icon="icon: sign-in; ratio: 1.5" class="${buttonTakeStatus}" 
                     style="${buttonTakeColor}"  onclick="takeBook(${book.id})"></a>
                 </td>`
-        return row;
+    return row;
 }
 
 function changeSort() {
@@ -199,12 +197,16 @@ function userInfo(id) {
         .then(data => {
             if (data.status == 'OK') {
                 document.getElementById("user-photo").src = `images/users/${data.user.photo}`;
-                document.getElementById("user-number").innerHTML=`${data.user.number}`;
-                document.getElementById("user-fn").innerHTML=`${data.user.firstName}`;
-                document.getElementById("user-ln").innerHTML=`${data.user.lastName}`;
-                document.getElementById("user-dob").innerHTML=`${data.user.dateOfBirth}`;
-                document.getElementById("user-phone").innerHTML=`${data.user.phone}`;
+                document.getElementById("user-number").innerHTML = `${data.user.number}`;
+                document.getElementById("user-fn").innerHTML = `${data.user.firstName}`;
+                document.getElementById("user-ln").innerHTML = `${data.user.lastName}`;
+                document.getElementById("user-dob").innerHTML = `${data.user.dateOfBirth}`;
+                document.getElementById("user-phone").innerHTML = `${data.user.phone}`;
             } else callErrorAlert(data.message);
         });
 
-};
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    callPOSTRequest(1, 0);
+});

@@ -156,6 +156,7 @@ public class BookService {
             //delete book image file and BD row
             if (book != null && bookDAO.delete(book)) {
                 innerObject.add("status", new Gson().toJsonTree("OK"));
+                innerObject.add("message", new Gson().toJsonTree(message.getString("list_books.message.deleted")));
                 if (!book.getImage().equals("_blank.png")) {
                     File file = new File(path, book.getImage());
                     boolean result  = file.delete();

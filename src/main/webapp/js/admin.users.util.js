@@ -1,9 +1,7 @@
-var itemsPerPage=5;
-var currentPGPage=1;
-var sortBy="number";
-window.addEventListener('DOMContentLoaded', (event) => {
-        callPOSTRequest(1,0);
-});
+let itemsPerPage=5;
+let currentPGPage=1;
+let sortBy="number";
+
 function callPOSTRequest(option, parameter) {
     var items = parseInt($('#itemsPerPage').val());
     switch (option){
@@ -92,14 +90,13 @@ function changeUserStatus(id) {
 }
 
 function changeStatusButton(e) {
-    UIkit.modal.confirm("Are you sure to change user status?").then(function () {
+    UIkit.modal.confirm(javascript_admin_user_status_button).then(function () {
         changeUserStatus(e);
         console.log('User is enabled')
     }, function () {
         console.log('Canceling enable')
     });
 };
-
 
 function changeSort(){
     sortBy = $('#sortUsersOption').val();
@@ -110,3 +107,7 @@ function changeSort(){
 function callErrorAlert(message){
     UIkit.modal.alert(message);
 }
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    callPOSTRequest(1,0);
+});

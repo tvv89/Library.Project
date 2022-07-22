@@ -61,7 +61,7 @@ function createTable(tx) {
 }
 
 function takeBookButton(id) {
-    UIkit.modal.confirm('This book will be booked. Are you sure?').then(function () {
+    UIkit.modal.confirm(javascript_user_books_take_book).then(function () {
         fetch('user?command=takeUserBook', {
             method: 'POST',
             headers: {

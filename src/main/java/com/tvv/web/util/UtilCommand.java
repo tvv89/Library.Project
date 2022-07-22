@@ -13,10 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class UtilCommand {
 
@@ -112,5 +110,27 @@ public class UtilCommand {
         String local = (String) session.getAttribute("currentLanguage");
         if (local==null || local.isEmpty()) local="";
         return local;
+    }
+
+    /**
+     * Load to JSP language keys for javascript
+     * @param local string language ISO 639-1
+     * @return
+     */
+    public static Map<String,String> jsLanguagePack(String local) {
+        Map<String,String> result = new HashMap<>();
+        if (local==null || local.isEmpty()) local="";
+        Locale locale = new Locale(local);
+        ResourceBundle data = ResourceBundle.getBundle("resources",locale);
+        List<String> keyList = data.keySet()
+                .stream()
+                .filter(value->value.contains("javascript."))
+                .collect(Collectors.toList());
+        for (String key: keyList) {
+            String keys = key.replace(".", "_");
+            result.put(keys,data.getString(key));
+        }
+
+        return result;
     }
 }

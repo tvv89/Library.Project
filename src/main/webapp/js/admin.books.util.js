@@ -91,7 +91,7 @@ function editImageButton(bookId) {
 }
 
 function deleteBookButton(id) {
-    UIkit.modal.confirm("Book will be deleted. Are you sure?").then(function () {
+    UIkit.modal.confirm(javascript_admin_books_delete_book_button).then(function () {
         fetch('admin?command=deleteBook', {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -105,7 +105,7 @@ function deleteBookButton(id) {
                 if (data.status == 'OK') {
                     callPOSTRequest(1, 0);
                     UIkit.notification({
-                        message: "Book was deleted",
+                        message: `${data.message}`,
                         status: 'success',
                         timeout: 2000
                     });

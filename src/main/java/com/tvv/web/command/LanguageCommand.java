@@ -71,6 +71,7 @@ public class LanguageCommand extends Command {
 		log.debug("language "+ lang);
 		Config.set(session, "javax.servlet.jsp.jstl.fmt.locale", lang);
 		session.setAttribute("currentLanguage", lang);
+		session.setAttribute("langPack", UtilCommand.jsLanguagePack(lang));
 		log.trace("Refresh page");
 		log.debug("Command finished "+ request.getMethod());
 	}
