@@ -9,11 +9,15 @@ import java.util.List;
 
 public interface UserDAO {
     boolean create(User user) throws AppException;
+
     User findById(long id) throws AppException;
+
     boolean update(User user) throws AppException;
+
     boolean delete(User user) throws AppException;
 
     List<User> findAllUsers(PageSettings pageSettings, long role) throws AppException;
+
     long userCount(long role) throws AppException;
 
     User findUserByNumber(String number) throws AppException;

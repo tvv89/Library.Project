@@ -1,8 +1,10 @@
 package com.tvv.web.servlet;
 
+import com.tvv.db.entity.Role;
 import com.tvv.service.exception.AppException;
 import com.tvv.web.command.Command;
 import com.tvv.web.command.CommandCollection;
+import com.tvv.web.command.LoginCommand;
 import com.tvv.web.util.security.IncognitoLevel;
 import com.tvv.web.util.Path;
 import com.tvv.web.util.UtilCommand;
@@ -15,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -38,6 +41,15 @@ public class StartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
+        log.debug("StartController  started GET");
+        HttpSession session = request.getSession();
+        Role userRole = (Role) session.getAttribute("userRole");
+        if (userRole != null) {
+            String forward = LoginCommand.getForwardPage(userRole);
+            response.sendRedirect(forward);
+            log.debug("StartController finished GET with " + forward);
+            return;
+        }
         process(request, response);
     }
 
@@ -60,7 +72,8 @@ public class StartController extends HttpServlet {
          */
         log.debug("StartController Incognito started");
         String commandName = request.getParameter("command");
-        log.trace("Request parameter command GET: " + commandName);
+        log.trace("Request parameter command: " + commandName);
+        if (commandName == null) commandName = "listIncognitoAllBooks";
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
         try {

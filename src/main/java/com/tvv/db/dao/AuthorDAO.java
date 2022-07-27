@@ -8,9 +8,11 @@ import java.util.Set;
 
 public interface AuthorDAO {
     boolean create(Author author) throws AppException;
+
     Author findById(long id) throws AppException;
+
     boolean update(Author author) throws AppException;
+
     boolean delete(Author author) throws AppException;
-    Set<Author> findAuthorsByBookId(long id) throws AppException;
 
 }
