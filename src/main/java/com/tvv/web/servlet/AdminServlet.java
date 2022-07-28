@@ -31,78 +31,57 @@ public class AdminServlet extends HttpServlet {
     /**
      * Function for GET request. Use command GET function
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @param request http servlet request
+     * @param response http servlet response
+     * @throws ServletException exception
      */
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        String commandName = request.getParameter("command");
-        log.trace("Request parameter command GET: " + commandName);
-        Command command = CommandCollection.get(commandName);
-        log.trace("Command is " + command);
-        try {
-            /**
-             * GET executed function
-             */
-            Annotation[] annotations = command.getClass().getAnnotations();
-            if (Arrays.stream(annotations).anyMatch(a -> a instanceof AdminLevel)) {
-                command.executeGet(request, response);
-            } else {
-                RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);
-                disp.forward(request, response);
-            }
-        } catch (ServletException | NullPointerException e) {
-            /**
-             * Show error page
-             */
-            request.getSession().setAttribute("errorHeader", "404");
-            request.getSession().setAttribute("errorMessage", "Page not found");
-            UtilCommand.goToErrorPage(request, response);
-        }
-        log.debug("StartController finished GET with " + commandName);
+        process(request, response);
     }
 
     /**
      * Function for POST request. Use command POST function
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @param request http servlet request
+     * @param response http servlet response
+     * @throws ServletException exception
      */
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        /**
+        process(request, response);
+    }
+
+    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
          * Read command name
          */
         String commandName = request.getParameter("command");
-        log.trace("Request parameter command POST: " + commandName);
+        log.trace("Request parameter command: " + commandName);
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
         try {
-            /**
+            /*
              * POST executed function
              */
             Annotation[] annotations = command.getClass().getAnnotations();
             if (Arrays.stream(annotations).anyMatch(a -> a instanceof AdminLevel)) {
-                command.executePost(request, response);
+                if (request.getMethod().equals("GET")) command.executeGet(request, response);
+                if (request.getMethod().equals("POST")) command.executePost(request, response);
             } else {
                 RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);
                 disp.forward(request, response);
             }
         } catch (ServletException | NullPointerException | AppException e) {
-            /**
+            /*
              * Show error page
              */
             request.getSession().setAttribute("errorHeader", "404");
             request.getSession().setAttribute("errorMessage", "Page not found " + e.getMessage());
             UtilCommand.goToErrorPage(request, response);
         }
-        log.debug("StartController finished POST with " + commandName);
+        log.debug("StartController finished with " + commandName);
     }
-
 }

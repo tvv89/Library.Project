@@ -34,10 +34,9 @@ public class StartController extends HttpServlet {
     /**
      * Function for GET request. Use command GET function
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @param request http servlet request
+     * @param response http servlet response
+     * @throws ServletException exception
      */
     @Override
     protected void doGet(HttpServletRequest request,
@@ -51,74 +50,55 @@ public class StartController extends HttpServlet {
             log.debug("StartController finished GET with " + forward);
             return;
         }
-        String commandName = request.getParameter("command");
-        log.trace("Request parameter command GET: " + commandName);
-        if (commandName == null) commandName = "listIncognitoAllBooks";
-        Command command = CommandCollection.get(commandName);
-        log.trace("Command is " + command);
-        try {
-            /**
-             * GET executed function
-             */
-            Annotation[] annotations = command.getClass().getAnnotations();
-            if (Arrays.stream(annotations).anyMatch(a -> a instanceof IncognitoLevel)) {
-                command.executeGet(request, response);
-            } else {
-                RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);
-                disp.forward(request, response);
-            }
-        } catch (ServletException | NullPointerException e) {
-            /**
-             * Show error page
-             */
-            request.getSession().setAttribute("errorHeader", "404");
-            request.getSession().setAttribute("errorMessage", "Page not found");
-            UtilCommand.goToErrorPage(request, response);
-        }
-        log.debug("StartController finished GET with " + commandName);
+        process(request, response);
     }
 
     /**
      * Function for POST request. Use command POST function
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @param request http servlet request
+     * @param response http servlet response
+     * @throws ServletException exception
      */
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        /**
+        process(request, response);
+    }
+
+    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
          * Read command name
          */
-        log.debug("StartController Librarian started GET");
+        log.debug("StartController Incognito started");
         String commandName = request.getParameter("command");
-        log.trace("Request parameter command GET: " + commandName);
+        log.trace("Request parameter command: " + commandName);
+        if (commandName == null) commandName = "listIncognitoAllBooks";
         Command command = CommandCollection.get(commandName);
         log.trace("Command is " + command);
         try {
-            /**
-             * POST executed function
+            /*
+             * GET/POST executed function
              */
             Annotation[] annotations = command.getClass().getAnnotations();
             if (Arrays.stream(annotations).anyMatch(a -> a instanceof IncognitoLevel)) {
-                command.executePost(request, response);
+                if (request.getMethod().equals("GET")) command.executeGet(request, response);
+                if (request.getMethod().equals("POST")) command.executePost(request, response);
             } else {
                 RequestDispatcher disp = request.getRequestDispatcher(Path.PAGE__ACCESS_DENIED);
                 disp.forward(request, response);
             }
         } catch (ServletException | NullPointerException e) {
-            /**
+            /*
              * Show error page
              */
             request.getSession().setAttribute("errorHeader", "404");
             request.getSession().setAttribute("errorMessage", "Page not found");
-            UtilCommand.goToErrorPage(request,response);
+            UtilCommand.goToErrorPage(request, response);
         } catch (AppException e) {
             throw new RuntimeException(e);
         }
-        log.debug("StartController Librarian finished GET with " + commandName);
+        log.debug("StartController Incognito finished with " + commandName);
     }
 
 }

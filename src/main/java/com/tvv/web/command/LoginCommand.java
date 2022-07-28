@@ -36,15 +36,13 @@ public class LoginCommand extends Command {
 	}
 	/**
 	 * Function for POST request. Check user  login and password, redirect to different page for USER and ADMIN
-	 * @param request
-	 * @param response
-	 * @throws IOException
-	 * @throws ServletException
+	 * @param request http servlet request
+	 * @param response http servlet response
+	 * @throws ServletException exception
 	 */
 	@Override
 	public void executePost(HttpServletRequest request,
 							HttpServletResponse response) throws IOException, ServletException {
-		
 		log.debug("Command starts "+ this.getClass().getSimpleName());
 		HttpSession session = request.getSession();
 		ResourceBundle message = UtilCommand.getLocale(request);
@@ -52,8 +50,7 @@ public class LoginCommand extends Command {
 		log.trace("Request parameter: login " + login);
 		String password = request.getParameter("password");
 		String forward;
-
-		/**
+		/*
 		 * Check blank login and password input
 		 */
 		if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
@@ -63,7 +60,7 @@ public class LoginCommand extends Command {
 			log.error("errorMessage " + message.getString("error.page.user.login.message.password_empty"));
 			return;
 		}
-		/**
+		/*
 		 * Read user by login
 		 */
 		User currentUser;
@@ -77,7 +74,7 @@ public class LoginCommand extends Command {
 			return;
 		}
 		log.trace("Load from DB: user " + currentUser);
-		/**
+		/*
 		 * Check user: exist or not
 		 */
 		if (currentUser == null) {
@@ -93,7 +90,7 @@ public class LoginCommand extends Command {
 			log.error("errorMessage: " + message.getString("error.page.user.login.message.user_locked"));
 			return;
 		}
-		/**
+		/*
 		 * Check user: password
 		 */
 		else if (!StringHash.getHashString(password).equals(currentUser.getPassword())) {
@@ -103,7 +100,7 @@ public class LoginCommand extends Command {
 			log.error("errorMessage: " + message.getString("error.page.user.login.message.user_password"));
 			return;
 		}
-		/**
+		/*
 		 * Check user: all parameters are correct
 		 */
 		else {
@@ -118,14 +115,10 @@ public class LoginCommand extends Command {
 			log.trace("Set the session attribute: currentPage " + "users");
 
 			String lang;
-			try {
-				lang = currentUser.getLocale();
-			} catch (Exception e) {
-				lang = "en";
-				log.error("Can not read user locale");
-			}
+			lang = currentUser.getLocale();
 			Config.set(session, "javax.servlet.jsp.jstl.fmt.locale", lang);
 			session.setAttribute("currentLanguage", lang);
+			session.setAttribute("langPack", UtilCommand.jsLanguagePack(lang));
 		}
 		log.debug("Command finished");
 		response.sendRedirect(forward);
@@ -154,8 +147,7 @@ public class LoginCommand extends Command {
 	 * Execute GET function for StartController. This function doesn't have GET request, and redirect to error page
 	 * @param request servlet request
 	 * @param response servlet response
-	 * @throws IOException
-	 * @throws ServletException
+	 * @throws ServletException exception
 	 */
 	@Override
 	public void executeGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
