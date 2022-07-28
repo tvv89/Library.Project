@@ -129,7 +129,6 @@ public class BookDAOImpl implements BookDAO {
 
     private DBManager dbManager;
 
-    @Override
     public void init(DBManager dbManager) {
         this.dbManager = dbManager;
     }
