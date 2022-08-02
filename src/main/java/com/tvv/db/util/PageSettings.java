@@ -2,9 +2,23 @@ package com.tvv.db.util;
 
 import java.util.Objects;
 
+/**
+ * Page settings for pagination
+ */
 public class PageSettings {
+    /**
+     * number of page
+     */
     private long page;
+
+    /**
+     * show items per page
+     */
     private long size;
+
+    /**
+     * key word for sorting
+     */
     private String sort;
 
     public long getPage() {

@@ -163,8 +163,8 @@ public class UserService {
         return user;
     }
 
-    public void updateLocalUserById(long id, String currentLanguage) throws AppException {
-        userDAO.updateLocale(id, currentLanguage);
+    public boolean updateLocalUserById(long id, String currentLanguage) throws AppException {
+        return userDAO.updateLocale(id, currentLanguage);
     }
 
     public String getUserFreeNumber(long roleId) {
