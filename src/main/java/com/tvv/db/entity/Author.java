@@ -2,7 +2,7 @@ package com.tvv.db.entity;
 
 import java.util.Objects;
 
-public class Author extends Entity{
+public class Author extends Entity {
     private String firstName;
     private String lastName;
 

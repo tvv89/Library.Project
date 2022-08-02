@@ -2,7 +2,6 @@ package com.tvv.db.impl;
 
 import com.tvv.db.DBManager;
 import com.tvv.db.dao.GenreDAO;
-import com.tvv.db.entity.Author;
 import com.tvv.db.entity.Genre;
 import com.tvv.db.util.Fields;
 import com.tvv.service.exception.AppException;

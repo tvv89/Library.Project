@@ -14,4 +14,5 @@ public interface GenreDAO {
 
     boolean delete(Genre genre) throws AppException;
 
+    Set<Genre> findGenresByBookId(long id) throws AppException;
 }
