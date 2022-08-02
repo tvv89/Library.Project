@@ -42,4 +42,5 @@ public interface AuthorDAO {
      */
     boolean delete(Author author) throws AppException;
 
+    Set<Author> findAuthorsByBookId(long id) throws AppException;
 }

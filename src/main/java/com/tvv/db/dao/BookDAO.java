@@ -1,5 +1,6 @@
 package com.tvv.db.dao;
 
+import com.tvv.db.DBManager;
 import com.tvv.db.entity.Book;
 import com.tvv.db.entity.CountBook;
 import com.tvv.db.entity.RentBook;
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public interface BookDAO {
 
+    void init(DBManager dbManager);
     /**
      * Create book and add counts of books to DB
      *
