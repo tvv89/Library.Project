@@ -27,7 +27,7 @@
         </ul>
     </div>
     <div class="uk-child-width-1-5@m uk-grid-small uk-grid-match" id="table" uk-grid>
-
+        <div class="uk-align-center" uk-spinner></div>
     </div>
     <div id="userinfo" uk-modal>
 
