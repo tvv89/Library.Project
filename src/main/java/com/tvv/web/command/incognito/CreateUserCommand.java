@@ -62,11 +62,11 @@ public class CreateUserCommand extends Command {
         String currentLanguage = (String) session.getAttribute("currentLanguage");
         if (currentLanguage == null) currentLanguage = "";
         Map<String, String> userData = readParameters(request);
-        /**
+        /*
          * Create user with parameter
          */
         try {
-            /**
+            /*
              * Create stream for read loaded photo
              */
             Part filePart = request.getPart("photo-file");
@@ -74,7 +74,7 @@ public class CreateUserCommand extends Command {
             InputStream fileContent = filePart.getInputStream();
             ServletContext servletContext = request.getServletContext();
             String absolutePathToIndexJSP = servletContext.getRealPath("/images/users");
-            /**
+            /*
              * Save photo file
              */
             if (fileContent.available() > 0) {
@@ -135,8 +135,14 @@ public class CreateUserCommand extends Command {
         result.put("lastName", request.getParameter("last-name"));
         check = check && FieldsChecker.checkNameField(result.get("lastName"));
         result.put("dateOfBirth", request.getParameter("date-of-birth"));
-        check =
-                check && FieldsChecker.checkAge16YearsOld(LocalDate.parse(result.get("dateOfBirth")));
+        try {
+            check =
+                    check && FieldsChecker.checkAge16YearsOld(LocalDate.parse(result.get("dateOfBirth")));
+        } catch (Exception ex)
+        {
+            result.put("dateOfBirth", LocalDate.now().toString());
+            check = false;
+        }
         result.put("phone", request.getParameter("phone"));
         check = check && FieldsChecker.checkPhone(result.get("phone"));
         result.put("locale", request.getParameter("locale"));
