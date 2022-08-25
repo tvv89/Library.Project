@@ -66,7 +66,10 @@
                 <label class="uk-form-label" for="date-of-birth"><fmt:message
                         key="form_create_user.user.date_of_birth"/></label>
                 <div class="uk-form-controls">
-                    <input type="date" id="date-of-birth" name="date-of-birth" form-field/>
+                    <input type="date" id="date-of-birth" name="date-of-birth" form-field
+                           form-field-regex="^\d{4}-\d{2}-\d{2}$"
+                           form-field-regex-error="<fmt:message key="regex.message.user.day_of_birth"/>"/>
+                    <p id="date-of-birth-error"></p>
                 </div>
             </div>
             <div class="uk-margin">

@@ -13,7 +13,7 @@ public class FieldsChecker {
 
     /**
      * Check user first name or last name
-     * @param name
+     * @param name string field name
      * @return correct or not
      */
     public static boolean checkNameField(String name) {
@@ -57,7 +57,7 @@ public class FieldsChecker {
      * @return correct or not
      */
     public static boolean checkAuthors (String authors) {
-        String regex = "^([A-Za-zА-Яа-яіІїЇёЁъЪ, ]+)";
+        String regex = "^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ, ]+";
         return checkRegEx(authors,regex);
     }
 
@@ -67,7 +67,7 @@ public class FieldsChecker {
      * @return correct or not
      */
     public static boolean checkBookName (String bookName) {
-        String regex = "^([0-9A-Za-zА-Яа-яіІїЇёЁъЪ,?.!-:; ]+)";
+        String regex = "^([0-9A-Za-zА-Яа-яіІїЇёЁъЪЄє,?.!-:; ]+)";
         return checkRegEx(bookName,regex);
     }
 
@@ -77,7 +77,7 @@ public class FieldsChecker {
      * @return correct or not
      */
     public static boolean checkPublisher (String publisher) {
-        String regex = "^([A-Za-zА-Яа-яіІїЇёЁъЪ0-9,. ]+)";
+        String regex = "^[A-Za-zАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯабвгґдеєжзиіїйклмнопрстуфхцчшщьюяёЁъЪ,.«» ]+";
         return checkRegEx(publisher,regex);
     }
 
